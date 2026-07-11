@@ -1,0 +1,1356 @@
+{
+  "name": "H1-v1.4",
+  "source": "Appendix H-1 UAD Compliance Rules v1.4.encoded (csv sha256:25ac319fdbe2)",
+  "rules": [
+    {
+      "rule_id": "UAD1001",
+      "category": "Subject Property",
+      "description": "If AddressLineText is not provided",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/ADDRESS/AddressLineText"
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0007, Message ID UAD1001",
+      "messages": {
+        "reviewer": "Provide the address line for the subject property physical address."
+      },
+      "h1": {
+        "unique_id": "0100.0007",
+        "property_affected": "Subject",
+        "report_subsection": "{No Subsection}",
+        "data_point": "AddressLineText",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/ADDRESS/AddressLineText"
+      }
+    },
+    {
+      "rule_id": "UAD1002",
+      "category": "Subject Property",
+      "description": "If CityName is not provided",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/ADDRESS/CityName"
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0009, Message ID UAD1002",
+      "messages": {
+        "reviewer": "Provide the city name for the subject property physical address."
+      },
+      "h1": {
+        "unique_id": "0100.0009",
+        "property_affected": "Subject",
+        "report_subsection": "{No Subsection}",
+        "data_point": "CityName",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/ADDRESS/CityName"
+      }
+    },
+    {
+      "rule_id": "UAD1003",
+      "category": "Subject Property",
+      "description": "If CountyName is not provided",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/ADDRESS/CountyName"
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0010, Message ID UAD1003",
+      "messages": {
+        "reviewer": "Provide the county name for the subject property physical address."
+      },
+      "h1": {
+        "unique_id": "0100.0010",
+        "property_affected": "Subject",
+        "report_subsection": "{No Subsection}",
+        "data_point": "CountyName",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/ADDRESS/CountyName"
+      }
+    },
+    {
+      "rule_id": "UAD1004",
+      "category": "Subject Property",
+      "description": "If PostalCode is not provided",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/ADDRESS/PostalCode"
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0011, Message ID UAD1004",
+      "messages": {
+        "reviewer": "Provide the ZIP code for the subject property physical address."
+      },
+      "h1": {
+        "unique_id": "0100.0011",
+        "property_affected": "Subject",
+        "report_subsection": "{No Subsection}",
+        "data_point": "PostalCode",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/ADDRESS/PostalCode"
+      }
+    },
+    {
+      "rule_id": "UAD1005",
+      "category": "Subject Property",
+      "description": "If PostalCode is not in the required format (5 digits, or 5 digits, a hyphen, and 4 digits)",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "regex_match",
+        "field": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/ADDRESS/PostalCode",
+        "pattern": "\\d{5}(-\\d{4})?"
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0011, Message ID UAD1005",
+      "messages": {
+        "reviewer": "The ZIP code for the subject property physical address must be either 5 digits, or 5 digits, a hyphen, and 4 digits (ZIP+4)."
+      },
+      "h1": {
+        "unique_id": "0100.0011",
+        "property_affected": "Subject",
+        "report_subsection": "{No Subsection}",
+        "data_point": "PostalCode (%PV%)",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/ADDRESS/PostalCode"
+      }
+    },
+    {
+      "rule_id": "UAD1006",
+      "category": "Subject Property",
+      "description": "If StateCode is not provided",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/ADDRESS/StateCode"
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0012, Message ID UAD1006",
+      "messages": {
+        "reviewer": "Provide the state code for the subject property physical address."
+      },
+      "h1": {
+        "unique_id": "0100.0012",
+        "property_affected": "Subject",
+        "report_subsection": "{No Subsection}",
+        "data_point": "StateCode",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/ADDRESS/StateCode"
+      }
+    },
+    {
+      "rule_id": "UAD1007",
+      "category": "Subject Property",
+      "description": "If StateCode is not a valid 2-character US State or Territory Code",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/ADDRESS/StateCode",
+        "allowed": [
+          "AL", "AK", "AS", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "GU", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MP", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "PR", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "VI", "WA", "WV", "WI", "WY"
+        ]
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0012, Message ID UAD1007",
+      "messages": {
+        "reviewer": "The state code for the subject property physical address must be a valid 2-character US State or Territory Code."
+      },
+      "h1": {
+        "unique_id": "0100.0012",
+        "property_affected": "Subject",
+        "report_subsection": "{No Subsection}",
+        "data_point": "StateCode (%PV%)",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/ADDRESS/StateCode"
+      }
+    },
+    {
+      "rule_id": "UAD1008",
+      "category": "Does Not Display",
+      "description": "If LatitudeIdentifier is not provided",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/LOCATION_IDENTIFIER/GEOSPATIAL_INFORMATION/LatitudeIdentifier"
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0015, Message ID UAD1008",
+      "messages": {
+        "reviewer": "Provide the latitude for subject property. For assistance with this message, contact the appraisal software vendor."
+      },
+      "h1": {
+        "unique_id": "0100.0015",
+        "property_affected": "Subject",
+        "report_subsection": "Does Not Display",
+        "data_point": "LatitudeIdentifier",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/LOCATION_IDENTIFIER/GEOSPATIAL_INFORMATION/LatitudeIdentifier"
+      }
+    },
+    {
+      "rule_id": "UAD1009",
+      "category": "Does Not Display",
+      "description": "If LongitudeIdentifier is not provided",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/LOCATION_IDENTIFIER/GEOSPATIAL_INFORMATION/LongitudeIdentifier"
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0016, Message ID UAD1009",
+      "messages": {
+        "reviewer": "Provide the longitude for subject property. For assistance with this message, contact the appraisal software vendor."
+      },
+      "h1": {
+        "unique_id": "0100.0016",
+        "property_affected": "Subject",
+        "report_subsection": "Does Not Display",
+        "data_point": "LongitudeIdentifier",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/LOCATION_IDENTIFIER/GEOSPATIAL_INFORMATION/LongitudeIdentifier"
+      }
+    },
+    {
+      "rule_id": "UAD1010",
+      "category": "Subject Property",
+      "description": "If AccessoryDwellingUnitTotalCount is not provided",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/AccessoryDwellingUnitTotalCount"
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0019, Message ID UAD1010",
+      "messages": {
+        "reviewer": "Provide the total number of ADUs, even if the value is 0."
+      },
+      "h1": {
+        "unique_id": "0100.0019",
+        "property_affected": "Subject",
+        "report_subsection": "{No Subsection}",
+        "data_point": "AccessoryDwellingUnitTotalCount",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/AccessoryDwellingUnitTotalCount"
+      }
+    },
+    {
+      "rule_id": "UAD1011",
+      "category": "Subject Property",
+      "description": "If AccessoryDwellingUnitTotalCount <> the number of instances of PROPERTY_UNIT_DETAIL with AccessoryDwellingUnitIndicator = \"true\"",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "value_comparison",
+        "operator": "!=",
+        "field": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/AccessoryDwellingUnitTotalCount",
+        "compare_value": {
+          "type": "instance_count",
+          "target": "PROPERTY_UNIT_DETAIL",
+          "condition": { "field": "AccessoryDwellingUnitIndicator", "value": "true" }
+        }
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0019, Message ID UAD1011",
+      "messages": {
+        "reviewer": "The number of 'Accessory Dwelling Units' does not equal the number of living units identified as an ADU."
+      },
+      "h1": {
+        "unique_id": "0100.0019",
+        "property_affected": "Subject",
+        "report_subsection": "{No Subsection}",
+        "data_point": "AccessoryDwellingUnitTotalCount (%PV%)",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/AccessoryDwellingUnitTotalCount"
+      }
+    },
+    {
+      "rule_id": "UAD1012",
+      "category": "Subject Property",
+      "description": "If AttachmentType is not provided",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/AttachmentType"
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0020, Message ID UAD1012",
+      "messages": {
+        "reviewer": "Provide the 'Attachment Type' for the property."
+      },
+      "h1": {
+        "unique_id": "0100.0020",
+        "property_affected": "Subject",
+        "report_subsection": "{No Subsection}",
+        "data_point": "AttachmentType",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/AttachmentType"
+      }
+    },
+    {
+      "rule_id": "UAD1013",
+      "category": "Subject Property",
+      "description": "If DwellingCount is not provided",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/DwellingCount"
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0021, Message ID UAD1013",
+      "messages": {
+        "reviewer": "Provide the total number of dwellings."
+      },
+      "h1": {
+        "unique_id": "0100.0021",
+        "property_affected": "Subject",
+        "report_subsection": "{No Subsection}",
+        "data_point": "DwellingCount",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/DwellingCount"
+      }
+    },
+    {
+      "rule_id": "UAD1014",
+      "category": "Subject Property",
+      "description": "If DwellingCount < 1",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "value_comparison",
+        "operator": "<",
+        "field": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/DwellingCount",
+        "compare_value": 1
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0021, Message ID UAD1014",
+      "messages": {
+        "reviewer": "The total number of dwellings must be at least 1."
+      },
+      "h1": {
+        "unique_id": "0100.0021",
+        "property_affected": "Subject",
+        "report_subsection": "{No Subsection}",
+        "data_point": "DwellingCount (%PV%)",
+        "min_value": "1",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/DwellingCount"
+      }
+    },
+    {
+      "rule_id": "UAD1015",
+      "category": "Subject Property",
+      "description": "If DwellingCount > LivingUnitExcludingADUCount",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "value_comparison",
+        "operator": ">",
+        "field": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/DwellingCount",
+        "compare_value": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/LivingUnitExcludingADUCount"
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0021, Message ID UAD1015",
+      "messages": {
+        "reviewer": "The total number of dwellings exceeds the total number of living units, excluding any ADUs."
+      },
+      "h1": {
+        "unique_id": "0100.0021",
+        "property_affected": "Subject",
+        "report_subsection": "{No Subsection}",
+        "data_point": "DwellingCount (%PV%)",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/DwellingCount"
+      }
+    },
+    {
+      "rule_id": "UAD1016",
+      "category": "Subject Property",
+      "description": "If DwellingCount does not equal the number of instances of IMPROVEMENT_DETAIL with ImprovementType = \"Dwelling\"",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "value_comparison",
+        "operator": "!=",
+        "field": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/DwellingCount",
+        "compare_value": {
+          "type": "instance_count",
+          "target": "IMPROVEMENT_DETAIL",
+          "condition": { "field": "ImprovementType", "value": "Dwelling" }
+        }
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0021, Message ID UAD1016",
+      "messages": {
+        "reviewer": "The 'Dwellings Containing Units' does not equal the number of structures identified as a dwelling."
+      },
+      "h1": {
+        "unique_id": "0100.0021",
+        "property_affected": "Subject",
+        "report_subsection": "{No Subsection}",
+        "data_point": "DwellingCount (%PV%)",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/DwellingCount"
+      }
+    },
+    {
+      "rule_id": "UAD1017",
+      "category": "Subject Property",
+      "description": "If LivingUnitExcludingADUCount is not provided",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/LivingUnitExcludingADUCount"
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0022, Message ID UAD1017",
+      "messages": {
+        "reviewer": "Provide the total number of living units, excluding any ADUs."
+      },
+      "h1": {
+        "unique_id": "0100.0022",
+        "property_affected": "Subject",
+        "report_subsection": "{No Subsection}",
+        "data_point": "LivingUnitExcludingADUCount",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/LivingUnitExcludingADUCount"
+      }
+    },
+    {
+      "rule_id": "UAD1018",
+      "category": "Subject Property",
+      "description": "If LivingUnitExcludingADUCount < 1",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "value_comparison",
+        "operator": "<",
+        "field": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/LivingUnitExcludingADUCount",
+        "compare_value": 1
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0022, Message ID UAD1018",
+      "messages": {
+        "reviewer": "The total number of living units, excluding any ADUs, must be at least 1."
+      },
+      "h1": {
+        "unique_id": "0100.0022",
+        "property_affected": "Subject",
+        "report_subsection": "{No Subsection}",
+        "data_point": "LivingUnitExcludingADUCount (%PV%)",
+        "min_value": "1",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/LivingUnitExcludingADUCount"
+      }
+    },
+    {
+      "rule_id": "UAD1019",
+      "category": "Subject Property",
+      "description": "If LivingUnitExcludingADUCount does not equal the number of instances of PROPERTY_UNIT_DETAIL with AccessoryDwellingUnitIndicator = \"false\"",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "value_comparison",
+        "operator": "!=",
+        "field": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/LivingUnitExcludingADUCount",
+        "compare_value": {
+          "type": "instance_count",
+          "target": "PROPERTY_UNIT_DETAIL",
+          "condition": { "field": "AccessoryDwellingUnitIndicator", "value": "false" }
+        }
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0022, Message ID UAD1019",
+      "messages": {
+        "reviewer": "The 'Units Excluding ADUs' does not equal the number of living units delivered in the UAD XML."
+      },
+      "h1": {
+        "unique_id": "0100.0022",
+        "property_affected": "Subject",
+        "report_subsection": "{No Subsection}",
+        "data_point": "LivingUnitExcludingADUCount (%PV%)",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/LivingUnitExcludingADUCount"
+      }
+    },
+    {
+      "rule_id": "UAD1021",
+      "category": "Subject Property",
+      "description": "If (PropertyInProjectIndicator = \"false\" or ProjectLegalStructureType = \"Condominium\"), and PropertyEstateType is not provided",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "complex_condition",
+        "rules": [
+          {
+            "operator": "AND",
+            "conditions": [
+              {
+                "operator": "OR",
+                "conditions": [
+                  { "field": "PropertyInProjectIndicator", "value": "false" },
+                  { "field": "ProjectLegalStructureType", "value": "Condominium" }
+                ]
+              },
+              { "field": "PropertyEstateType", "required": true }
+            ]
+          }
+        ]
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0024, Message ID UAD1021",
+      "messages": {
+        "reviewer": "Provide 'Property Rights Appraised'."
+      },
+      "h1": {
+        "unique_id": "0100.0024",
+        "property_affected": "Subject",
+        "report_subsection": "Ownership Rights",
+        "data_point": "PropertyEstateType",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/PropertyEstateType"
+      }
+    },
+    {
+      "rule_id": "UAD1022",
+      "category": "Subject Property",
+      "description": "If PropertyEstateType = \"Other\" and PropertyEstateTypeOtherDescription is not provided",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "conditional_field_present",
+        "conditions": [
+          { "field": "PropertyEstateType", "value": "Other" }
+        ],
+        "required_field": "PropertyEstateTypeOtherDescription"
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0053, Message ID UAD1022",
+      "messages": {
+        "reviewer": "Provide a description when 'Property Rights Appraised' = 'Other'."
+      },
+      "h1": {
+        "unique_id": "0100.0053",
+        "property_affected": "Subject",
+        "report_subsection": "Ownership Rights",
+        "data_point": "PropertyEstateTypeOtherDescription",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/PropertyEstateTypeOtherDescription"
+      }
+    },
+    {
+      "rule_id": "UAD1023",
+      "category": "Subject Property",
+      "description": "If PUDIndicator is not provided",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/PUDIndicator"
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0026, Message ID UAD1023",
+      "messages": {
+        "reviewer": "Indicate whether the property is located within a PUD."
+      },
+      "h1": {
+        "unique_id": "0100.0026",
+        "property_affected": "Subject",
+        "report_subsection": "{No Subsection}",
+        "data_point": "PUDIndicator",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/PUDIndicator"
+      }
+    },
+    {
+      "rule_id": "UAD1024",
+      "category": "Subject Property",
+      "description": "If PropertyEstateType = \"Leasehold\" and LandOwnedInCommonIndicator = \"false\", and PropertyGroundLeaseAnnualAmount is not provided",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "conditional_field_present",
+        "conditions": [
+          { "field": "PropertyEstateType", "value": "Leasehold" },
+          { "field": "LandOwnedInCommonIndicator", "value": "false" }
+        ],
+        "required_field": "PropertyGroundLeaseAnnualAmount"
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0028, Message ID UAD1024",
+      "messages": {
+        "reviewer": "Provide 'Ground Rent Annual Amount'."
+      },
+      "h1": {
+        "unique_id": "0100.0028",
+        "property_affected": "Subject",
+        "report_subsection": "Ownership Rights",
+        "data_point": "PropertyGroundLeaseAnnualAmount",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_GROUND_RENT/PropertyGroundLeaseAnnualAmount"
+      }
+    },
+    {
+      "rule_id": "UAD1025",
+      "category": "Subject Property",
+      "description": "If PropertyEstateType = \"Leasehold\" and LandOwnedInCommonIndicator = \"false\", and PropertyGroundLeaseExpirationDate is not provided",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "conditional_field_present",
+        "conditions": [
+          { "field": "PropertyEstateType", "value": "Leasehold" },
+          { "field": "LandOwnedInCommonIndicator", "value": "false" }
+        ],
+        "required_field": "PropertyGroundLeaseExpirationDate"
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0029, Message ID UAD1025",
+      "messages": {
+        "reviewer": "Provide the property ground lease expiration date."
+      },
+      "h1": {
+        "unique_id": "0100.0029",
+        "property_affected": "Subject",
+        "report_subsection": "Ownership Rights",
+        "data_point": "PropertyGroundLeaseExpirationDate",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_GROUND_RENT/PropertyGroundLeaseExpirationDate"
+      }
+    },
+    {
+      "rule_id": "UAD1026",
+      "category": "Subject Property",
+      "description": "If PropertyEstateType = \"Leasehold\" and LandOwnedInCommonIndicator = \"false\", and PropertyGroundLeaseRenewableIndicator is not provided",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "conditional_field_present",
+        "conditions": [
+          { "field": "PropertyEstateType", "value": "Leasehold" },
+          { "field": "LandOwnedInCommonIndicator", "value": "false" }
+        ],
+        "required_field": "PropertyGroundLeaseRenewableIndicator"
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0030, Message ID UAD1026",
+      "messages": {
+        "reviewer": "Indicate whether the property ground lease is renewable."
+      },
+      "h1": {
+        "unique_id": "0100.0030",
+        "property_affected": "Subject",
+        "report_subsection": "Ownership Rights",
+        "data_point": "PropertyGroundLeaseRenewableIndicator",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_GROUND_RENT/PropertyGroundLeaseRenewableIndicator"
+      }
+    },
+    {
+      "rule_id": "UAD1027",
+      "category": "Subject Property",
+      "description": "If SpecialTaxAssessmentsIndicator is not provided",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_TAXES/PROPERTY_TAX/PROPERTY_TAX_DETAIL/SpecialTaxAssessmentsIndicator"
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0033, Message ID UAD1027",
+      "messages": {
+        "reviewer": "Indicate whether the property has any special tax assessments."
+      },
+      "h1": {
+        "unique_id": "0100.0033",
+        "property_affected": "Subject",
+        "report_subsection": "{No Subsection}",
+        "data_point": "SpecialTaxAssessmentsIndicator",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_TAXES/PROPERTY_TAX/PROPERTY_TAX_DETAIL/SpecialTaxAssessmentsIndicator"
+      }
+    },
+    {
+      "rule_id": "UAD1028",
+      "category": "Subject Property",
+      "description": "If LandOwnedInCommonIndicator = \"false\" and AllPropertyRightsAppraisedIndicator is not provided",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "conditional_field_present",
+        "conditions": [
+          { "field": "LandOwnedInCommonIndicator", "value": "false" }
+        ],
+        "required_field": "AllPropertyRightsAppraisedIndicator"
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0034, Message ID UAD1028",
+      "messages": {
+        "reviewer": "Indicate whether all ownership rights of the property are included as part of the valuation."
+      },
+      "h1": {
+        "unique_id": "0100.0034",
+        "property_affected": "Subject",
+        "report_subsection": "Ownership Rights",
+        "data_point": "AllPropertyRightsAppraisedIndicator",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SALES_CONTRACTS/SALES_CONTRACT/SALES_CONTRACT_DETAIL/AllPropertyRightsAppraisedIndicator"
+      }
+    },
+    {
+      "rule_id": "UAD1029",
+      "category": "Does Not Display",
+      "description": "If AppraisedIndicator is not \"false\" in a given instance of REAL_PROPERTY_INTEREST",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "value_comparison",
+        "operator": "==",
+        "field": "AppraisedIndicator",
+        "compare_value": "false"
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0035, Message ID UAD1029",
+      "messages": {
+        "reviewer": "Deliver this indicator as false for each ownership right that is not included in the appraisal. For assistance with this message, contact the appraisal software vendor."
+      },
+      "h1": {
+        "unique_id": "0100.0035",
+        "property_affected": "Subject",
+        "report_subsection": "Does Not Display",
+        "data_point": "AppraisedIndicator",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/REAL_PROPERTY_INTERESTS/REAL_PROPERTY_INTEREST/AppraisedIndicator"
+      }
+    },
+    {
+      "rule_id": "UAD1030",
+      "category": "Subject Property",
+      "description": "If AllPropertyRightsAppraisedIndicator = \"false\" and (at least one instance of REAL_PROPERTY_INTEREST is not provided or PropertyPartialInterestType is not provided in a given instance of REAL_PROPERTY_INTEREST)",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "complex_condition",
+        "rules": [
+          {
+            "operator": "AND",
+            "conditions": [
+              { "field": "AllPropertyRightsAppraisedIndicator", "value": "false" },
+              { "field": "PropertyPartialInterestType", "required": true }
+            ]
+          }
+        ]
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0036, Message ID UAD1030",
+      "messages": {
+        "reviewer": "Provide 'Rights Not Included'."
+      },
+      "h1": {
+        "unique_id": "0100.0036",
+        "property_affected": "Subject",
+        "report_subsection": "Ownership Rights",
+        "data_point": "PropertyPartialInterestType",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/REAL_PROPERTY_INTERESTS/REAL_PROPERTY_INTEREST/PropertyPartialInterestType"
+      }
+    },
+    {
+      "rule_id": "UAD1031",
+      "category": "Subject Property",
+      "description": "If PropertyPartialInterestType = \"Other\" and PropertyPartialInterestTypeOtherDescription is not provided in a given instance of REAL_PROPERTY_INTEREST",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "conditional_field_present",
+        "conditions": [
+          { "field": "PropertyPartialInterestType", "value": "Other" }
+        ],
+        "required_field": "PropertyPartialInterestTypeOtherDescription"
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0037, Message ID UAD1031",
+      "messages": {
+        "reviewer": "Provide a description when 'Rights Not Included' = 'Other'."
+      },
+      "h1": {
+        "unique_id": "0100.0037",
+        "property_affected": "Subject",
+        "report_subsection": "Ownership Rights",
+        "data_point": "PropertyPartialInterestTypeOtherDescription",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/REAL_PROPERTY_INTERESTS/REAL_PROPERTY_INTEREST/PropertyPartialInterestTypeOtherDescription"
+      }
+    },
+    {
+      "rule_id": "UAD1032",
+      "category": "Does Not Display",
+      "description": "If an instance of PROPERTY is not provided with @ValuationUseType = \"SubjectProperty\"",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "instance_count",
+        "target": "PROPERTY",
+        "min_count": 1,
+        "condition": { "field": "@ValuationUseType", "value": "SubjectProperty" }
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0043, Message ID UAD1032",
+      "messages": {
+        "reviewer": "The subject property has not been identified in the UAD XML. For assistance with this message, contact the appraisal software vendor."
+      },
+      "h1": {
+        "unique_id": "0100.0043",
+        "property_affected": "Subject",
+        "report_subsection": "Does Not Display",
+        "data_point": "@ValuationUseType",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/@ValuationUseType"
+      }
+    },
+    {
+      "rule_id": "UAD1033",
+      "category": "Does Not Display",
+      "description": "If more than one instance of PROPERTY has @ValuationUseType = \"SubjectProperty\"",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "instance_count",
+        "target": "PROPERTY",
+        "max_count": 1,
+        "condition": { "field": "@ValuationUseType", "value": "SubjectProperty" }
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0043, Message ID UAD1033",
+      "messages": {
+        "reviewer": "More than one property has been identified as the subject property. For assistance with this message, contact the appraisal software vendor."
+      },
+      "h1": {
+        "unique_id": "0100.0043",
+        "property_affected": "Subject",
+        "report_subsection": "Does Not Display",
+        "data_point": "@ValuationUseType",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/@ValuationUseType"
+      }
+    },
+    {
+      "rule_id": "UAD1034",
+      "category": "Does Not Display",
+      "description": "If @ValuationUseType is not provided for one or more instances of PROPERTY",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "complex_condition",
+        "rules": [
+          {
+            "operator": "AND",
+            "conditions": [
+              { "field": "PROPERTY", "required": true },
+              { "field": "@ValuationUseType", "required": true }
+            ]
+          }
+        ]
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID , Message ID UAD1034",
+      "messages": {
+        "reviewer": "Provide 'ValuationUseType' for each property included in the appraisal. For assistance with this message, contact the appraisal software vendor."
+      },
+      "h1": {
+        "unique_id": "",
+        "property_affected": "N/A",
+        "report_subsection": "Does Not Display",
+        "data_point": "@ValuationUseType",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "doc:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/@ValuationUseType"
+      }
+    },
+    {
+      "rule_id": "UAD1035",
+      "category": "Subject Property",
+      "description": "If HomeownerResponsibleForExteriorMaintenanceIndicator is not provided",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/HomeownerResponsibleForExteriorMaintenanceIndicator"
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0046, Message ID UAD1035",
+      "messages": {
+        "reviewer": "Provide 'Homeowner Responsible for all Exterior Maintenance of Dwelling(s)'."
+      },
+      "h1": {
+        "unique_id": "0100.0046",
+        "property_affected": "Subject",
+        "report_subsection": "{No Subsection}",
+        "data_point": "HomeownerResponsibleForExteriorMaintenanceIndicator",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/HomeownerResponsibleForExteriorMaintenanceIndicator"
+      }
+    },
+    {
+      "rule_id": "UAD1036",
+      "category": "Subject Property",
+      "description": "If LandOwnedInCommonIndicator is not provided",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/SITE_DETAIL/LandOwnedInCommonIndicator"
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0047, Message ID UAD1036",
+      "messages": {
+        "reviewer": "Indicate whether the site is owned in common."
+      },
+      "h1": {
+        "unique_id": "0100.0047",
+        "property_affected": "Subject",
+        "report_subsection": "{No Subsection}",
+        "data_point": "LandOwnedInCommonIndicator",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/SITE_DETAIL/LandOwnedInCommonIndicator"
+      }
+    },
+    {
+      "rule_id": "UAD1037",
+      "category": "Does Not Display",
+      "description": "If there is more than one instance of VALUATION_COMMENTARY with the same ValuationAnalysisCategoryType enumeration",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "uniqueness_check",
+        "field": "ValuationAnalysisCategoryType",
+        "scope": "VALUATION_COMMENTARY"
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID , Message ID UAD1037",
+      "messages": {
+        "reviewer": "Each ValuationAnalysisCategoryType can only be delivered once. For assistance with this message, contact the appraisal software vendor."
+      },
+      "h1": {
+        "unique_id": "",
+        "property_affected": "N/A",
+        "report_subsection": "Does Not Display",
+        "data_point": "ValuationAnalysisCategoryType",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "doc:VALUATION_ANALYSIS/VALUATION_REPORT/VALUATION_COMMENTARIES/VALUATION_COMMENTARY/ValuationAnalysisCategoryType"
+      }
+    },
+    {
+      "rule_id": "UAD1038",
+      "category": "Does Not Display",
+      "description": "If SpecialTaxAssessmentsIndicator = \"true\", and there is no instance of VALUATION_COMMENTARY with ValuationAnalysisCategoryType = \"PropertySpecialTaxAssessments\"",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "complex_condition",
+        "rules": [
+          {
+            "operator": "AND",
+            "conditions": [
+              { "field": "SpecialTaxAssessmentsIndicator", "value": "true" },
+              { "field": "ValuationAnalysisCategoryType", "required": true, "value": "PropertySpecialTaxAssessments" }
+            ]
+          }
+        ]
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0049, Message ID UAD1038",
+      "messages": {
+        "reviewer": "Provide ValuationAnalysisCategoryType = 'PropertySpecialTaxAssessments' when there are special tax assessments. For assistance with this message, contact the appraisal software vendor."
+      },
+      "h1": {
+        "unique_id": "0100.0049",
+        "property_affected": "N/A",
+        "report_subsection": "Does Not Display",
+        "data_point": "ValuationAnalysisCategoryType",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "doc:VALUATION_ANALYSIS/VALUATION_REPORT/VALUATION_COMMENTARIES/VALUATION_COMMENTARY/ValuationAnalysisCategoryType"
+      }
+    },
+    {
+      "rule_id": "UAD1039",
+      "category": "Subject Property",
+      "description": "If SpecialTaxAssessmentsIndicator = \"true\" and ValuationCommentText is not provided in the instance of VALUATION_COMMENTARY with ValuationAnalysisCategoryType = \"PropertySpecialTaxAssessments\"",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "complex_condition",
+        "rules": [
+          {
+            "operator": "AND",
+            "conditions": [
+              { "field": "SpecialTaxAssessmentsIndicator", "value": "true" },
+              { "field": "ValuationAnalysisCategoryType", "value": "PropertySpecialTaxAssessments" },
+              { "field": "ValuationCommentText", "required": true }
+            ]
+          }
+        ]
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0050, Message ID UAD1039",
+      "messages": {
+        "reviewer": "Provide 'Description of Special Tax Assessments and Impact to Value / Marketability'."
+      },
+      "h1": {
+        "unique_id": "0100.0050",
+        "property_affected": "N/A",
+        "report_subsection": "{No Subsection}",
+        "data_point": "ValuationCommentText",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "doc:VALUATION_ANALYSIS/VALUATION_REPORT/VALUATION_COMMENTARIES/VALUATION_COMMENTARY/ValuationCommentText"
+      }
+    },
+    {
+      "rule_id": "UAD1040",
+      "category": "Subject Property",
+      "description": "If NativeAmericanLandsIndicator is not provided",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/NativeAmericanLandsIndicator"
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0054, Message ID UAD1040",
+      "messages": {
+        "reviewer": "Indicate whether the property is located on Native American lands."
+      },
+      "h1": {
+        "unique_id": "0100.0054",
+        "property_affected": "Subject",
+        "report_subsection": "{No Subsection}",
+        "data_point": "NativeAmericanLandsIndicator",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/NativeAmericanLandsIndicator"
+      }
+    },
+    {
+      "rule_id": "UAD1041",
+      "category": "Does Not Display",
+      "description": "If @ValuationUseType = \"SalesComparable\" and AccessoryDwellingUnitTotalCount is not provided",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "conditional_field_present",
+        "conditions": [
+          { "field": "@ValuationUseType", "value": "SalesComparable" }
+        ],
+        "required_field": "AccessoryDwellingUnitTotalCount"
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0059, Message ID UAD1041",
+      "messages": {
+        "reviewer": "Provide the total number of ADUs in the sales comparable."
+      },
+      "h1": {
+        "unique_id": "0100.0059",
+        "property_affected": "Sales Comparable #n",
+        "report_subsection": "Does Not Display",
+        "data_point": "AccessoryDwellingUnitTotalCount",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": null
+      }
+    },
+    {
+      "rule_id": "UAD1042",
+      "category": "Subject Property",
+      "description": "If PropertyInProjectIndicator is not provided",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/PropertyInProjectIndicator"
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0065, Message ID UAD1042",
+      "messages": {
+        "reviewer": "Indicate whether the property is located in a project."
+      },
+      "h1": {
+        "unique_id": "0100.0065",
+        "property_affected": "Subject",
+        "report_subsection": "{No Subsection}",
+        "data_point": "PropertyInProjectIndicator",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/PropertyInProjectIndicator"
+      }
+    },
+    {
+      "rule_id": "UAD1043",
+      "category": "Subject Property",
+      "description": "If ImageCategoryType = \"LegalDescription\" is not provided in any instance of IMAGE, and ParcelsLegalDescription is not provided",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "complex_condition",
+        "rules": [
+          {
+            "operator": "AND",
+            "conditions": [
+              { "field": "ImageCategoryType", "required": true, "value": "LegalDescription" },
+              { "field": "ParcelsLegalDescription", "required": true }
+            ]
+          }
+        ]
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0067, Message ID UAD1043",
+      "messages": {
+        "reviewer": "Provide the legal description or an image of the legal description."
+      },
+      "h1": {
+        "unique_id": "0100.0067",
+        "property_affected": "Subject",
+        "report_subsection": "Legal Description",
+        "data_point": "ParcelsLegalDescription",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PARCEL_SUMMARY/PARCEL_SUMMARY_DETAIL/ParcelsLegalDescription"
+      }
+    },
+    {
+      "rule_id": "UAD1044",
+      "category": "Does Not Display",
+      "description": "If @ValuationUseType = \"RentalComparable\" and ImprovementType is not provided in a given instance of IMPROVEMENT_DETAIL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "conditional_field_present",
+        "conditions": [
+          { "field": "@ValuationUseType", "value": "RentalComparable" }
+        ],
+        "required_field": "ImprovementType"
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0068, Message ID UAD1044",
+      "messages": {
+        "reviewer": "Indicate whether the structure is a 'Dwelling' or 'Outbuilding'."
+      },
+      "h1": {
+        "unique_id": "0100.0068",
+        "property_affected": "Rental Comparable #n",
+        "report_subsection": "Does Not Display",
+        "data_point": "ImprovementType",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": null
+      }
+    },
+    {
+      "rule_id": "UAD1045",
+      "category": "Subject Property Amenities",
+      "description": "If PropertyAmenityExistsIndicator is not provided",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/PropertyAmenityExistsIndicator"
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0200.0015, Message ID UAD1045",
+      "messages": {
+        "reviewer": "Indicate whether the property has any amenities."
+      },
+      "h1": {
+        "unique_id": "0200.0015",
+        "property_affected": "Subject",
+        "report_subsection": "{No Subsection}",
+        "data_point": "PropertyAmenityExistsIndicator",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/PropertyAmenityExistsIndicator"
+      }
+    },
+    {
+      "rule_id": "UAD1046",
+      "category": "Subject Property Amenities",
+      "description": "If PropertyAmenityExistsIndicator = \"true\" and SubjectPropertyAmenitiesDefectsExistIndicator is not provided",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "conditional_field_present",
+        "conditions": [
+          { "field": "PropertyAmenityExistsIndicator", "value": "true" }
+        ],
+        "required_field": "SubjectPropertyAmenitiesDefectsExistIndicator"
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0200.0053, Message ID UAD1046",
+      "messages": {
+        "reviewer": "Indicate whether the subject property amenities have any defects, damages, or deficiencies."
+      },
+      "h1": {
+        "unique_id": "0200.0053",
+        "property_affected": "Subject",
+        "report_subsection": "Apparent Defects, Damages, Deficiencies",
+        "data_point": "SubjectPropertyAmenitiesDefectsExistIndicator",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/SubjectPropertyAmenitiesDefectsExistIndicator"
+      }
+    },
+    {
+      "rule_id": "UAD1047",
+      "category": "Uncategorized",
+      "description": "If ImprovementType is not provided in a given instance of IMPROVEMENT_DETAIL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/IMPROVEMENT_DETAIL/ImprovementType"
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0300.0009, Message ID UAD1047",
+      "messages": {
+        "reviewer": "Indicate whether the structure is a 'Dwelling' or 'Outbuilding'."
+      },
+      "h1": {
+        "unique_id": "0300.0009",
+        "property_affected": "Subject",
+        "report_subsection": "",
+        "data_point": "ImprovementType",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/IMPROVEMENT_DETAIL/ImprovementType"
+      }
+    },
+    {
+      "rule_id": "UAD1048",
+      "category": "Dwelling Exterior",
+      "description": "If ImprovementType is not \"Dwelling\" in at least one instance of IMPROVEMENT_DETAIL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "instance_count",
+        "target": "IMPROVEMENT_DETAIL",
+        "min_count": 1,
+        "condition": { "field": "ImprovementType", "value": "Dwelling" }
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0300.0009, Message ID UAD1048",
+      "messages": {
+        "reviewer": "At least one structure on the property must be identified as a 'Dwelling'."
+      },
+      "h1": {
+        "unique_id": "0300.0009",
+        "property_affected": "Subject",
+        "report_subsection": "{No Subsection}",
+        "data_point": "ImprovementType",
+        "min_value": "1",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/IMPROVEMENT_DETAIL/ImprovementType"
+      }
+    },
+    {
+      "rule_id": "UAD1049",
+      "category": "Subject Property",
+      "description": "If NewConstructionIndicator is not provided",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/NewConstructionIndicator"
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0300.0010, Message ID UAD1049",
+      "messages": {
+        "reviewer": "Indicate whether the property is new construction."
+      },
+      "h1": {
+        "unique_id": "0300.0010",
+        "property_affected": "Subject",
+        "report_subsection": "{No Subsection}",
+        "data_point": "NewConstructionIndicator",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/NewConstructionIndicator"
+      }
+    },
+    {
+      "rule_id": "UAD1050",
+      "category": "Dwelling Exterior",
+      "description": "If ImprovementType = \"Dwelling\" and PropertyStructureBuiltYear is not provided in a given instance of IMPROVEMENT_DETAIL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "conditional_field_present",
+        "conditions": [
+          { "field": "ImprovementType", "value": "Dwelling" }
+        ],
+        "required_field": "PropertyStructureBuiltYear"
+      },
+      "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0300.0011, Message ID UAD1050",
+      "messages": {
+        "reviewer": "Provide 'Year Built' for each dwelling."
+      },
+      "h1": {
+        "unique_id": "0300.0011",
+        "property_affected": "Subject",
+        "report_subsection": "{No Subsection}",
+        "data_point": "PropertyStructureBuiltYear",
+        "min_value": "",
+        "max_value": "",
+        "date_format": "",
+        "field_key": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/IMPROVEMENT_DETAIL/PropertyStructureBuiltYear"
+      }
+    }
+  ]
+}

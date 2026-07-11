@@ -1,0 +1,8 @@
+{
+  "name": "Remix: uad36-qc-beta",
+  "description": "Imported from GitHub: kzelenakas/uad36-qc-beta",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
