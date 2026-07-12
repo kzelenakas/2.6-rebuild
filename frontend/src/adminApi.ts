@@ -1,9 +1,19 @@
-const ADMIN = { "X-QC-Role": "admin" };
+import { getUserHeaders } from "./api";
+
+// Send the acting user's real identity (email + role from localStorage). A bare
+// "X-QC-Role: admin" header no longer grants admin server-side after the auth fix —
+// the request must resolve to a real admin in users.json (or carry the proxy secret),
+// so the admin panel only works for a genuine admin.
+const ADMIN: Record<string, string> = { ...getUserHeaders(), "X-QC-Role": "admin" };
 
 async function handle<T>(res: Response): Promise<T> {
   if (!res.ok) {
-    const detail = await res.json().catch(() => ({ detail: res.statusText }));
-    throw new Error(typeof detail.detail === "string" ? detail.detail : "Request failed");
+    // Server error responses use { error: "..." }; fall back to detail/statusText.
+    const body = await res.json().catch(() => ({ error: res.statusText }));
+    const msg = typeof body.error === "string" ? body.error
+      : typeof body.detail === "string" ? body.detail
+      : "Request failed";
+    throw new Error(msg);
   }
   return res.json();
 }

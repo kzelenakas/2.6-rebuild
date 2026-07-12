@@ -11,6 +11,16 @@ function ensureDataDir() {
   }
 }
 
+// Write JSON atomically: write to a temp file then rename, so a crash mid-write
+// can never leave a truncated/corrupt store on disk.
+// ponytail: this prevents corruption, not lost updates from concurrent request
+// handlers racing across awaits — that ceiling needs SQLite or a write lock.
+function writeJsonAtomic(filePath: string, data: any) {
+  const tmpPath = `${filePath}.tmp`;
+  fs.writeFileSync(tmpPath, JSON.stringify(data, null, 2), "utf-8");
+  fs.renameSync(tmpPath, filePath);
+}
+
 export interface Rule {
   rule_id: string;
   category: string;
@@ -183,7 +193,7 @@ export function initDatabase() {
 export function saveUsersToDisk() {
   ensureDataDir();
   const usersPath = path.join(DATA_DIR, "users.json");
-  fs.writeFileSync(usersPath, JSON.stringify(userPermissions, null, 2), "utf-8");
+  writeJsonAtomic(usersPath, userPermissions);
 }
 
 export function getUserPermissions(): UserPermission[] {
@@ -262,7 +272,7 @@ function backfillH1Metadata(sourceRules: any[]) {
 export function saveRulesToDisk() {
   ensureDataDir();
   const rulesPath = path.join(DATA_DIR, "rules.json");
-  fs.writeFileSync(rulesPath, JSON.stringify(rules, null, 2), "utf-8");
+  writeJsonAtomic(rulesPath, rules);
 
   // Automatically archive the rules database on every change or addition
   try {
@@ -270,8 +280,10 @@ export function saveRulesToDisk() {
     if (!fs.existsSync(archivesDir)) {
       fs.mkdirSync(archivesDir, { recursive: true });
     }
+    // Include changeCounter so two saves within the same second don't overwrite
+    // each other's archive (timestamp is second-resolution).
     const timestamp = new Date().toISOString().replace(/:/g, "-").replace(/\..+/, "");
-    const archivePath = path.join(archivesDir, `rules_archive_${timestamp}.json`);
+    const archivePath = path.join(archivesDir, `rules_archive_${timestamp}_v${changeCounter}.json`);
     fs.copyFileSync(rulesPath, archivePath);
     console.log(`[Archive] Rules database archived to ${archivePath}`);
   } catch (err) {
@@ -284,13 +296,13 @@ export function saveRulesToDisk() {
 export function saveProfilesToDisk() {
   ensureDataDir();
   const profilesPath = path.join(DATA_DIR, "profiles.json");
-  fs.writeFileSync(profilesPath, JSON.stringify(profiles, null, 2), "utf-8");
+  writeJsonAtomic(profilesPath, profiles);
 }
 
 export function saveRunsToDisk() {
   ensureDataDir();
   const runsPath = path.join(DATA_DIR, "runs.json");
-  fs.writeFileSync(runsPath, JSON.stringify(runs, null, 2), "utf-8");
+  writeJsonAtomic(runsPath, runs);
 }
 
 // RULES CRUD

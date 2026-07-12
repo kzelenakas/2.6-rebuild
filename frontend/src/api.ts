@@ -10,8 +10,12 @@ export interface UserPermission {
 
 async function handle<T>(res: Response): Promise<T> {
   if (!res.ok) {
-    const detail = await res.json().catch(() => ({ detail: res.statusText }));
-    throw new Error(typeof detail.detail === "string" ? detail.detail : "Request failed");
+    // Server error responses use { error: "..." }; fall back to detail/statusText.
+    const body = await res.json().catch(() => ({ error: res.statusText }));
+    const msg = typeof body.error === "string" ? body.error
+      : typeof body.detail === "string" ? body.detail
+      : "Request failed";
+    throw new Error(msg);
   }
   return res.json();
 }

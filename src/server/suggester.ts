@@ -64,7 +64,7 @@ Rule to encode:
 Candidate fields (key -> label, section):
 {fields}`;
 
-export async function callGemini(apiKeyOrClient: string | GoogleGenAI, prompt: string, model = "gemini-3.5-flash"): Promise<string> {
+export async function callGemini(apiKeyOrClient: string | GoogleGenAI, prompt: string, model = "gemini-2.0-flash"): Promise<string> {
   const finalModel = process.env.QC_AI_MODEL || model;
   if (typeof apiKeyOrClient === "string") {
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${finalModel}:generateContent?key=${apiKeyOrClient}`;
@@ -323,7 +323,7 @@ export async function evaluateAiRule(prompt: string, context: Record<string, str
     };
   }
 
-  const model = process.env.QC_AI_MODEL || "gemini-3.5-flash";
+  const model = process.env.QC_AI_MODEL || "gemini-2.0-flash";
   const rulePrompt = INSTRUCTION_EVALUATE
     .replace("{prompt}", prompt)
     .replace("{context}", JSON.stringify(context, null, 2));
@@ -395,7 +395,7 @@ Max value: ${rule.h1?.max_value || ""}
 Date format: ${rule.h1?.date_format || ""}
 Known field key for this row (if any): ${fieldKey || "none"}`;
 
-  const model = process.env.QC_AI_MODEL || "gemini-3.5-flash";
+  const model = process.env.QC_AI_MODEL || "gemini-2.0-flash";
   const encodingPrompt = INSTRUCTION_ENCODING
     .replace("{rule_text}", ruleText)
     .replace("{fields}", formatCandidateFields(candidates.slice(0, 30)));
@@ -534,7 +534,7 @@ You MUST respond with ONLY a JSON object (no markdown, no prose, no code block b
 `;
 
   try {
-    const model = process.env.QC_AI_MODEL || "gemini-3.5-flash";
+    const model = process.env.QC_AI_MODEL || "gemini-2.0-flash";
     const rawResponse = await callGemini(ai, prompt, model);
     const cleaned = rawResponse.match(/\{[\s\S]*\}/)?.[0] || rawResponse;
     const parsed = JSON.parse(cleaned);
@@ -614,7 +614,7 @@ Respond with ONLY the JSON object, no other text or formatting.`;
 
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-3.5-flash",
+      model: process.env.QC_AI_MODEL || "gemini-2.0-flash",
       contents: prompt,
       config: {
         responseMimeType: "application/json",

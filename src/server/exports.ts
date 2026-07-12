@@ -1,3 +1,14 @@
+// Escape a value for safe inline HTML (prevents stored XSS from report/appraiser-supplied content).
+function htmlEscape(val: any): string {
+  if (val === null || val === undefined) return "";
+  return String(val)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 export function renderCSV(run: any, mode: string): string {
   const columns = [
     "run_id", "filename", "created_at", "schema_version", "ruleset_version",
@@ -8,7 +19,12 @@ export function renderCSV(run: any, mode: string): string {
 
   const escapeCSV = (val: any) => {
     if (val === null || val === undefined) return "";
-    const str = String(val);
+    let str = String(val);
+    // Neutralize spreadsheet formula injection: a leading =,+,-,@ (or control chars)
+    // makes Excel/Sheets evaluate the cell as a formula. Prefix with a single quote.
+    if (/^[=+\-@\t\r]/.test(str)) {
+      str = "'" + str;
+    }
     if (str.includes(",") || str.includes('"') || str.includes("\n")) {
       return `"${str.replace(/"/g, '""')}"`;
     }
@@ -83,7 +99,7 @@ export function renderPDF(run: any, mode: string): string {
         <p class="small text-gray">These are file-structure problems checked before QC rules; they may invalidate rule results below.</p>
         <ul style="padding-left: 20px;">
           ${structural.slice(0, 100).map((e: any) => `
-            <li class="err-item"><strong>[${e.code}${e.location ? ` @ ${e.location}` : ""}]</strong> ${e.message}</li>
+            <li class="err-item"><strong>[${htmlEscape(e.code)}${e.location ? ` @ ${htmlEscape(e.location)}` : ""}]</strong> ${htmlEscape(e.message)}</li>
           `).join("")}
           ${structural.length > 100 ? `<li class="small text-gray">... and ${structural.length - 100} more</li>` : ""}
         </ul>
@@ -96,7 +112,7 @@ export function renderPDF(run: any, mode: string): string {
     findingsHtml = `
       <div class="section">
         <h2>No Issues Found</h2>
-        <p>All enabled rules passed for ${run.filename} under rule set ${run.ruleset_version}.</p>
+        <p>All enabled rules passed for ${htmlEscape(run.filename)} under rule set ${htmlEscape(run.ruleset_version)}.</p>
       </div>
     `;
   } else {
@@ -118,7 +134,7 @@ export function renderPDF(run: any, mode: string): string {
           const sorted = [...items].sort((a, b) => (order[a.severity] ?? 9) - (order[b.severity] ?? 9));
           return `
             <div class="category-block">
-              <h3>${category}</h3>
+              <h3>${htmlEscape(category)}</h3>
               ${sorted.map((f: any) => {
                 const message = mode === "appraiser" ? f.message_appraiser : f.message_reviewer;
                 const color = sevColors[f.severity] || "#000";
@@ -126,25 +142,25 @@ export function renderPDF(run: any, mode: string): string {
 
                 const details: string[] = [];
                 if (f.section) {
-                  details.push(`Location: ${f.section}${f.xpath ? ` - ${f.xpath}` : ""}`);
+                  details.push(`Location: ${htmlEscape(f.section)}${f.xpath ? ` - ${htmlEscape(f.xpath)}` : ""}`);
                 }
                 for (const [k, v] of Object.entries(f.values || {})) {
-                  details.push(`Value: ${k}=${v === null || v === "" ? "(blank)" : v}`);
+                  details.push(`Value: ${htmlEscape(k)}=${v === null || v === "" ? "(blank)" : htmlEscape(v)}`);
                 }
                 if (mode === "reviewer" && f.citation) {
-                  details.push(`Citation: ${f.citation}`);
+                  details.push(`Citation: ${htmlEscape(f.citation)}`);
                 }
                 if (f.appraiser_checked) {
                   details.push("Appraiser marked addressed");
                 }
                 if (mode === "reviewer" && f.reviewer_status && f.reviewer_status !== "pending") {
-                  details.push(`Reviewer: ${f.reviewer_status}${f.reviewer_note ? ` - ${f.reviewer_note}` : ""}`);
+                  details.push(`Reviewer: ${htmlEscape(f.reviewer_status)}${f.reviewer_note ? ` - ${htmlEscape(f.reviewer_note)}` : ""}`);
                 }
 
                 return `
                   <div class="finding-item" style="border-left: 3px solid ${color};">
                     <div class="finding-title" style="color: ${color};">
-                      <strong>[${label}] ${f.rule_id}</strong> - ${message}
+                      <strong>[${htmlEscape(label)}] ${htmlEscape(f.rule_id)}</strong> - ${htmlEscape(message)}
                     </div>
                     <div class="finding-details">
                       ${details.map(d => `<div class="detail-line">${d}</div>`).join("")}
@@ -164,7 +180,7 @@ export function renderPDF(run: any, mode: string): string {
 <html>
 <head>
   <meta charset="utf-8">
-  <title>UAD 3.6 QC Report - ${run.filename}</title>
+  <title>UAD 3.6 QC Report - ${htmlEscape(run.filename)}</title>
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -254,31 +270,31 @@ export function renderPDF(run: any, mode: string): string {
 </head>
 <body>
   <h1>UAD 3.6 Quality Control Report</h1>
-  
+
   <table>
     <tr>
       <td class="label">File</td>
-      <td><strong>${run.filename}</strong></td>
+      <td><strong>${htmlEscape(run.filename)}</strong></td>
     </tr>
     <tr>
       <td class="label">Run ID</td>
-      <td>${run.id}</td>
+      <td>${htmlEscape(run.id)}</td>
     </tr>
     <tr>
       <td class="label">File hash (SHA-256)</td>
-      <td><code class="small">${run.file_hash}</code></td>
+      <td><code class="small">${htmlEscape(run.file_hash)}</code></td>
     </tr>
     <tr>
       <td class="label">Run timestamp</td>
-      <td>${run.created_at}</td>
+      <td>${htmlEscape(run.created_at)}</td>
     </tr>
     <tr>
       <td class="label">Schema version</td>
-      <td>${run.schema_version}</td>
+      <td>${htmlEscape(run.schema_version)}</td>
     </tr>
     <tr>
       <td class="label">Rule set version</td>
-      <td>${run.ruleset_version}</td>
+      <td>${htmlEscape(run.ruleset_version)}</td>
     </tr>
     <tr>
       <td class="label">Mode</td>
@@ -286,11 +302,11 @@ export function renderPDF(run: any, mode: string): string {
     </tr>
     <tr>
       <td class="label">Reviewer</td>
-      <td>${run.reviewer_name || "-"}</td>
+      <td>${htmlEscape(run.reviewer_name || "-")}</td>
     </tr>
     <tr>
       <td class="label">Sign-off state</td>
-      <td>${run.sign_off_state || "-"}</td>
+      <td>${htmlEscape(run.sign_off_state || "-")}</td>
     </tr>
     <tr>
       <td class="label">Counts</td>

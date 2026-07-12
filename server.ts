@@ -21,6 +21,7 @@ import {
   getRun,
   saveRun,
   getRulesetVersion,
+  saveRulesToDisk,
   DATA_DIR,
   getUserPermissions,
   saveUserPermission,
@@ -63,7 +64,17 @@ function getActiveUser(req: express.Request) {
     };
   }
 
-  const finalRole = (requestedRole === "reviewer" || requestedRole === "admin" || requestedRole === "appraiser")
+  // A raw client header must never grant privilege on its own. Only honor an
+  // elevated x-qc-role for an unknown (non-DB) user when the request proves it came
+  // from a trusted proxy via a shared secret (QC_PROXY_SECRET). Otherwise the
+  // unknown user gets the lowest privilege. DB-mapped users always get their real
+  // role above regardless of this.
+  const proxySecret = process.env.QC_PROXY_SECRET || "";
+  const secretHeader = req.headers["x-qc-proxy-secret"];
+  const providedSecret = (Array.isArray(secretHeader) ? secretHeader[0] : secretHeader || "").trim();
+  const headersTrusted = proxySecret.length > 0 && providedSecret === proxySecret;
+
+  const finalRole = (headersTrusted && (requestedRole === "reviewer" || requestedRole === "admin" || requestedRole === "appraiser"))
     ? requestedRole
     : "appraiser";
 
@@ -741,7 +752,9 @@ async function startServer() {
         };
       }
 
-      const stem = runToRender.filename.split(".")[0];
+      // Sanitize: the filename comes from the upload, so strip anything that could
+      // break out of the quoted Content-Disposition header (quotes, CR/LF, path seps).
+      const stem = (String(runToRender.filename).split(".")[0].replace(/[^a-zA-Z0-9._-]/g, "_")) || "report";
 
       if (format === "csv") {
         const csvContent = renderCSV(runToRender, mode);
@@ -904,9 +917,11 @@ async function startServer() {
         // Try heuristic first
         const heur = tryHeuristicEncode(rule, manifest);
         if (heur) {
+          // Mutate in place (rules from getRules are live store references) and
+          // persist once after the loop — calling upsertRule per rule rewrote the
+          // whole rules.json and wrote a fresh archive copy on every iteration.
           rule.logic = heur;
           rule.updated_at = new Date().toISOString();
-          upsertRule(rule);
           updated++;
           heuristicCount++;
         } else if (mode === "heuristic_and_ai") {
@@ -922,7 +937,6 @@ async function startServer() {
               if (suggestion && suggestion.logic_type !== "needs_encoding" && !suggestion.blocked) {
                 rule.logic = suggestion.logic;
                 rule.updated_at = new Date().toISOString();
-                upsertRule(rule);
                 updated++;
                 aiCount++;
               } else {
@@ -935,6 +949,11 @@ async function startServer() {
             failed++;
           }
         }
+      }
+
+      // Single persist for the whole batch (one file write + one archive copy).
+      if (updated > 0) {
+        saveRulesToDisk();
       }
 
       res.json({
@@ -992,7 +1011,7 @@ Revisions Guidelines Text:
 ${revisionsText}
 `;
 
-      const model = process.env.QC_AI_MODEL || "gemini-3.5-flash";
+      const model = process.env.QC_AI_MODEL || "gemini-2.0-flash";
       const responseText = await callGemini(ai, prompt, model);
 
       let cleanText = responseText.trim();
