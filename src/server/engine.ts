@@ -2,6 +2,9 @@ import { NormalizedReport } from "./parser";
 import { Rule } from "./db";
 import { evaluateAiRule } from "./suggester";
 import { DOMParser } from "@xmldom/xmldom";
+import { spawn } from "child_process";
+import path from "path";
+import fs from "fs";
 
 export interface Finding {
   id: number;
@@ -85,6 +88,68 @@ function getNodeValue(node: any, path: string): string | null {
     current = found;
   }
   return current ? (current.textContent || null) : null;
+}
+
+async function runPythonSupplementalRules(report: NormalizedReport): Promise<Finding[]> {
+  return new Promise((resolve) => {
+    try {
+      const scriptPath = path.join(process.cwd(), "supplemental_rules", "engine.py");
+      
+      if (!fs.existsSync(scriptPath)) {
+        console.warn(`Python supplemental rules engine not found at: ${scriptPath}`);
+        return resolve([]);
+      }
+
+      const pythonProcess = spawn("python3", [scriptPath]);
+      let stdoutData = "";
+      let stderrData = "";
+
+      const payload = JSON.stringify({
+        fields: report.fields,
+        xmlString: report.xmlString || "",
+        google_maps_api_key: process.env.VITE_GOOGLE_MAPS_API_KEY || process.env.GOOGLE_MAPS_API_KEY || "",
+        gemini_api_key: process.env.GEMINI_API_KEY || ""
+      });
+
+      pythonProcess.stdout.on("data", (data) => {
+        stdoutData += data.toString();
+      });
+
+      pythonProcess.stderr.on("data", (data) => {
+        stderrData += data.toString();
+      });
+
+      pythonProcess.on("error", (err) => {
+        console.error("Failed to start Python supplemental rules process:", err);
+        resolve([]);
+      });
+
+      pythonProcess.on("close", (code) => {
+        if (code !== 0) {
+          console.error(`Python supplemental rules process exited with code ${code}. Stderr: ${stderrData}`);
+          return resolve([]);
+        }
+
+        try {
+          const result = JSON.parse(stdoutData.trim());
+          if (result.error) {
+            console.error("Python supplemental rules engine error:", result.error);
+            return resolve([]);
+          }
+          resolve(result.findings || []);
+        } catch (parseErr) {
+          console.error("Failed to parse Python supplemental rules output:", parseErr, "Raw output:", stdoutData);
+          resolve([]);
+        }
+      });
+
+      pythonProcess.stdin.write(payload);
+      pythonProcess.stdin.end();
+    } catch (err) {
+      console.error("Error running Python supplemental rules:", err);
+      resolve([]);
+    }
+  });
 }
 
 export async function evaluateReport(
@@ -421,6 +486,13 @@ export async function evaluateReport(
         reviewed_at: null
       });
     }
+  }
+
+  try {
+    const supplementalFindings = await runPythonSupplementalRules(report);
+    findings.push(...supplementalFindings);
+  } catch (err) {
+    console.error("Error adding supplemental findings:", err);
   }
 
   return { findings, rule_errors };

@@ -263,6 +263,21 @@ export function saveRulesToDisk() {
   ensureDataDir();
   const rulesPath = path.join(DATA_DIR, "rules.json");
   fs.writeFileSync(rulesPath, JSON.stringify(rules, null, 2), "utf-8");
+
+  // Automatically archive the rules database on every change or addition
+  try {
+    const archivesDir = path.join(DATA_DIR, "archives");
+    if (!fs.existsSync(archivesDir)) {
+      fs.mkdirSync(archivesDir, { recursive: true });
+    }
+    const timestamp = new Date().toISOString().replace(/:/g, "-").replace(/\..+/, "");
+    const archivePath = path.join(archivesDir, `rules_archive_${timestamp}.json`);
+    fs.copyFileSync(rulesPath, archivePath);
+    console.log(`[Archive] Rules database archived to ${archivePath}`);
+  } catch (err) {
+    console.error("Failed to archive rules database:", err);
+  }
+
   changeCounter++;
 }
 

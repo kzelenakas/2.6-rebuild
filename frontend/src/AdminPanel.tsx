@@ -2,9 +2,9 @@ import { useEffect, useMemo, useState } from "react";
 import {
   archiveRule, exportRuleset, importRuleset, listAdminRules, listFields, listProfiles,
   saveProfile, saveRule, suggestEncoding, toggleRule, batchEncodeRules, suggestFromRevisions,
-  interactiveSuggestEncoding
+  interactiveSuggestEncoding, verifyRule
 } from "./adminApi";
-import type { AdminRule, EncodingSuggestion, FieldManifestEntry, Profile, BatchEncodeResult, RuleSuggestion, InteractiveEncodingResponse } from "./adminApi";
+import type { AdminRule, EncodingSuggestion, FieldManifestEntry, Profile, BatchEncodeResult, RuleSuggestion, InteractiveEncodingResponse, VerificationReport } from "./adminApi";
 import { LogicEditor, validateLogic } from "./LogicEditor";
 import { getAdminUsers, saveAdminUser, deleteAdminUser } from "./api";
 import type { UserPermission } from "./api";
@@ -38,6 +38,8 @@ export function AdminPanel() {
   const [error, setError] = useState<string | null>(null);
   const [suggestion, setSuggestion] = useState<EncodingSuggestion | null>(null);
   const [suggesting, setSuggesting] = useState(false);
+  const [verificationReport, setVerificationReport] = useState<VerificationReport | null>(null);
+  const [verifying, setVerifying] = useState(false);
 
   // Interactive AI Encoder States
   const [interactiveRes, setInteractiveRes] = useState<InteractiveEncodingResponse | null>(null);
@@ -122,6 +124,7 @@ export function AdminPanel() {
     setInteractiveRes(null);
     setUserAnswers({});
     setFeedbackText("");
+    setVerificationReport(rule.ai_verification ? (rule.ai_verification as VerificationReport) : null);
     setEditing(structuredClone(rule));
   }
 
@@ -130,7 +133,34 @@ export function AdminPanel() {
     setInteractiveRes(null);
     setUserAnswers({});
     setFeedbackText("");
+    setVerificationReport(null);
     setEditing(null);
+  }
+
+  async function onVerifyRule() {
+    if (!editing) return;
+    setVerifying(true);
+    setVerificationReport(null);
+    setError(null);
+    setStatus(null);
+    try {
+      const report = await verifyRule(
+        editing.description,
+        editing.logic || {},
+        editing.category,
+        editing.severity
+      );
+      setVerificationReport(report);
+      if (report.approved) {
+        setStatus("AI verification completed: Compliance logic approved with high accuracy rating!");
+      } else {
+        setError("AI verification flag: The auditor highlighted potential issues with the current logic.");
+      }
+    } catch (e: any) {
+      setError(e.message || String(e));
+    } finally {
+      setVerifying(false);
+    }
   }
 
   async function onStartInteractiveAI() {
@@ -799,6 +829,25 @@ export function AdminPanel() {
                                 needs encoding
                               </span>
                             )}
+                            {rule.ai_verification ? (
+                              <span 
+                                className={`inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-[9px] font-medium ${
+                                  (rule.ai_verification as any).approved
+                                    ? "bg-teal-50 text-teal-700 border border-teal-200"
+                                    : "bg-amber-50 text-amber-700 border border-amber-200"
+                                }`}
+                                title={(rule.ai_verification as any).remarks}
+                              >
+                                🛡️ AI {(rule.ai_verification as any).approved ? `Verified (${Math.round((rule.ai_verification as any).score * 100)}%)` : "Flagged"}
+                              </span>
+                            ) : (
+                              <span 
+                                className="inline-flex items-center gap-1 rounded bg-gray-50 px-1.5 py-0.5 text-[9px] font-medium text-gray-400 border border-gray-100"
+                                title="No automated AI verification report available for this rule yet"
+                              >
+                                🛡️ Unverified
+                              </span>
+                            )}
                           </div>
                         </td>
                         <td className="px-4 py-3 text-right">
@@ -1140,6 +1189,71 @@ export function AdminPanel() {
                 sourceText={editing.description}
                 onChange={(logic) => setEditing({ ...editing, logic })}
               />
+            </div>
+
+            {/* AI Rule Verification section */}
+            <div className="rounded-lg border border-teal-100 bg-teal-50/50 p-4 space-y-3">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h4 className="text-sm font-bold text-teal-950 flex items-center gap-1.5">
+                    <span>🛡️</span> AI Compliance Review & Verification
+                  </h4>
+                  <p className="text-[11px] text-teal-800">
+                    Get an instant AI-powered validation report to review safety, logic mapping, and false positive risks.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={onVerifyRule}
+                  disabled={verifying}
+                  className="rounded bg-teal-700 hover:bg-teal-800 text-white font-semibold px-3 py-1.5 text-xs transition-colors cursor-pointer"
+                >
+                  {verifying ? "Auditing logic..." : "Run AI Verification"}
+                </button>
+              </div>
+
+              {verificationReport && (
+                <div className="bg-white rounded-md border border-teal-100 p-3.5 space-y-3 shadow-xs">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-teal-700 flex items-center gap-1">
+                      <span>✓</span> Verification Audit Result
+                    </span>
+                    <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold ${
+                      verificationReport.approved 
+                        ? "bg-green-100 text-green-800" 
+                        : "bg-amber-100 text-amber-800"
+                    }`}>
+                      {verificationReport.approved ? "Approved" : "Flags Raised"}
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <span className="text-[10px] font-semibold text-gray-400 block uppercase">Confidence Score</span>
+                      <div className="flex items-center gap-2 mt-1">
+                        <div className="w-full bg-gray-100 rounded-full h-2.5 max-w-[120px]">
+                          <div 
+                            className={`h-2.5 rounded-full ${verificationReport.score >= 0.8 ? 'bg-green-500' : 'bg-amber-500'}`} 
+                            style={{ width: `${Math.round(verificationReport.score * 100)}%` }}
+                          />
+                        </div>
+                        <span className="text-xs font-bold text-gray-800">{Math.round(verificationReport.score * 100)}%</span>
+                      </div>
+                    </div>
+
+                    <div>
+                      <span className="text-[10px] font-semibold text-gray-400 block uppercase">Verified On</span>
+                      <span className="text-xs font-medium text-gray-600 block mt-1">
+                        {new Date().toLocaleDateString()}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="bg-gray-50/50 rounded p-2.5 border border-gray-100 text-xs text-gray-700 leading-relaxed font-sans">
+                    {verificationReport.remarks}
+                  </div>
+                </div>
+              )}
             </div>
             </div>
             <div className="flex items-center gap-2 border-t border-gray-100 pt-4">

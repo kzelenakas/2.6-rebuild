@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState, useRef } from "react";
 import { AdminPanel } from "./AdminPanel";
 import { PDFPreview } from "./components/PDFPreview";
+import { SupplementalAnalytics } from "./components/SupplementalAnalytics";
 import {
   checkFinding, getRun, listRuns, reviewFinding, signOff, uploadReport,
   addReviewerRequest, checkReviewerRequest, deleteReviewerRequest, uploadRevision
@@ -22,6 +23,7 @@ export default function App() {
   const [appMode, setAppMode] = useState<AppMode>("appraiser");
   const [selectedFindingId, setSelectedFindingId] = useState<number | null>(null);
   const [activePage, setActivePage] = useState<"dashboard" | "review">("dashboard");
+  const [rightTab, setRightTab] = useState<"form" | "supplemental">("form");
 
   const activeFinding = useMemo(() => {
     if (!run || selectedFindingId === null) return null;
@@ -983,12 +985,45 @@ export default function App() {
 
               </div>
 
-              {/* Right Column: Sticky appraisal report PDF preview (7 Columns) */}
-              <div className="lg:col-span-7 lg:sticky lg:top-4 h-[calc(100vh-120px)] min-h-[500px]">
-                <PDFPreview 
-                  run={run} 
-                  activeFinding={activeFinding} 
-                />
+              {/* Right Column: Sticky appraisal report or Supplemental Analytics (7 Columns) */}
+              <div className="lg:col-span-7 lg:sticky lg:top-4 h-[calc(100vh-120px)] min-h-[500px] flex flex-col">
+                {/* Right Tab Switcher */}
+                <div className="flex bg-[#24252f] px-4 pt-2 border-b border-gray-300 rounded-t-lg select-none shrink-0 gap-1">
+                  <button
+                    onClick={() => setRightTab("form")}
+                    className={`px-4 py-2 text-xs font-black uppercase tracking-wider rounded-t-md transition-all cursor-pointer ${
+                      rightTab === "form"
+                        ? "bg-gray-100 text-[#1d1c1d] border-t-2 border-[#2a5d49]"
+                        : "text-gray-400 hover:text-white hover:bg-gray-800/40"
+                    }`}
+                  >
+                    📝 Fannie Mae 1004 Form
+                  </button>
+                  <button
+                    onClick={() => setRightTab("supplemental")}
+                    className={`px-4 py-2 text-xs font-black uppercase tracking-wider rounded-t-md transition-all cursor-pointer flex items-center gap-1.5 ${
+                      rightTab === "supplemental"
+                        ? "bg-gray-100 text-[#1d1c1d] border-t-2 border-[#2a5d49]"
+                        : "text-gray-400 hover:text-white hover:bg-gray-800/40"
+                    }`}
+                  >
+                    <span>✦</span> Supplemental Analytics
+                    <span className="text-[9px] bg-emerald-500/15 text-emerald-400 border border-emerald-500/25 px-1.5 py-0.2 rounded font-mono font-normal">
+                      Maps & Photos
+                    </span>
+                  </button>
+                </div>
+
+                <div className="flex-1 min-h-0 flex flex-col border border-t-0 border-gray-300 rounded-b-lg overflow-hidden bg-white">
+                  {rightTab === "form" ? (
+                    <PDFPreview 
+                      run={run} 
+                      activeFinding={activeFinding} 
+                    />
+                  ) : (
+                    <SupplementalAnalytics run={run} />
+                  )}
+                </div>
               </div>
 
             </div>

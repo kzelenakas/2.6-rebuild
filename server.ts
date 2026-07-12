@@ -30,7 +30,7 @@ import {
 
 import { initParser, parseAndNormalizeXML, getFieldManifest } from "./src/server/parser";
 import { evaluateReport } from "./src/server/engine";
-import { getEncodingSuggestion, tryHeuristicEncode, callGemini, getInteractiveEncodingSuggestion } from "./src/server/suggester";
+import { getEncodingSuggestion, tryHeuristicEncode, callGemini, getInteractiveEncodingSuggestion, verifyRuleEncoding, getGoogleGenAI } from "./src/server/suggester";
 import { renderCSV, renderPDF } from "./src/server/exports";
 
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
@@ -790,12 +790,37 @@ async function startServer() {
   });
 
   // Upsert rule
-  app.put("/api/admin/rules/:ruleId", requireAdmin, (req, res) => {
+  app.put("/api/admin/rules/:ruleId", requireAdmin, async (req, res) => {
     try {
       const ruleData = req.body;
       ruleData.rule_id = req.params.ruleId;
+      
+      // Automatic AI review and verification before implementing
+      const report = await verifyRuleEncoding(
+        ruleData.description || "",
+        ruleData.logic || {},
+        ruleData.category || "General",
+        ruleData.severity || "Warning"
+      );
+      ruleData.ai_verification = report;
+
       const updated = upsertRule(ruleData);
       res.json(updated);
+    } catch (e: any) {
+      res.status(500).json({ error: e.message || String(e) });
+    }
+  });
+
+  // Verify proposed rule logic
+  app.post("/api/admin/rules/verify", requireAdmin, async (req, res) => {
+    try {
+      const { description, logic, category, severity } = req.body;
+      if (!description) {
+        res.status(422).json({ error: "description is required" });
+        return;
+      }
+      const report = await verifyRuleEncoding(description, logic || {}, category || "General", severity || "Warning");
+      res.json(report);
     } catch (e: any) {
       res.status(500).json({ error: e.message || String(e) });
     }
@@ -891,8 +916,8 @@ async function startServer() {
           }
 
           try {
-            const apiKey = process.env.GEMINI_API_KEY || process.env.QC_GEMINI_API_KEY;
-            if (apiKey) {
+            const ai = getGoogleGenAI();
+            if (ai) {
               const suggestion = await getEncodingSuggestion(rule);
               if (suggestion && suggestion.logic_type !== "needs_encoding" && !suggestion.blocked) {
                 rule.logic = suggestion.logic;
@@ -934,9 +959,9 @@ async function startServer() {
         return;
       }
 
-      const apiKey = process.env.GEMINI_API_KEY || process.env.QC_GEMINI_API_KEY;
-      if (!apiKey) {
-        res.status(400).json({ error: "Gemini API Key is missing. Live AI Rule Suggestion requires a configured GEMINI_API_KEY." });
+      const ai = getGoogleGenAI();
+      if (!ai) {
+        res.status(400).json({ error: "AI backend is not configured. Live AI Rule Suggestion requires a configured GEMINI_API_KEY or Vertex AI setup." });
         return;
       }
 
@@ -967,8 +992,8 @@ Revisions Guidelines Text:
 ${revisionsText}
 `;
 
-      const model = process.env.QC_AI_MODEL || "gemini-2.5-flash" || "gemini-2.0-flash";
-      const responseText = await callGemini(apiKey, prompt, model);
+      const model = process.env.QC_AI_MODEL || "gemini-3.5-flash";
+      const responseText = await callGemini(ai, prompt, model);
 
       let cleanText = responseText.trim();
       if (cleanText.startsWith("```")) {

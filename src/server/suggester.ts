@@ -1,4 +1,42 @@
+import { GoogleGenAI } from "@google/genai";
 import { getFieldManifest } from "./parser";
+
+let aiClient: GoogleGenAI | null = null;
+
+export function getGoogleGenAI(): GoogleGenAI | null {
+  if (aiClient) return aiClient;
+
+  const apiKey = process.env.GEMINI_API_KEY || process.env.QC_GEMINI_API_KEY;
+  const backend = process.env.QC_AI_BACKEND || (apiKey ? "gemini" : "stub");
+
+  if (backend === "vertex") {
+    const project = process.env.GCP_PROJECT || process.env.GOOGLE_CLOUD_PROJECT || undefined;
+    const location = process.env.GCP_LOCATION || "us-central1";
+    aiClient = new GoogleGenAI({
+      vertexai: true,
+      project,
+      location,
+      httpOptions: {
+        headers: {
+          'User-Agent': 'aistudio-build',
+        }
+      }
+    });
+    return aiClient;
+  } else if (backend === "gemini" && apiKey) {
+    aiClient = new GoogleGenAI({
+      apiKey,
+      httpOptions: {
+        headers: {
+          'User-Agent': 'aistudio-build',
+        }
+      }
+    });
+    return aiClient;
+  }
+
+  return null;
+}
 
 const INSTRUCTION_EVALUATE = `You are a QC rule evaluator for residential appraisal reports. Apply the rule below to the provided field values. Respond with ONLY a JSON object: {"triggered": true|false, "explanation": "<one sentence>"} where triggered=true means the rule FIRES (a problem was found).
 
@@ -26,25 +64,41 @@ Rule to encode:
 Candidate fields (key -> label, section):
 {fields}`;
 
-export async function callGemini(apiKey: string, prompt: string, model = "gemini-2.0-flash"): Promise<string> {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-  const response = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: { temperature: 0 },
-    }),
-  });
-  if (!response.ok) {
-    throw new Error(`Gemini API failed with status ${response.status}: ${await response.text()}`);
+export async function callGemini(apiKeyOrClient: string | GoogleGenAI, prompt: string, model = "gemini-3.5-flash"): Promise<string> {
+  const finalModel = process.env.QC_AI_MODEL || model;
+  if (typeof apiKeyOrClient === "string") {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${finalModel}:generateContent?key=${apiKeyOrClient}`;
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: { temperature: 0 },
+      }),
+    });
+    if (!response.ok) {
+      throw new Error(`Gemini API failed with status ${response.status}: ${await response.text()}`);
+    }
+    const data: any = await response.json();
+    const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+    if (!text) {
+      throw new Error("No text response from Gemini API");
+    }
+    return text;
+  } else {
+    const response = await apiKeyOrClient.models.generateContent({
+      model: finalModel,
+      contents: prompt,
+      config: {
+        temperature: 0,
+      }
+    });
+    const text = response.text;
+    if (!text) {
+      throw new Error("No text response from Gemini API");
+    }
+    return text;
   }
-  const data: any = await response.json();
-  const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-  if (!text) {
-    throw new Error("No text response from Gemini API");
-  }
-  return text;
 }
 
 function parseAiJson(text: string): { triggered: boolean; rationale: string } {
@@ -261,23 +315,20 @@ export function tryHeuristicEncode(rule: any, manifest: any[]): any {
 }
 
 export async function evaluateAiRule(prompt: string, context: Record<string, string | null>): Promise<{ triggered: boolean; rationale: string }> {
-  const apiKey = process.env.GEMINI_API_KEY || process.env.QC_GEMINI_API_KEY;
-  // Fallback to live gemini if apiKey is present, bypassing the "stub" restriction in .env
-  const backend = apiKey ? "gemini" : (process.env.QC_AI_BACKEND || "stub");
-
-  if (backend === "stub" || !apiKey) {
+  const ai = getGoogleGenAI();
+  if (!ai) {
     return {
       triggered: false,
       rationale: "Stub AI backend (no live model configured or GEMINI_API_KEY missing)."
     };
   }
 
-  const model = process.env.QC_AI_MODEL || "gemini-2.5-flash" || "gemini-2.0-flash";
+  const model = process.env.QC_AI_MODEL || "gemini-3.5-flash";
   const rulePrompt = INSTRUCTION_EVALUATE
     .replace("{prompt}", prompt)
     .replace("{context}", JSON.stringify(context, null, 2));
 
-  const text = await callGemini(apiKey, rulePrompt, model);
+  const text = await callGemini(ai, rulePrompt, model);
   return parseAiJson(text);
 }
 
@@ -320,10 +371,9 @@ export async function getEncodingSuggestion(rule: any): Promise<any> {
     ];
   }
 
-  const apiKey = process.env.GEMINI_API_KEY || process.env.QC_GEMINI_API_KEY;
-  const backend = apiKey ? "gemini" : (process.env.QC_AI_BACKEND || "stub");
+  const ai = getGoogleGenAI();
 
-  if (backend === "stub" || !apiKey) {
+  if (!ai) {
     return {
       logic_type: "needs_encoding",
       logic: {},
@@ -345,13 +395,13 @@ Max value: ${rule.h1?.max_value || ""}
 Date format: ${rule.h1?.date_format || ""}
 Known field key for this row (if any): ${fieldKey || "none"}`;
 
-  const model = process.env.QC_AI_MODEL || "gemini-2.0-flash";
+  const model = process.env.QC_AI_MODEL || "gemini-3.5-flash";
   const encodingPrompt = INSTRUCTION_ENCODING
     .replace("{rule_text}", ruleText)
     .replace("{fields}", formatCandidateFields(candidates.slice(0, 30)));
 
   try {
-    const text = await callGemini(apiKey, encodingPrompt, model);
+    const text = await callGemini(ai, encodingPrompt, model);
     const suggestion = parseEncodingJson(text);
 
     let logicType = suggestion.logic_type;
@@ -420,11 +470,11 @@ export async function getInteractiveEncodingSuggestion(
   const candidates = getCandidateFields(rule, manifest);
   const formattedFields = formatCandidateFields(candidates.slice(0, 30));
 
-  const apiKey = process.env.GEMINI_API_KEY || process.env.QC_GEMINI_API_KEY;
-  if (!apiKey) {
+  const ai = getGoogleGenAI();
+  if (!ai) {
     return {
       suggested_logic: rule.logic || { type: "needs_encoding" },
-      human_explanation: "Gemini API key is not configured. Please add GEMINI_API_KEY to your environment/settings to unlock full AI encoding capabilities.",
+      human_explanation: "AI backend is not configured. Please add GEMINI_API_KEY or configure Vertex AI (QC_AI_BACKEND=vertex) to unlock full AI encoding capabilities.",
       questions: [],
       ready_to_save: false
     };
@@ -484,8 +534,8 @@ You MUST respond with ONLY a JSON object (no markdown, no prose, no code block b
 `;
 
   try {
-    const model = process.env.QC_AI_MODEL || "gemini-2.0-flash";
-    const rawResponse = await callGemini(apiKey, prompt, model);
+    const model = process.env.QC_AI_MODEL || "gemini-3.5-flash";
+    const rawResponse = await callGemini(ai, prompt, model);
     const cleaned = rawResponse.match(/\{[\s\S]*\}/)?.[0] || rawResponse;
     const parsed = JSON.parse(cleaned);
 
@@ -515,3 +565,82 @@ You MUST respond with ONLY a JSON object (no markdown, no prose, no code block b
     };
   }
 }
+
+export interface VerificationReport {
+  approved: boolean;
+  score: number;
+  remarks: string;
+  proposed_logic: any;
+}
+
+export async function verifyRuleEncoding(
+  ruleDescription: string,
+  proposedLogic: any,
+  category: string,
+  severity: string
+): Promise<VerificationReport> {
+  const ai = getGoogleGenAI();
+  if (!ai) {
+    return {
+      approved: true,
+      score: 1.0,
+      remarks: "Verification skipped: No live AI model configured (missing GEMINI_API_KEY or Vertex AI setup).",
+      proposed_logic: proposedLogic,
+    };
+  }
+
+  const prompt = `You are an expert compliance rule auditor for residential appraisal reports (UAD 3.6). Your job is to verify if a proposed machine-executable compliance rule logic is accurate, robust, and correctly represents the natural language description of the rule.
+
+Natural Language Rule:
+Category: ${category}
+Severity: ${severity}
+Description: ${ruleDescription}
+
+Proposed Logic:
+${JSON.stringify(proposedLogic, null, 2)}
+
+Instructions:
+1. Verify if the trigger logic maps correctly to the rule description.
+2. Ensure the selected fields make logical sense.
+3. Check for obvious logical flaws or high risks of false positives/negatives.
+4. Output your assessment strictly as a JSON object of type:
+{
+  "approved": boolean,
+  "score": number (between 0.0 and 1.0 indicating your confidence/accuracy estimate),
+  "remarks": "detailed professional explanation of your review, identifying any potential gaps or confirming correct mapping"
+}
+
+Respond with ONLY the JSON object, no other text or formatting.`;
+
+  try {
+    const response = await ai.models.generateContent({
+      model: "gemini-3.5-flash",
+      contents: prompt,
+      config: {
+        responseMimeType: "application/json",
+      },
+    });
+
+    const text = response.text || "";
+    const match = text.match(/\{[\s\S]*\}/);
+    if (!match) {
+      throw new Error("No JSON object found in response");
+    }
+    const result = JSON.parse(match[0]);
+    return {
+      approved: result.approved !== undefined ? !!result.approved : true,
+      score: typeof result.score === "number" ? result.score : 0.8,
+      remarks: String(result.remarks || "No remarks provided."),
+      proposed_logic: proposedLogic
+    };
+  } catch (err: any) {
+    console.error("AI verification failed:", err);
+    return {
+      approved: true, // Fail-open
+      score: 0.5,
+      remarks: `Automated verification encountered an error during review: ${err.message || String(err)}`,
+      proposed_logic: proposedLogic
+    };
+  }
+}
+

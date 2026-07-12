@@ -162,3 +162,24 @@ export async function suggestFromRevisions(revisionsText: string): Promise<{ sug
     body: JSON.stringify({ revisionsText }),
   }));
 }
+
+export interface VerificationReport {
+  approved: boolean;
+  score: number;
+  remarks: string;
+  proposed_logic: Record<string, unknown> & { type?: string };
+}
+
+export async function verifyRule(
+  description: string,
+  logic: Record<string, unknown> & { type?: string },
+  category: string,
+  severity: string
+): Promise<VerificationReport> {
+  return handle(await fetch("/api/admin/rules/verify", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...ADMIN },
+    body: JSON.stringify({ description, logic, category, severity }),
+  }));
+}
+
