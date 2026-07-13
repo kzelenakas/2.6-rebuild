@@ -93,14 +93,23 @@ function getNodeValue(node: any, path: string): string | null {
 async function runPythonSupplementalRules(report: NormalizedReport): Promise<Finding[]> {
   return new Promise((resolve) => {
     try {
+      // Allow ops to disable the Python engine entirely (e.g. until the photo/geocode
+      // analysis is wired to real data) without touching code.
+      if (process.env.QC_DISABLE_SUPPLEMENTAL === "1" || process.env.QC_DISABLE_SUPPLEMENTAL === "true") {
+        return resolve([]);
+      }
+
       const scriptPath = path.join(process.cwd(), "supplemental_rules", "engine.py");
-      
+
       if (!fs.existsSync(scriptPath)) {
         console.warn(`Python supplemental rules engine not found at: ${scriptPath}`);
         return resolve([]);
       }
 
-      const pythonProcess = spawn("python3", [scriptPath]);
+      // Interpreter is configurable: "python3" is absent on many Windows dev machines
+      // (where the binary is "python"), which silently skips supplemental rules.
+      const pythonBin = process.env.QC_PYTHON_BIN || "python3";
+      const pythonProcess = spawn(pythonBin, [scriptPath]);
       let stdoutData = "";
       let stderrData = "";
 
@@ -158,6 +167,24 @@ export async function evaluateReport(
 ): Promise<RunResult> {
   const findings: Finding[] = [];
   const rule_errors: RuleError[] = [];
+  // Sequential IDs: stable within a run and collision-free. Random IDs risked two
+  // findings sharing an id, which would make a reviewer's check/review land on the
+  // wrong finding. Python supplemental findings use a separate 20M+ range.
+  let findingSeq = 1;
+
+  // If the XML did not parse at all, every field is null and evaluating rules would
+  // fire a flood of false "missing field" findings. Skip evaluation; the structural
+  // error surfaced by the parser already tells the user the file is malformed.
+  if (report.parse_failed) {
+    return {
+      findings: [],
+      rule_errors: [{
+        rule_id: "*",
+        error_type: "parse_failed",
+        detail: "XML did not parse; rule evaluation skipped. See structural errors."
+      }]
+    };
+  }
 
   // Parse DOM document if raw xmlString is present
   let doc: any = null;
@@ -469,7 +496,7 @@ export async function evaluateReport(
       const reviewerMsg = rule.messages?.reviewer || rule.messages?.appraiser || rule.description || "";
 
       findings.push({
-        id: Math.floor(Math.random() * 10000000) + 1,
+        id: findingSeq++,
         rule_id: rule.rule_id,
         category: rule.category || "",
         severity: rule.severity || "Warning",

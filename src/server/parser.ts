@@ -13,6 +13,9 @@ export interface NormalizedReport {
   schema_version: string;
   fields: Record<string, NormalizedField>;
   xmlString?: string;
+  // True when the XML could not be parsed at all (every field resolves null);
+  // callers should skip rule evaluation to avoid a flood of false "missing" findings.
+  parse_failed?: boolean;
 }
 
 export interface StructuralError {
@@ -201,7 +204,8 @@ export function parseAndNormalizeXML(xmlString: string, filename: string): {
     normalized: {
       schema_version: "GSE_UAD_3.6.0_v1.3",
       fields,
-      xmlString
+      xmlString,
+      parse_failed: !doc
     },
     structural_errors
   };

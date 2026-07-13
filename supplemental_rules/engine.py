@@ -310,36 +310,24 @@ def run_checks(data):
             })
 
     # --- Rule 6: Location Verification (SUPP-006) ---
+    # Runs ONLY on real data pulled from the report. The previous version fell back to
+    # hard-coded demo addresses/coordinates and ALWAYS emitted a finding, fabricating
+    # a location result on every report. Now: no real subject + comparable address and
+    # proximity data -> no finding.
     google_maps_api_key = data.get("google_maps_api_key", "")
-    
-    # Extract addresses
-    subject_address_full = "1248 Pinecrest Avenue, San Francisco, CA 94118"
-    subject_addr_raw = get_field_val("Subject/Address") or get_field_val("SubjectAddress")
-    if subject_addr_raw:
-        city_raw = get_field_val("Subject/City") or get_field_val("SubjectCity") or "San Francisco"
-        state_raw = get_field_val("Subject/State") or get_field_val("SubjectState") or "CA"
-        zip_raw = get_field_val("Subject/Zip") or get_field_val("SubjectPostalCode") or "94118"
-        subject_address_full = f"{subject_addr_raw}, {city_raw}, {state_raw} {zip_raw}"
 
-    # Geocoding helpers
-    def get_fallback_coords(address):
-        h = int(hashlib.md5(address.encode("utf-8")).hexdigest(), 16)
-        if "1248 Pinecrest" in address:
-            return 37.7818, -122.4722
-        elif "1312 Pinecrest" in address:
-            return 37.7812, -122.4719
-        elif "945 Fulton" in address:
-            return 37.7772, -122.4338
-        elif "411 Cabrillo" in address:
-            return 37.7753, -122.4623
-        
-        offset_lat = ((h % 1000) / 1000.0 - 0.5) * 0.03
-        offset_lng = (((h // 1000) % 1000) / 1000.0 - 0.5) * 0.03
-        return 37.7749 + offset_lat, -122.4194 + offset_lng
+    subject_addr_raw = get_field_val("Subject/Address") or get_field_val("SubjectAddress")
+    subject_address_full = None
+    if subject_addr_raw:
+        city_raw = get_field_val("Subject/City") or get_field_val("SubjectCity") or ""
+        state_raw = get_field_val("Subject/State") or get_field_val("SubjectState") or ""
+        zip_raw = get_field_val("Subject/Zip") or get_field_val("SubjectPostalCode") or ""
+        subject_address_full = f"{subject_addr_raw}, {city_raw}, {state_raw} {zip_raw}".strip().strip(",").strip()
 
     def geocode_address(address, api_key):
-        if not api_key:
-            return get_fallback_coords(address)
+        # No fabricated fallback: return None when we can't geocode for real.
+        if not api_key or not address:
+            return None
         try:
             query = urllib.parse.urlencode({"address": address, "key": api_key})
             url = f"https://maps.googleapis.com/maps/api/geocode/json?{query}"
@@ -351,7 +339,7 @@ def run_checks(data):
                     return float(location["lat"]), float(location["lng"])
         except Exception:
             pass
-        return get_fallback_coords(address)
+        return None
 
     def haversine_distance(coords1, coords2):
         lat1, lon1 = coords1
@@ -377,107 +365,39 @@ def run_checks(data):
             return float(m_mile.group(1))
         return None
 
-    # Geocode Subject
-    sub_coords = geocode_address(subject_address_full, google_maps_api_key)
+    sub_coords = geocode_address(subject_address_full, google_maps_api_key) if subject_address_full else None
 
-    # Compile locations list
-    locations = [
-        {
-            "label": "Subject Property",
-            "address": subject_address_full,
-            "lat": sub_coords[0],
-            "lng": sub_coords[1],
-            "role": "subject",
-            "reported_prox": "Subject",
-            "computed_dist": 0.0,
-            "status": "Verified"
-        }
-    ]
-
-    has_location_discrepancy = False
     discrepancy_details = []
+    if sub_coords:
+        for comp_idx in (1, 2, 3):
+            comp_addr_raw = get_field_val(f"Comp{comp_idx}Address") or get_field_val(f"Comp{comp_idx}/Address")
+            comp_prox_raw = get_field_val(f"Comp{comp_idx}Proximity") or get_field_val(f"Comp{comp_idx}/Proximity")
+            # Skip comps without BOTH a real address and a real reported proximity —
+            # never invent them.
+            if not comp_addr_raw or not comp_prox_raw:
+                continue
+            comp_coords = geocode_address(comp_addr_raw, google_maps_api_key)
+            reported_dist = parse_reported_distance(comp_prox_raw)
+            if comp_coords is None or reported_dist is None:
+                continue
+            computed_dist = haversine_distance(sub_coords, comp_coords)
+            if abs(computed_dist - reported_dist) > 1.0:
+                discrepancy_details.append(
+                    f"Comp {comp_idx} is {computed_dist:.2f} miles away, but reported as '{comp_prox_raw}'"
+                )
 
-    for comp_idx in (1, 2, 3):
-        comp_addr_raw = get_field_val(f"Comp{comp_idx}Address") or get_field_val(f"Comp{comp_idx}/Address")
-        if not comp_addr_raw:
-            if comp_idx == 1:
-                comp_addr_raw = "1312 Pinecrest Avenue, San Francisco, CA 94118"
-            elif comp_idx == 2:
-                comp_addr_raw = "945 Fulton Street, San Francisco, CA 94117"
-            else:
-                comp_addr_raw = "411 Cabrillo Street, San Francisco, CA 94118"
-        
-        comp_prox_raw = get_field_val(f"Comp{comp_idx}Proximity") or get_field_val(f"Comp{comp_idx}/Proximity")
-        if not comp_prox_raw:
-            if comp_idx == 1:
-                comp_prox_raw = "1 block North"
-            elif comp_idx == 2:
-                comp_prox_raw = "3 blocks South"
-            else:
-                comp_prox_raw = "0.4 miles West"
-
-        comp_coords = geocode_address(comp_addr_raw, google_maps_api_key)
-        computed_dist = haversine_distance(sub_coords, comp_coords)
-        reported_dist = parse_reported_distance(comp_prox_raw)
-
-        status = "Verified"
-        if reported_dist is not None and abs(computed_dist - reported_dist) > 1.0:
-            status = "Discrepancy"
-            has_location_discrepancy = True
-            discrepancy_details.append(f"Comp {comp_idx} is {computed_dist:.2f} miles away, but reported as '{comp_prox_raw}'")
-
-        locations.append({
-            "label": f"Comparable {comp_idx}",
-            "address": comp_addr_raw,
-            "lat": comp_coords[0],
-            "lng": comp_coords[1],
-            "role": f"comp{comp_idx}",
-            "reported_prox": comp_prox_raw,
-            "computed_dist": round(computed_dist, 2),
-            "status": status
-        })
-
-    if has_location_discrepancy:
+    if discrepancy_details:
         xpath, section = get_field_details("Comp2Proximity")
-        msg_reviewer = f"Location Verification: {'; '.join(discrepancy_details)}."
         findings.append({
             "rule_id": "SUPP-006",
             "category": "Supplemental Guidelines",
             "severity": "Warning",
             "message_appraiser": "Comparable property proximity check shows a discrepancy with calculated physical distances. Please verify the reported proximity details.",
-            "message_reviewer": msg_reviewer,
+            "message_reviewer": f"Location Verification: {'; '.join(discrepancy_details)}.",
             "field_path": "Comp2Proximity",
             "xpath": xpath,
             "section": section or "Sales Comparison Approach",
-            "values": {
-                "subject_address": subject_address_full,
-                "subject_lat": sub_coords[0],
-                "subject_lng": sub_coords[1],
-                "locations": locations
-            },
-            "citation": "Fannie Mae Selling Guide B4-1.3-01",
-            "appraiser_checked": False,
-            "reviewer_status": "pending",
-            "reviewer_note": None,
-            "reviewed_at": None
-        })
-    else:
-        xpath, section = get_field_details("Comp1Proximity")
-        findings.append({
-            "rule_id": "SUPP-006",
-            "category": "Supplemental Guidelines",
-            "severity": "Advisory",
-            "message_appraiser": "All location proximities verified successfully with Google Maps.",
-            "message_reviewer": "Location Verification: All comparable proximities are consistent with coordinates.",
-            "field_path": "Comp1Proximity",
-            "xpath": xpath,
-            "section": section or "Sales Comparison Approach",
-            "values": {
-                "subject_address": subject_address_full,
-                "subject_lat": sub_coords[0],
-                "subject_lng": sub_coords[1],
-                "locations": locations
-            },
+            "values": {"discrepancies": "; ".join(discrepancy_details)},
             "citation": "Fannie Mae Selling Guide B4-1.3-01",
             "appraiser_checked": False,
             "reviewer_status": "pending",
@@ -486,78 +406,11 @@ def run_checks(data):
         })
 
     # --- Rule 7: Multimodal Photo Audit (SUPP-007) ---
-    gemini_api_key = data.get("gemini_api_key", "")
-    
-    photos = [
-        {
-            "id": "subject_front",
-            "label": "Subject Front",
-            "status": "Verified",
-            "url": "https://images.unsplash.com/photo-1513584684374-8bab748fbf90?auto=format&fit=crop&q=80&w=400",
-            "remarks": "Excellent quality, high-contrast, front facade fully visible. Foliage matches signature date of report.",
-            "quality": "Good",
-            "view_match": "Consistent"
-        },
-        {
-            "id": "comp1_front",
-            "label": "Comparable 1",
-            "status": "Verified",
-            "url": "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&q=80&w=400",
-            "remarks": "Exterior view is fully consistent with Form 1004 elevation data. Quality verified.",
-            "quality": "Good",
-            "view_match": "Consistent"
-        },
-        {
-            "id": "comp2_front",
-            "label": "Comparable 2",
-            "status": "Warning",
-            "url": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=400",
-            "remarks": "Seasonal Inconsistency: The photograph shows lush green maple foliage and clear bright summer light, but the transaction record lists a sale date of January 15, 2026. The view angle also deviates significantly from historical MLS exterior records.",
-            "quality": "Fair",
-            "view_match": "Inconsistent"
-        },
-        {
-            "id": "comp3_front",
-            "label": "Comparable 3",
-            "status": "Verified",
-            "url": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=400",
-            "remarks": "Clear exterior shot, matching modern architectural style reported. No visual blur or degradation.",
-            "quality": "Good",
-            "view_match": "Consistent"
-        }
-    ]
-
-    if gemini_api_key:
-        try:
-            url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={gemini_api_key}"
-            payload = {
-                "contents": [{"parts": [{"text": "Hello, confirm photo audit API connection."}]}],
-            }
-            req = urllib.request.Request(url, data=json.dumps(payload).encode("utf-8"), headers={"Content-Type": "application/json"})
-            with urllib.request.urlopen(req, timeout=3) as res:
-                pass
-        except Exception:
-            pass
-
-    xpath, section = get_field_details("Subject/Photos")
-    findings.append({
-        "rule_id": "SUPP-007",
-        "category": "Supplemental Guidelines",
-        "severity": "Warning",
-        "message_appraiser": "Potential seasonal inconsistency or view discrepancy found on Comparable 2 photo attachment. Please verify.",
-        "message_reviewer": "Multimodal Photo Audit: Comparable 2 photo contains green summer foliage but sale occurred in mid-winter (January 15, 2026). View angle deviates from database MLS records.",
-        "field_path": "Comp2/Photo",
-        "xpath": xpath,
-        "section": section or "Exhibits / Photographs",
-        "values": {
-            "photos": photos
-        },
-        "citation": "Fannie Mae Selling Guide B4-1.2-01",
-        "appraiser_checked": False,
-        "reviewer_status": "pending",
-        "reviewer_note": None,
-        "reviewed_at": None
-    })
+    # DISABLED. The previous implementation always emitted a hard-coded Warning with
+    # stock Unsplash photos and a fixed "green summer foliage / January 15, 2026"
+    # narrative regardless of the actual report — a fabricated finding on every run.
+    # Real multimodal photo analysis is not wired yet; emit nothing until it is.
+    # Do NOT re-enable with placeholder data.
 
     return findings
 
