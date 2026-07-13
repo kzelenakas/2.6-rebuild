@@ -1011,7 +1011,7 @@ Revisions Guidelines Text:
 ${revisionsText}
 `;
 
-      const model = process.env.QC_AI_MODEL || "gemini-2.0-flash";
+      const model = process.env.QC_AI_MODEL || "gemini-1.5-flash";
       const responseText = await callGemini(ai, prompt, model);
 
       let cleanText = responseText.trim();
