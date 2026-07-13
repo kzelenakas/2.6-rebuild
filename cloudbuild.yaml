@@ -3,7 +3,7 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/$PROJECT_ID/remix-uad36-qc-beta:$COMMIT_SHA', '.']
 
-  # 2. Push the container image
+  # 2. Push the container image 
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/remix-uad36-qc-beta:$COMMIT_SHA']
 
