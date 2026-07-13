@@ -161,6 +161,75 @@ async function runPythonSupplementalRules(report: NormalizedReport): Promise<Fin
   });
 }
 
+async function runPythonCollateralRisk(report: NormalizedReport): Promise<Finding[]> {
+  return new Promise((resolve) => {
+    try {
+      if (process.env.QC_DISABLE_COLLATERAL_RISK === "1" || process.env.QC_DISABLE_COLLATERAL_RISK === "true") {
+        return resolve([]);
+      }
+
+      const packageDir = path.join(process.cwd(), "collateral_risk");
+
+      if (!fs.existsSync(packageDir)) {
+        console.warn(`Python collateral risk engine not found at: ${packageDir}`);
+        return resolve([]);
+      }
+
+      // run_entrypoint.py uses relative imports (part of the collateral_risk package),
+      // so it must run as a module (-m) from repo root, not as a direct script path.
+      const pythonBin = process.env.QC_PYTHON_BIN || "python3";
+      const pythonProcess = spawn(pythonBin, ["-m", "collateral_risk.run_entrypoint"], { cwd: process.cwd() });
+      let stdoutData = "";
+      let stderrData = "";
+
+      const payload = JSON.stringify({
+        fields: report.fields,
+        xmlString: report.xmlString || "",
+        google_maps_api_key: process.env.VITE_GOOGLE_MAPS_API_KEY || process.env.GOOGLE_MAPS_API_KEY || "",
+        gemini_api_key: process.env.GEMINI_API_KEY || ""
+      });
+
+      pythonProcess.stdout.on("data", (data) => {
+        stdoutData += data.toString();
+      });
+
+      pythonProcess.stderr.on("data", (data) => {
+        stderrData += data.toString();
+      });
+
+      pythonProcess.on("error", (err) => {
+        console.error("Failed to start Python collateral risk process:", err);
+        resolve([]);
+      });
+
+      pythonProcess.on("close", (code) => {
+        if (code !== 0) {
+          console.error(`Python collateral risk process exited with code ${code}. Stderr: ${stderrData}`);
+          return resolve([]);
+        }
+
+        try {
+          const result = JSON.parse(stdoutData.trim());
+          if (result.error) {
+            console.error("Python collateral risk engine error:", result.error);
+            return resolve([]);
+          }
+          resolve(result.findings || []);
+        } catch (parseErr) {
+          console.error("Failed to parse Python collateral risk output:", parseErr, "Raw output:", stdoutData);
+          resolve([]);
+        }
+      });
+
+      pythonProcess.stdin.write(payload);
+      pythonProcess.stdin.end();
+    } catch (err) {
+      console.error("Error running Python collateral risk engine:", err);
+      resolve([]);
+    }
+  });
+}
+
 export async function evaluateReport(
   report: NormalizedReport,
   activeRules: Rule[]
@@ -520,6 +589,13 @@ export async function evaluateReport(
     findings.push(...supplementalFindings);
   } catch (err) {
     console.error("Error adding supplemental findings:", err);
+  }
+
+  try {
+    const collateralRiskFindings = await runPythonCollateralRisk(report);
+    findings.push(...collateralRiskFindings);
+  } catch (err) {
+    console.error("Error adding collateral risk findings:", err);
   }
 
   return { findings, rule_errors };

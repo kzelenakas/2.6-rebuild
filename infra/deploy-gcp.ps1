@@ -66,6 +66,9 @@ $conn = "${ProjectId}:${Region}:${DbInstance}"
 # QC_DATA_DIR points at the same persistent GCS volume as QC_FILES_DIR so rules/
 # profiles/runs/users survive redeploys and scale-to-zero instead of living on
 # the container's ephemeral local disk.
+# Both Python rule engines run by default (unset = enabled). To opt out without a
+# redeploy: gcloud run services update SERVICE --update-env-vars QC_DISABLE_SUPPLEMENTAL=1
+# or QC_DISABLE_COLLATERAL_RISK=1.
 gcloud run deploy $Service `
     --source . `
     --region $Region `

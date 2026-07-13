@@ -23,6 +23,14 @@ RUN npm run build:server
 FROM node:22-slim
 WORKDIR /app
 
+# Python interpreter for supplemental_rules/ and collateral_risk/ subprocess engines
+# (engine.ts spawns QC_PYTHON_BIN, defaulting to "python3" -- this image never had one).
+# lxml is collateral_risk/resolve.py's field-resolution layer -- it uses local-name()
+# XPath predicates that stdlib xml.etree.ElementTree can't do, not swappable.
+RUN apt-get update && apt-get install -y --no-install-recommends python3 python3-pip \
+    && rm -rf /var/lib/apt/lists/* \
+    && pip3 install --no-cache-dir --break-system-packages lxml
+
 COPY package.json package-lock.json ./
 RUN npm ci --only=production
 
@@ -34,6 +42,11 @@ COPY --from=frontend-builder /app/frontend/dist /app/frontend/dist
 COPY rules /app/rules
 COPY schemas /app/schemas
 COPY GSE_UAD_3.6.0_v1.3_schema/Combined /app/GSE_UAD_3.6.0_v1.3_schema/Combined
+
+# Python subprocess rule engines (were never copied into the runtime image before --
+# engine.ts's own existence-check silently skipped them, findings always empty)
+COPY supplemental_rules /app/supplemental_rules
+COPY collateral_risk /app/collateral_risk
 
 ENV QC_DATA_DIR=/data/files/db \
     NODE_ENV=production \
