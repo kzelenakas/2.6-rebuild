@@ -1,7 +1,7 @@
 backend/.venv/
 backend/data/
 backend/tests/
-frontend/node_modules/
+node_modules/
 frontend/dist/
 Sample reports/
 QC_rules/
