@@ -104,6 +104,8 @@ export default function App() {
     rule_count: number;
     active_rule_count: number;
     profiles: string[];
+    commit: string;
+    environment: string;
   } | null>(null);
 
   // Custom simulation identity helper
@@ -1060,6 +1062,11 @@ export default function App() {
           <p className="text-[11px] text-gray-400">
             © {new Date().getFullYear()} True Footage. All rights reserved.
           </p>
+          {meta && (
+            <p className="text-[10px] text-gray-400 font-mono tracking-wide">
+              {meta.environment} · {meta.commit} · ruleset {meta.ruleset_version}
+            </p>
+          )}
         </div>
       </footer>
     </div>

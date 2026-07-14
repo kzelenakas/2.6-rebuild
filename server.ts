@@ -168,7 +168,9 @@ async function startServer() {
         ruleset_version: getRulesetVersion(),
         rule_count: getRules("all").length,
         active_rule_count: activeRules.length,
-        profiles: getProfiles().map(p => p.name)
+        profiles: getProfiles().map(p => p.name),
+        commit: process.env.GIT_COMMIT || "dev",
+        environment: process.env.GCP_PROJECT || "local"
       });
     } catch (e: any) {
       res.status(500).json({ error: e.message || String(e) });

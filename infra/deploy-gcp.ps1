@@ -17,49 +17,61 @@ param(
 $ErrorActionPreference = "Stop"
 Set-Location (Split-Path $PSScriptRoot -Parent)
 
-Write-Host "==> Setting project" -ForegroundColor Cyan
-gcloud config set project $ProjectId
+# Every gcloud call below passes --project=$ProjectId explicitly. Do not rely
+# on `gcloud config set project` alone -- different gcloud command families
+# (Cloud SQL admin, Secret Manager, Cloud Run/Cloud Build) have been observed
+# resolving the ambient project inconsistently within a single script run,
+# which once silently sent a Cloud SQL password change and a Cloud Run deploy
+# to an unrelated existing project that happened to share resource names.
+Write-Host "==> Confirming target project" -ForegroundColor Cyan
+$resolvedProjectId = gcloud projects describe $ProjectId --format="value(projectId)" 2>$null
+if ($resolvedProjectId -ne $ProjectId) {
+    Write-Host "FAILED: '$ProjectId' did not resolve to itself (got '$resolvedProjectId'). Refusing to proceed." -ForegroundColor Red
+    exit 1
+}
+Write-Host "==> Target confirmed: $ProjectId" -ForegroundColor Green
 
 Write-Host "==> Enabling required services (one-time, ~2 min)" -ForegroundColor Cyan
 gcloud services enable run.googleapis.com cloudbuild.googleapis.com `
-    artifactregistry.googleapis.com sqladmin.googleapis.com iap.googleapis.com secretmanager.googleapis.com
+    artifactregistry.googleapis.com sqladmin.googleapis.com iap.googleapis.com secretmanager.googleapis.com `
+    --project=$ProjectId
 if ($LASTEXITCODE -ne 0) { Write-Host "FAILED enabling services." -ForegroundColor Red; exit 1 }
 
 Write-Host "==> Ensuring DB password exists in Secret Manager (source of truth, never regenerated blank)." -ForegroundColor Cyan
-$secretExists = gcloud secrets describe $DbPasswordSecret --format="value(name)" 2>$null
+$secretExists = gcloud secrets describe $DbPasswordSecret --project=$ProjectId --format="value(name)" 2>$null
 $dbJustCreated = $false
 if (-not $secretExists) {
     $newPassword = -join ((65..90) + (97..122) + (48..57) | Get-Random -Count 24 | ForEach-Object { [char]$_ })
-    $newPassword | gcloud secrets create $DbPasswordSecret --data-file=- --replication-policy=automatic
+    $newPassword | gcloud secrets create $DbPasswordSecret --project=$ProjectId --data-file=- --replication-policy=automatic
     if ($LASTEXITCODE -ne 0) { Write-Host "FAILED creating DB password secret." -ForegroundColor Red; exit 1 }
     $dbJustCreated = $true
 }
-$DbPassword = gcloud secrets versions access latest --secret=$DbPasswordSecret
+$DbPassword = gcloud secrets versions access latest --secret=$DbPasswordSecret --project=$ProjectId
 if (-not $DbPassword) { Write-Host "FAILED reading DB password from Secret Manager." -ForegroundColor Red; exit 1 }
 
 Write-Host "==> Creating Cloud SQL Postgres (smallest tier, ~`$10/mo). Skips if it exists." -ForegroundColor Cyan
-$exists = gcloud sql instances list --filter="name=$DbInstance" --format="value(name)"
+$exists = gcloud sql instances list --project=$ProjectId --filter="name=$DbInstance" --format="value(name)"
 if (-not $exists) {
-    gcloud sql instances create $DbInstance --database-version=POSTGRES_16 `
-        --tier=db-f1-micro --region=$Region --storage-size=10
+    gcloud sql instances create $DbInstance --project=$ProjectId --database-version=POSTGRES_16 `
+        --tier=db-f1-micro --edition=ENTERPRISE --region=$Region --storage-size=10
     if ($LASTEXITCODE -ne 0) { Write-Host "FAILED creating Cloud SQL instance." -ForegroundColor Red; exit 1 }
-    gcloud sql users set-password postgres --instance=$DbInstance --password=$DbPassword
-    gcloud sql databases create qc --instance=$DbInstance
+    gcloud sql users set-password postgres --instance=$DbInstance --project=$ProjectId --password=$DbPassword
+    gcloud sql databases create qc --instance=$DbInstance --project=$ProjectId
 } elseif ($dbJustCreated) {
     # Secret was just created but instance already existed — sync the instance to match the new secret.
-    gcloud sql users set-password postgres --instance=$DbInstance --password=$DbPassword
+    gcloud sql users set-password postgres --instance=$DbInstance --project=$ProjectId --password=$DbPassword
 }
 
 Write-Host "==> Creating GCS bucket for retained report files + persistent app data. Skips if it exists." -ForegroundColor Cyan
 $bucket = "$ProjectId-uad36-qc-files"
-if (-not (gcloud storage buckets list --filter="name=$bucket" --format="value(name)")) {
-    gcloud storage buckets create "gs://$bucket" --location=$Region --uniform-bucket-level-access
+if (-not (gcloud storage buckets list --project=$ProjectId --filter="name=$bucket" --format="value(name)")) {
+    gcloud storage buckets create "gs://$bucket" --project=$ProjectId --location=$Region --uniform-bucket-level-access
 }
 
 Write-Host "==> Granting Cloud Run runtime SA access to the DB password secret" -ForegroundColor Cyan
 $projectNumber = gcloud projects describe $ProjectId --format="value(projectNumber)"
 $runtimeSa = "$projectNumber-compute@developer.gserviceaccount.com"
-gcloud secrets add-iam-policy-binding $DbPasswordSecret `
+gcloud secrets add-iam-policy-binding $DbPasswordSecret --project=$ProjectId `
     --member="serviceAccount:$runtimeSa" --role="roles/secretmanager.secretAccessor" --condition=None | Out-Null
 
 Write-Host "==> Ensuring the proxy shared secret exists (source of truth, never regenerated once set)." -ForegroundColor Cyan
@@ -67,29 +79,29 @@ Write-Host "==> Ensuring the proxy shared secret exists (source of truth, never 
 # trusted proxy (Bubble) rather than a caller spoofing an X-QC-User-Email
 # header. Without it every request is treated as an anonymous guest -- auto-
 # generate one here so the service never runs without this closed by default.
-$proxySecretExists = gcloud secrets describe $ProxySecret --format="value(name)" 2>$null
+$proxySecretExists = gcloud secrets describe $ProxySecret --project=$ProjectId --format="value(name)" 2>$null
 if (-not $proxySecretExists) {
     $newProxySecret = -join ((65..90) + (97..122) + (48..57) | Get-Random -Count 40 | ForEach-Object { [char]$_ })
-    $newProxySecret | gcloud secrets create $ProxySecret --data-file=- --replication-policy=automatic
+    $newProxySecret | gcloud secrets create $ProxySecret --project=$ProjectId --data-file=- --replication-policy=automatic
     if ($LASTEXITCODE -ne 0) { Write-Host "FAILED creating proxy secret." -ForegroundColor Red; exit 1 }
     Write-Host "==> Created '$ProxySecret'. The Bubble proxy must send this exact value as the" -ForegroundColor Yellow
     Write-Host "    X-QC-Proxy-Secret header on every request, or all callers stay anonymous." -ForegroundColor Yellow
-    Write-Host "    Retrieve it with: gcloud secrets versions access latest --secret=$ProxySecret" -ForegroundColor Yellow
+    Write-Host "    Retrieve it with: gcloud secrets versions access latest --secret=$ProxySecret --project=$ProjectId" -ForegroundColor Yellow
 }
-gcloud secrets add-iam-policy-binding $ProxySecret `
+gcloud secrets add-iam-policy-binding $ProxySecret --project=$ProjectId `
     --member="serviceAccount:$runtimeSa" --role="roles/secretmanager.secretAccessor" --condition=None | Out-Null
 
 # Google Maps / Gemini keys are external credentials (Maps Platform / AI Studio),
 # not something this script can generate like the DB password -- create them
-# yourself first: gcloud secrets create uad36-qc-google-maps-api-key --data-file=-
+# yourself first: gcloud secrets create uad36-qc-google-maps-api-key --project=$ProjectId --data-file=-
 # (paste the key, Ctrl+Z/Ctrl+D to end) and same for uad36-qc-gemini-api-key.
 # Collateral-risk POI/geo rules and Gemini-backed AI suggestions silently run
 # key-less (empty string) until these exist -- no crash, just reduced findings.
 $secretRefs = @("QC_PROXY_SECRET=$($ProxySecret):latest")
 foreach ($pair in @(@{Name = $GoogleMapsSecret; EnvVar = "GOOGLE_MAPS_API_KEY" }, @{Name = $GeminiSecret; EnvVar = "GEMINI_API_KEY" })) {
-    $exists = gcloud secrets describe $pair.Name --format="value(name)" 2>$null
+    $exists = gcloud secrets describe $pair.Name --project=$ProjectId --format="value(name)" 2>$null
     if ($exists) {
-        gcloud secrets add-iam-policy-binding $pair.Name `
+        gcloud secrets add-iam-policy-binding $pair.Name --project=$ProjectId `
             --member="serviceAccount:$runtimeSa" --role="roles/secretmanager.secretAccessor" --condition=None | Out-Null
         $secretRefs += "$($pair.EnvVar)=$($pair.Name):latest"
     } else {
@@ -99,6 +111,8 @@ foreach ($pair in @(@{Name = $GoogleMapsSecret; EnvVar = "GOOGLE_MAPS_API_KEY" }
 
 Write-Host "==> Building container with Cloud Build and deploying to Cloud Run" -ForegroundColor Cyan
 $conn = "${ProjectId}:${Region}:${DbInstance}"
+$gitCommit = (git rev-parse --short HEAD 2>$null)
+if (-not $gitCommit) { $gitCommit = "unknown" }
 # --update-env-vars only touches the keys listed here — it will never wipe out
 # unrelated env vars set by a previous deploy or manually in the console.
 # QC_DATA_DIR points at the same persistent GCS volume as QC_FILES_DIR so rules/
@@ -109,13 +123,14 @@ $conn = "${ProjectId}:${Region}:${DbInstance}"
 # or QC_DISABLE_COLLATERAL_RISK=1.
 $deployArgs = @(
     "run", "deploy", $Service,
+    "--project", $ProjectId,
     "--source", ".",
     "--region", $Region,
     "--no-allow-unauthenticated",
     "--add-cloudsql-instances", $conn,
     "--add-volume", "name=files,type=cloud-storage,bucket=$bucket",
     "--add-volume-mount", "volume=files,mount-path=/data/files",
-    "--update-env-vars", "QC_DB_URL=postgresql+psycopg://postgres:$DbPassword@/qc?host=/cloudsql/$conn,QC_DATA_CLASS=real,QC_AI_BACKEND=stub,QC_FILES_DIR=/data/files,QC_DATA_DIR=/data/files/appdata",
+    "--update-env-vars", "QC_DB_URL=postgresql+psycopg://postgres:$DbPassword@/qc?host=/cloudsql/$conn,QC_DATA_CLASS=real,QC_AI_BACKEND=stub,QC_FILES_DIR=/data/files,QC_DATA_DIR=/data/files/appdata,GIT_COMMIT=$gitCommit,GCP_PROJECT=$ProjectId",
     "--memory", "1Gi", "--cpu", "1", "--min-instances", "0", "--max-instances", "2"
 )
 if ($secretRefs.Count -gt 0) {
@@ -128,6 +143,15 @@ if ($LASTEXITCODE -ne 0) {
     Write-Host "DEPLOY FAILED. Check the build logs above / Cloud Build history before assuming anything shipped." -ForegroundColor Red
     exit 1
 }
+
+Write-Host "==> Confirming the deployed service actually lives in $ProjectId" -ForegroundColor Cyan
+$deployedProject = gcloud run services describe $Service --project=$ProjectId --region=$Region --format="value(metadata.namespace)" 2>$null
+$serviceUrl = gcloud run services describe $Service --project=$ProjectId --region=$Region --format="value(status.url)" 2>$null
+if (-not $serviceUrl) {
+    Write-Host "WARNING: could not confirm the service exists in $ProjectId after a reported-successful deploy. Check manually." -ForegroundColor Red
+    exit 1
+}
+Write-Host "==> Confirmed: $Service is live in $ProjectId at $serviceUrl" -ForegroundColor Green
 
 Write-Host ""
 Write-Host "Deployed. NEXT STEPS (manual, see docs/GCP_DEPLOY.md):" -ForegroundColor Green
