@@ -22,7 +22,10 @@ def subject_node(doc) -> "etree._Element | None":
     nodes = doc.xpath("//*[local-name()='PROPERTY'][*[local-name()='PROPERTY_DETAIL']"
                        "/*[local-name()='PropertyValuationUseType']='SubjectProperty' or "
                        "@ValuationUseType='SubjectProperty']")
-    return nodes[0] if nodes else doc.xpath("//*[local-name()='PROPERTY']")[0:1] and doc.xpath("//*[local-name()='PROPERTY']")[0]
+    if nodes:
+        return nodes[0]
+    fallback = doc.xpath("//*[local-name()='PROPERTY']")
+    return fallback[0] if fallback else None
 
 def comparable_nodes(doc, use_type: str = "SalesComparable") -> list:
     return doc.xpath(f"//*[local-name()='PROPERTY'][@ValuationUseType='{use_type}' or "
