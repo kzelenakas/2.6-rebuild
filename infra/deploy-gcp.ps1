@@ -8,7 +8,9 @@ param(
     [string]$Region = "us-central1",
     [string]$Service = "uad36-qc",
     [string]$DbInstance = "uad36-qc-db",
-    [string]$DbPasswordSecret = "uad36-qc-db-password"
+    [string]$DbPasswordSecret = "uad36-qc-db-password",
+    [string]$GoogleMapsSecret = "uad36-qc-google-maps-api-key",
+    [string]$GeminiSecret = "uad36-qc-gemini-api-key"
 )
 
 $ErrorActionPreference = "Stop"
@@ -59,6 +61,24 @@ $runtimeSa = "$projectNumber-compute@developer.gserviceaccount.com"
 gcloud secrets add-iam-policy-binding $DbPasswordSecret `
     --member="serviceAccount:$runtimeSa" --role="roles/secretmanager.secretAccessor" --condition=None | Out-Null
 
+# Google Maps / Gemini keys are external credentials (Maps Platform / AI Studio),
+# not something this script can generate like the DB password -- create them
+# yourself first: gcloud secrets create uad36-qc-google-maps-api-key --data-file=-
+# (paste the key, Ctrl+Z/Ctrl+D to end) and same for uad36-qc-gemini-api-key.
+# Collateral-risk POI/geo rules and Gemini-backed AI suggestions silently run
+# key-less (empty string) until these exist -- no crash, just reduced findings.
+$secretRefs = @()
+foreach ($pair in @(@{Name = $GoogleMapsSecret; EnvVar = "GOOGLE_MAPS_API_KEY" }, @{Name = $GeminiSecret; EnvVar = "GEMINI_API_KEY" })) {
+    $exists = gcloud secrets describe $pair.Name --format="value(name)" 2>$null
+    if ($exists) {
+        gcloud secrets add-iam-policy-binding $pair.Name `
+            --member="serviceAccount:$runtimeSa" --role="roles/secretmanager.secretAccessor" --condition=None | Out-Null
+        $secretRefs += "$($pair.EnvVar)=$($pair.Name):latest"
+    } else {
+        Write-Host "==> Secret '$($pair.Name)' not found -- skipping $($pair.EnvVar), rules needing it stay key-less." -ForegroundColor Yellow
+    }
+}
+
 Write-Host "==> Building container with Cloud Build and deploying to Cloud Run" -ForegroundColor Cyan
 $conn = "${ProjectId}:${Region}:${DbInstance}"
 # --update-env-vars only touches the keys listed here — it will never wipe out
@@ -69,15 +89,21 @@ $conn = "${ProjectId}:${Region}:${DbInstance}"
 # Both Python rule engines run by default (unset = enabled). To opt out without a
 # redeploy: gcloud run services update SERVICE --update-env-vars QC_DISABLE_SUPPLEMENTAL=1
 # or QC_DISABLE_COLLATERAL_RISK=1.
-gcloud run deploy $Service `
-    --source . `
-    --region $Region `
-    --no-allow-unauthenticated `
-    --add-cloudsql-instances $conn `
-    --add-volume "name=files,type=cloud-storage,bucket=$bucket" `
-    --add-volume-mount "volume=files,mount-path=/data/files" `
-    --update-env-vars "QC_DB_URL=postgresql+psycopg://postgres:$DbPassword@/qc?host=/cloudsql/$conn,QC_DATA_CLASS=real,QC_AI_BACKEND=stub,QC_FILES_DIR=/data/files,QC_DATA_DIR=/data/files/appdata" `
-    --memory 1Gi --cpu 1 --min-instances 0 --max-instances 2
+$deployArgs = @(
+    "run", "deploy", $Service,
+    "--source", ".",
+    "--region", $Region,
+    "--no-allow-unauthenticated",
+    "--add-cloudsql-instances", $conn,
+    "--add-volume", "name=files,type=cloud-storage,bucket=$bucket",
+    "--add-volume-mount", "volume=files,mount-path=/data/files",
+    "--update-env-vars", "QC_DB_URL=postgresql+psycopg://postgres:$DbPassword@/qc?host=/cloudsql/$conn,QC_DATA_CLASS=real,QC_AI_BACKEND=stub,QC_FILES_DIR=/data/files,QC_DATA_DIR=/data/files/appdata",
+    "--memory", "1Gi", "--cpu", "1", "--min-instances", "0", "--max-instances", "2"
+)
+if ($secretRefs.Count -gt 0) {
+    $deployArgs += @("--set-secrets", ($secretRefs -join ","))
+}
+gcloud @deployArgs
 
 if ($LASTEXITCODE -ne 0) {
     Write-Host ""
