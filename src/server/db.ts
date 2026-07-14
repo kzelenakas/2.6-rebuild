@@ -168,6 +168,12 @@ export function initDatabase() {
     // seed default permissions
     userPermissions = [
       {
+        email: "kevin.zelenakas@truefootage.tech",
+        name: "Kevin Zelenakas",
+        role: "admin",
+        permissions: ["run_qc", "check_findings", "review_findings", "sign_off", "add_requests", "send_report", "manage_rules", "manage_profiles", "manage_permissions"]
+      },
+      {
         email: "admin@example.com",
         name: "Default Admin",
         role: "admin",

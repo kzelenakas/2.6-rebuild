@@ -37,39 +37,41 @@ import { renderCSV, renderPDF } from "./src/server/exports";
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 const upload = multer({ storage: multer.memoryStorage() });
 
-const GUEST_USER = {
-  email: "guest@example.com",
-  name: "guest",
-  role: "appraiser" as const,
-  bubble_user_id: "",
-  permissions: ["run_qc", "check_findings", "resolve_requests"]
-};
+function getIapEmail(req: express.Request): string {
+  const raw = req.headers["x-goog-authenticated-user-email"];
+  const header = (Array.isArray(raw) ? raw[0] : raw || "").trim();
+  const prefix = "accounts.google.com:";
+  return (header.startsWith(prefix) ? header.slice(prefix.length) : header).toLowerCase();
+}
 
 function getActiveUser(req: express.Request) {
-  // Identity headers (x-qc-user-email, x-qc-user-bubble-id, x-qc-role) are set by
-  // the trusted proxy (Bubble) after IT authenticates the end user -- they are
-  // never proof of identity on their own, since anyone who can reach this service
-  // can set an arbitrary header. Without a valid shared secret proving the request
-  // actually came through that proxy, no identity claim is honored at all -- not
-  // even a lookup against a known user in users.json, because knowing/guessing a
+  // The only two identities this function will ever look up by: (1) IAP's own
+  // authenticated-user header, which Cloud Run's ingress guarantees came from a
+  // real Google login (no --allow-unauthenticated), or (2) an explicit
+  // x-qc-user-email/bubble-id/role assertion from a request that proves it came
+  // from a trusted proxy (Bubble) via the QC_PROXY_SECRET shared secret.
+  // Everything else -- an unverified header, a query param -- gets the lowest
+  // privilege, whatever email string it claims to be, because knowing/guessing a
   // real user's email is trivial and would otherwise grant their real role.
   const proxySecret = process.env.QC_PROXY_SECRET || "";
   const secretHeader = req.headers["x-qc-proxy-secret"];
   const providedSecret = (Array.isArray(secretHeader) ? secretHeader[0] : secretHeader || "").trim();
   const headersTrusted = proxySecret.length > 0 && providedSecret === proxySecret;
 
-  if (!headersTrusted) {
-    return GUEST_USER;
+  let email: string;
+  let bubbleUserId = "";
+  let requestedRole = "";
+
+  if (headersTrusted) {
+    const emailHeader = req.headers["x-qc-user-email"];
+    email = (Array.isArray(emailHeader) ? emailHeader[0] : emailHeader || "").trim().toLowerCase();
+    const bubbleIdHeader = req.headers["x-qc-user-bubble-id"];
+    bubbleUserId = (Array.isArray(bubbleIdHeader) ? bubbleIdHeader[0] : bubbleIdHeader || "").trim();
+    const roleHeader = req.headers["x-qc-role"];
+    requestedRole = (Array.isArray(roleHeader) ? roleHeader[0] : roleHeader || "").trim().toLowerCase();
+  } else {
+    email = getIapEmail(req);
   }
-
-  const emailHeader = req.headers["x-qc-user-email"];
-  const email = (Array.isArray(emailHeader) ? emailHeader[0] : emailHeader || "").trim().toLowerCase();
-
-  const bubbleIdHeader = req.headers["x-qc-user-bubble-id"];
-  const bubbleUserId = (Array.isArray(bubbleIdHeader) ? bubbleIdHeader[0] : bubbleIdHeader || "").trim();
-
-  const roleHeader = req.headers["x-qc-role"];
-  const requestedRole = (Array.isArray(roleHeader) ? roleHeader[0] : roleHeader || "").trim().toLowerCase();
 
   const users = getUserPermissions();
   let user = users.find(u => {
