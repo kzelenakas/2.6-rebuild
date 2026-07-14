@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState, useRef } from "react";
 import { AdminPanel } from "./AdminPanel";
-import { PDFPreview } from "./components/PDFPreview";
+import { ReportPreviewPane } from "./components/ReportPreviewPane";
+import { RevisionCompareView } from "./components/RevisionCompareView";
 import { SupplementalAnalytics } from "./components/SupplementalAnalytics";
 import {
   checkFinding, getRun, listRuns, reviewFinding, signOff, uploadReport,
@@ -25,11 +26,6 @@ export default function App() {
   const [activePage, setActivePage] = useState<"dashboard" | "review">("dashboard");
   const [rightTab, setRightTab] = useState<"form" | "supplemental">("form");
 
-  const activeFinding = useMemo(() => {
-    if (!run || selectedFindingId === null) return null;
-    return run.findings.find((f) => f.id === selectedFindingId) || null;
-  }, [run, selectedFindingId]);
-
   useEffect(() => {
     if (run && run.findings && run.findings.length > 0) {
       setSelectedFindingId(run.findings[0].id);
@@ -40,6 +36,7 @@ export default function App() {
 
   // Side-by-side comparison state & sync scrolling refs
   const [showComparison, setShowComparison] = useState(false);
+  const [showDocCompare, setShowDocCompare] = useState(false);
   const originalRef = useRef<HTMLDivElement>(null);
   const revisedRef = useRef<HTMLDivElement>(null);
   const isScrolling = useRef(false);
@@ -281,13 +278,33 @@ export default function App() {
               <span className="text-emerald-400 text-xs font-mono">{run.revised_filename}</span>
             </h1>
           </div>
-          <button
-            onClick={() => setShowComparison(false)}
-            className="rounded bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-3.5 py-2 text-xs transition cursor-pointer shadow-xs"
-          >
-            ✕ Close Side-by-Side Compare
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setShowDocCompare(true)}
+              className="rounded bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3.5 py-2 text-xs transition cursor-pointer shadow-xs"
+            >
+              View documents side-by-side
+            </button>
+            <button
+              onClick={() => setShowComparison(false)}
+              className="rounded bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-3.5 py-2 text-xs transition cursor-pointer shadow-xs"
+            >
+              ✕ Close Side-by-Side Compare
+            </button>
+          </div>
         </header>
+
+        {showDocCompare && (
+          <RevisionCompareView
+            v1PdfUrl={`/api/runs/${run.id}/file?version=original`}
+            v2PdfUrl={`/api/runs/${run.id}/file?version=revised`}
+            v1Findings={run.findings}
+            v2Findings={run.revised_findings ?? []}
+            v1Label={`Original — ${run.filename}`}
+            v2Label={`Revised — ${run.revised_filename}`}
+            onClose={() => setShowDocCompare(false)}
+          />
+        )}
 
         {/* Comparison Dashboard (Summary of differences) */}
         <div className="bg-[#1a1b24] px-6 py-3 border-b border-gray-800 grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs shadow-inner">
@@ -1016,9 +1033,11 @@ export default function App() {
 
                 <div className="flex-1 min-h-0 flex flex-col border border-t-0 border-gray-300 rounded-b-lg overflow-hidden bg-white">
                   {rightTab === "form" ? (
-                    <PDFPreview 
-                      run={run} 
-                      activeFinding={activeFinding} 
+                    <ReportPreviewPane
+                      pdfUrl={`/api/runs/${run.id}/file`}
+                      findings={run.findings}
+                      activeFindingId={selectedFindingId}
+                      onSelectFinding={setSelectedFindingId}
                     />
                   ) : (
                     <SupplementalAnalytics run={run} />

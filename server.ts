@@ -383,6 +383,56 @@ async function startServer() {
     }
   });
 
+  // Serve the original or revised report PDF (extracted from the retained
+  // upload) for in-app preview. Filenames used below always come from the
+  // server-stored run record, never from the request, so there's no path
+  // traversal or header-injection surface here.
+  app.get("/api/runs/:runId/file", (req, res) => {
+    try {
+      const run = getRun(req.params.runId);
+      if (!run) {
+        res.status(404).json({ error: "Run not found" });
+        return;
+      }
+
+      const version = req.query.version === "revised" ? "revised" : "original";
+      if (version === "revised" && !run.has_revision) {
+        res.status(404).json({ error: "No revision on file for this run" });
+        return;
+      }
+
+      const filesDir = path.join(DATA_DIR, "files", run.id);
+      const targetFilename = version === "revised" ? `revised_${run.revised_filename}` : run.filename;
+      const filePath = path.join(filesDir, targetFilename);
+      if (!fs.existsSync(filePath)) {
+        res.status(404).json({ error: "Stored report file not found on disk" });
+        return;
+      }
+
+      const rawBuffer = fs.readFileSync(filePath);
+      let pdfBuffer: Buffer | null = null;
+
+      if (targetFilename.toLowerCase().endsWith(".pdf")) {
+        pdfBuffer = rawBuffer;
+      } else if (targetFilename.toLowerCase().endsWith(".zip")) {
+        const zip = new AdmZip(rawBuffer);
+        const pdfEntry = zip.getEntries().find(e => e.entryName.toLowerCase().endsWith(".pdf"));
+        pdfBuffer = pdfEntry ? pdfEntry.getData() : null;
+      }
+
+      if (!pdfBuffer) {
+        res.status(404).json({ error: "No PDF found in the uploaded report — an XML-only upload has no document to preview" });
+        return;
+      }
+
+      res.setHeader("Content-Type", "application/pdf");
+      res.setHeader("Content-Disposition", `inline; filename="${version}-report.pdf"`);
+      res.send(pdfBuffer);
+    } catch (e: any) {
+      res.status(500).json({ error: e.message || String(e) });
+    }
+  });
+
   // Appraiser check finding
   app.post("/api/runs/:runId/findings/:findingId/check", (req, res) => {
     try {
