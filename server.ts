@@ -37,12 +37,36 @@ import { renderCSV, renderPDF } from "./src/server/exports";
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 const upload = multer({ storage: multer.memoryStorage() });
 
+const GUEST_USER = {
+  email: "guest@example.com",
+  name: "guest",
+  role: "appraiser" as const,
+  bubble_user_id: "",
+  permissions: ["run_qc", "check_findings", "resolve_requests"]
+};
+
 function getActiveUser(req: express.Request) {
+  // Identity headers (x-qc-user-email, x-qc-user-bubble-id, x-qc-role) are set by
+  // the trusted proxy (Bubble) after IT authenticates the end user -- they are
+  // never proof of identity on their own, since anyone who can reach this service
+  // can set an arbitrary header. Without a valid shared secret proving the request
+  // actually came through that proxy, no identity claim is honored at all -- not
+  // even a lookup against a known user in users.json, because knowing/guessing a
+  // real user's email is trivial and would otherwise grant their real role.
+  const proxySecret = process.env.QC_PROXY_SECRET || "";
+  const secretHeader = req.headers["x-qc-proxy-secret"];
+  const providedSecret = (Array.isArray(secretHeader) ? secretHeader[0] : secretHeader || "").trim();
+  const headersTrusted = proxySecret.length > 0 && providedSecret === proxySecret;
+
+  if (!headersTrusted) {
+    return GUEST_USER;
+  }
+
   const emailHeader = req.headers["x-qc-user-email"];
-  const email = (Array.isArray(emailHeader) ? emailHeader[0] : emailHeader || req.query.user_email as string || "").trim().toLowerCase();
+  const email = (Array.isArray(emailHeader) ? emailHeader[0] : emailHeader || "").trim().toLowerCase();
 
   const bubbleIdHeader = req.headers["x-qc-user-bubble-id"];
-  const bubbleUserId = (Array.isArray(bubbleIdHeader) ? bubbleIdHeader[0] : bubbleIdHeader || req.query.bubble_user_id as string || "").trim();
+  const bubbleUserId = (Array.isArray(bubbleIdHeader) ? bubbleIdHeader[0] : bubbleIdHeader || "").trim();
 
   const roleHeader = req.headers["x-qc-role"];
   const requestedRole = (Array.isArray(roleHeader) ? roleHeader[0] : roleHeader || "").trim().toLowerCase();
@@ -64,17 +88,7 @@ function getActiveUser(req: express.Request) {
     };
   }
 
-  // A raw client header must never grant privilege on its own. Only honor an
-  // elevated x-qc-role for an unknown (non-DB) user when the request proves it came
-  // from a trusted proxy via a shared secret (QC_PROXY_SECRET). Otherwise the
-  // unknown user gets the lowest privilege. DB-mapped users always get their real
-  // role above regardless of this.
-  const proxySecret = process.env.QC_PROXY_SECRET || "";
-  const secretHeader = req.headers["x-qc-proxy-secret"];
-  const providedSecret = (Array.isArray(secretHeader) ? secretHeader[0] : secretHeader || "").trim();
-  const headersTrusted = proxySecret.length > 0 && providedSecret === proxySecret;
-
-  const finalRole = (headersTrusted && (requestedRole === "reviewer" || requestedRole === "admin" || requestedRole === "appraiser"))
+  const finalRole = (requestedRole === "reviewer" || requestedRole === "admin" || requestedRole === "appraiser")
     ? requestedRole
     : "appraiser";
 
@@ -114,6 +128,22 @@ function requireAdmin(req: express.Request, res: express.Response, next: express
     return;
   }
   next();
+}
+
+// A role check alone ("is this a reviewer/admin") is not the same as an
+// ownership check ("does this run belong to this appraiser") -- an appraiser
+// role must only ever reach runs attributed to them. Runs with no appraiser
+// attribution at all (legacy/unassigned) stay visible to any role, matching
+// the tolerance already used by the runs-list self-filter.
+function canAccessRun(
+  user: { role: string; email: string; bubble_user_id: string },
+  run: { appraiser_email?: string | null; appraiser_bubble_id?: string | null }
+): boolean {
+  if (user.role === "reviewer" || user.role === "admin") return true;
+  if (!run.appraiser_email && !run.appraiser_bubble_id) return true;
+  if (run.appraiser_email && user.email && run.appraiser_email.toLowerCase() === user.email.toLowerCase()) return true;
+  if (run.appraiser_bubble_id && user.bubble_user_id && run.appraiser_bubble_id === user.bubble_user_id) return true;
+  return false;
 }
 
 async function startServer() {
@@ -200,9 +230,9 @@ async function startServer() {
       const fileHash = crypto.createHash("sha256").update(xmlBuffer).digest("hex");
 
       const currentUser = getActiveUser(req);
-      const appraiserEmail = req.query.appraiser_email as string || req.headers["x-qc-appraiser-email"] as string || (currentUser.role === "appraiser" ? currentUser.email : null);
-      const appraiserBubbleId = req.query.appraiser_bubble_id as string || req.headers["x-qc-appraiser-bubble-id"] as string || (currentUser.role === "appraiser" ? currentUser.bubble_user_id : null);
-      const bubbleOrderId = req.query.bubble_order_id as string || req.headers["x-qc-bubble-order-id"] as string || null;
+      const appraiserEmail = req.headers["x-qc-appraiser-email"] as string || (currentUser.role === "appraiser" ? currentUser.email : null);
+      const appraiserBubbleId = req.headers["x-qc-appraiser-bubble-id"] as string || (currentUser.role === "appraiser" ? currentUser.bubble_user_id : null);
+      const bubbleOrderId = req.headers["x-qc-bubble-order-id"] as string || null;
 
       const run = {
         id: runId,
@@ -243,6 +273,10 @@ async function startServer() {
       const run = getRun(req.params.runId);
       if (!run) {
         res.status(404).json({ error: "Run not found" });
+        return;
+      }
+      if (!canAccessRun(getActiveUser(req), run)) {
+        res.status(403).json({ error: "Not authorized for this run" });
         return;
       }
 
@@ -322,10 +356,16 @@ async function startServer() {
   app.get("/api/runs", (req, res) => {
     try {
       const currentUser = getActiveUser(req);
-      
-      const filterEmail = req.query.appraiser_email as string || req.query.user_email as string || "";
-      const filterBubbleId = req.query.bubble_user_id as string || "";
-      const filterOrderId = req.query.bubble_order_id as string || "";
+
+      // An appraiser can never widen their own view via query params -- only
+      // reviewer/admin may filter by an arbitrary appraiser identity. Without
+      // this, an appraiser (or an unauthenticated guest, who is also the
+      // lowest-privilege "appraiser" role) could list any other appraiser's
+      // runs just by passing their email/bubble id on the query string.
+      const canFilterByOther = currentUser.role === "reviewer" || currentUser.role === "admin";
+      const filterEmail = canFilterByOther ? (req.query.appraiser_email as string || req.query.user_email as string || "") : "";
+      const filterBubbleId = canFilterByOther ? (req.query.bubble_user_id as string || "") : "";
+      const filterOrderId = canFilterByOther ? (req.query.bubble_order_id as string || "") : "";
 
       let runsList = getRuns();
 
@@ -339,9 +379,9 @@ async function startServer() {
         runsList = runsList.filter(r => r.bubble_order_id === filterOrderId);
       }
 
-      if (currentUser.role === "appraiser" && !filterEmail && !filterBubbleId && !filterOrderId) {
-        runsList = runsList.filter(r => 
-          !r.appraiser_email || 
+      if (currentUser.role === "appraiser") {
+        runsList = runsList.filter(r =>
+          !r.appraiser_email ||
           r.appraiser_email.toLowerCase() === currentUser.email.toLowerCase() ||
           (currentUser.bubble_user_id && r.appraiser_bubble_id === currentUser.bubble_user_id)
         );
@@ -377,6 +417,10 @@ async function startServer() {
         res.status(404).json({ error: "Run not found" });
         return;
       }
+      if (!canAccessRun(getActiveUser(req), run)) {
+        res.status(403).json({ error: "Not authorized for this run" });
+        return;
+      }
       res.json(run);
     } catch (e: any) {
       res.status(500).json({ error: e.message || String(e) });
@@ -392,6 +436,10 @@ async function startServer() {
       const run = getRun(req.params.runId);
       if (!run) {
         res.status(404).json({ error: "Run not found" });
+        return;
+      }
+      if (!canAccessRun(getActiveUser(req), run)) {
+        res.status(403).json({ error: "Not authorized for this run" });
         return;
       }
 
@@ -439,6 +487,10 @@ async function startServer() {
       const run = getRun(req.params.runId);
       if (!run) {
         res.status(404).json({ error: "Run not found" });
+        return;
+      }
+      if (!canAccessRun(getActiveUser(req), run)) {
+        res.status(403).json({ error: "Not authorized for this run" });
         return;
       }
 
@@ -573,6 +625,10 @@ async function startServer() {
         res.status(404).json({ error: "Run not found" });
         return;
       }
+      if (!canAccessRun(getActiveUser(req), run)) {
+        res.status(403).json({ error: "Not authorized for this run" });
+        return;
+      }
 
       const { text } = req.body;
       if (!text || !text.trim()) {
@@ -613,6 +669,10 @@ async function startServer() {
       const run = getRun(req.params.runId);
       if (!run) {
         res.status(404).json({ error: "Run not found" });
+        return;
+      }
+      if (!canAccessRun(getActiveUser(req), run)) {
+        res.status(403).json({ error: "Not authorized for this run" });
         return;
       }
 
@@ -772,6 +832,10 @@ async function startServer() {
       const run = getRun(req.params.runId);
       if (!run) {
         res.status(404).json({ error: "Run not found" });
+        return;
+      }
+      if (!canAccessRun(getActiveUser(req), run)) {
+        res.status(403).json({ error: "Not authorized for this run" });
         return;
       }
 

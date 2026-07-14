@@ -10,7 +10,8 @@ param(
     [string]$DbInstance = "uad36-qc-db",
     [string]$DbPasswordSecret = "uad36-qc-db-password",
     [string]$GoogleMapsSecret = "uad36-qc-google-maps-api-key",
-    [string]$GeminiSecret = "uad36-qc-gemini-api-key"
+    [string]$GeminiSecret = "uad36-qc-gemini-api-key",
+    [string]$ProxySecret = "uad36-qc-proxy-secret"
 )
 
 $ErrorActionPreference = "Stop"
@@ -61,13 +62,30 @@ $runtimeSa = "$projectNumber-compute@developer.gserviceaccount.com"
 gcloud secrets add-iam-policy-binding $DbPasswordSecret `
     --member="serviceAccount:$runtimeSa" --role="roles/secretmanager.secretAccessor" --condition=None | Out-Null
 
+Write-Host "==> Ensuring the proxy shared secret exists (source of truth, never regenerated once set)." -ForegroundColor Cyan
+# QC_PROXY_SECRET is what proves an incoming request actually came from the
+# trusted proxy (Bubble) rather than a caller spoofing an X-QC-User-Email
+# header. Without it every request is treated as an anonymous guest -- auto-
+# generate one here so the service never runs without this closed by default.
+$proxySecretExists = gcloud secrets describe $ProxySecret --format="value(name)" 2>$null
+if (-not $proxySecretExists) {
+    $newProxySecret = -join ((65..90) + (97..122) + (48..57) | Get-Random -Count 40 | ForEach-Object { [char]$_ })
+    $newProxySecret | gcloud secrets create $ProxySecret --data-file=- --replication-policy=automatic
+    if ($LASTEXITCODE -ne 0) { Write-Host "FAILED creating proxy secret." -ForegroundColor Red; exit 1 }
+    Write-Host "==> Created '$ProxySecret'. The Bubble proxy must send this exact value as the" -ForegroundColor Yellow
+    Write-Host "    X-QC-Proxy-Secret header on every request, or all callers stay anonymous." -ForegroundColor Yellow
+    Write-Host "    Retrieve it with: gcloud secrets versions access latest --secret=$ProxySecret" -ForegroundColor Yellow
+}
+gcloud secrets add-iam-policy-binding $ProxySecret `
+    --member="serviceAccount:$runtimeSa" --role="roles/secretmanager.secretAccessor" --condition=None | Out-Null
+
 # Google Maps / Gemini keys are external credentials (Maps Platform / AI Studio),
 # not something this script can generate like the DB password -- create them
 # yourself first: gcloud secrets create uad36-qc-google-maps-api-key --data-file=-
 # (paste the key, Ctrl+Z/Ctrl+D to end) and same for uad36-qc-gemini-api-key.
 # Collateral-risk POI/geo rules and Gemini-backed AI suggestions silently run
 # key-less (empty string) until these exist -- no crash, just reduced findings.
-$secretRefs = @()
+$secretRefs = @("QC_PROXY_SECRET=$($ProxySecret):latest")
 foreach ($pair in @(@{Name = $GoogleMapsSecret; EnvVar = "GOOGLE_MAPS_API_KEY" }, @{Name = $GeminiSecret; EnvVar = "GEMINI_API_KEY" })) {
     $exists = gcloud secrets describe $pair.Name --format="value(name)" 2>$null
     if ($exists) {
