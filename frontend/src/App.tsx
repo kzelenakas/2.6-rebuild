@@ -476,8 +476,21 @@ export default function App() {
     );
   }
 
+  // GCP_PROJECT (server's `environment`) is the only thing that actually distinguishes this
+  // deploy from the real production uad36-qc-beta project -- both provision a Cloud Run
+  // service that can be named identically ("uad36-qc"), so this banner, not the service name,
+  // is the reliable tell. Anything that isn't literally the known-production project id gets
+  // flagged, including "local" dev and any future sandbox project.
+  const PRODUCTION_ENVIRONMENT = "uad36-qc-beta";
+  const isNonProduction = !!meta && meta.environment !== PRODUCTION_ENVIRONMENT;
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
+      {isNonProduction && (
+        <div className="bg-amber-500 text-black text-center py-1.5 px-4 text-xs font-bold tracking-wide uppercase sticky top-0 z-50 shadow">
+          ⚠ Sandbox environment ({meta!.environment}) — not the live production deployment
+        </div>
+      )}
       {/* Role Selector & Bubble Integration Simulator Sub-bar */}
       <div className="bg-[#1f212a] text-white border-b border-gray-800 py-3.5 shadow-md font-sans">
         <div className="mx-auto flex max-w-5xl flex-col gap-3 px-6 md:flex-row md:items-center md:justify-between">
