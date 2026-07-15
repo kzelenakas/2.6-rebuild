@@ -310,19 +310,68 @@ def run_checks(data):
             })
 
     # --- Rule 6: Location Verification (SUPP-006) ---
-    # Runs ONLY on real data pulled from the report. The previous version fell back to
-    # hard-coded demo addresses/coordinates and ALWAYS emitted a finding, fabricating
-    # a location result on every report. Now: no real subject + comparable address and
-    # proximity data -> no finding.
+    # Runs ONLY on real data pulled from the report. An earlier version fell back to
+    # hard-coded demo addresses/coordinates and ALWAYS emitted a finding, fabricating a
+    # location result on every report; that was fixed to "no real data -> no finding" but
+    # the replacement still looked up flat keys ("Subject/Address", "Comp1Proximity")
+    # that don't exist in this project's field manifest (subject/doc fields are keyed by
+    # full MISMO XPath, e.g. "subject:VALUATION_ANALYSIS/.../ADDRESS/AddressLineText" --
+    # see schemas/uad36_field_manifest.json) and parsed a freeform "X miles" proximity
+    # string that UAD 3.6 doesn't use. Both bugs meant SUPP-006 could never fire against
+    # a real report. Fixed: read subject/comparable ADDRESS and the comp's structured
+    # <ProximityToSubjectDistanceLinearMeasure LinearUnitOfMeasureType="..."> straight off
+    # the parsed XML (namespace-agnostic, mirrors collateral_risk/resolve.py's approach),
+    # no regex-parsing of a reported-distance string needed -- UAD 3.6 already reports it
+    # as a real number.
     google_maps_api_key = data.get("google_maps_api_key", "")
 
-    subject_addr_raw = get_field_val("Subject/Address") or get_field_val("SubjectAddress")
-    subject_address_full = None
-    if subject_addr_raw:
-        city_raw = get_field_val("Subject/City") or get_field_val("SubjectCity") or ""
-        state_raw = get_field_val("Subject/State") or get_field_val("SubjectState") or ""
-        zip_raw = get_field_val("Subject/Zip") or get_field_val("SubjectPostalCode") or ""
-        subject_address_full = f"{subject_addr_raw}, {city_raw}, {state_raw} {zip_raw}".strip().strip(",").strip()
+    def local_tag(tag):
+        return tag.rsplit("}", 1)[-1] if "}" in tag else tag
+
+    def find_child(el, tag_name):
+        for child in el:
+            if local_tag(child.tag) == tag_name:
+                return child
+        return None
+
+    def find_descendant(el, tag_name):
+        for node in el.iter():
+            if local_tag(node.tag) == tag_name:
+                return node
+        return None
+
+    def child_text(el, tag_name):
+        child = find_child(el, tag_name)
+        return child.text.strip() if child is not None and child.text else None
+
+    def property_address(property_el):
+        address_el = find_child(property_el, "ADDRESS")
+        if address_el is None:
+            return None
+        line = child_text(address_el, "AddressLineText")
+        if not line:
+            return None
+        city = child_text(address_el, "CityName") or ""
+        state = child_text(address_el, "StateCode") or ""
+        postal = child_text(address_el, "PostalCode") or ""
+        return f"{line}, {city}, {state} {postal}".strip().strip(",").strip()
+
+    _MILES_PER_UNIT = {"Miles": 1.0, "Feet": 1.0 / 5280.0, "Kilometers": 0.621371}
+
+    def comp_reported_distance_miles(property_el):
+        # Anywhere under the comp's PROPERTY subtree -- UAD 3.6 nests it under
+        # COMPARABLE/COMPARABLE_DETAIL, but this isn't hardcoded to that depth.
+        el = find_descendant(property_el, "ProximityToSubjectDistanceLinearMeasure")
+        if el is None or not el.text:
+            return None
+        unit = el.get("LinearUnitOfMeasureType", "Miles")
+        factor = _MILES_PER_UNIT.get(unit)
+        if factor is None:
+            return None  # unrecognized unit -- don't guess
+        try:
+            return float(el.text) * factor
+        except ValueError:
+            return None
 
     def geocode_address(address, api_key):
         # No fabricated fallback: return None when we can't geocode for real.
@@ -353,50 +402,47 @@ def run_checks(data):
         c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
         return R * c
 
-    def parse_reported_distance(proximity_str):
-        if not proximity_str:
-            return None
-        p_lower = proximity_str.lower()
-        m_block = re.search(r"(\d+)\s*block", p_lower)
-        if m_block:
-            return float(m_block.group(1)) * 0.1
-        m_mile = re.search(r"([\d\.]+)\s*mile", p_lower)
-        if m_mile:
-            return float(m_mile.group(1))
-        return None
-
-    sub_coords = geocode_address(subject_address_full, google_maps_api_key) if subject_address_full else None
-
     discrepancy_details = []
-    if sub_coords:
-        for comp_idx in (1, 2, 3):
-            comp_addr_raw = get_field_val(f"Comp{comp_idx}Address") or get_field_val(f"Comp{comp_idx}/Address")
-            comp_prox_raw = get_field_val(f"Comp{comp_idx}Proximity") or get_field_val(f"Comp{comp_idx}/Proximity")
-            # Skip comps without BOTH a real address and a real reported proximity —
-            # never invent them.
-            if not comp_addr_raw or not comp_prox_raw:
-                continue
-            comp_coords = geocode_address(comp_addr_raw, google_maps_api_key)
-            reported_dist = parse_reported_distance(comp_prox_raw)
-            if comp_coords is None or reported_dist is None:
-                continue
-            computed_dist = haversine_distance(sub_coords, comp_coords)
-            if abs(computed_dist - reported_dist) > 1.0:
-                discrepancy_details.append(
-                    f"Comp {comp_idx} is {computed_dist:.2f} miles away, but reported as '{comp_prox_raw}'"
-                )
+    if root is not None:
+        # PROPERTIES contains repeating PROPERTY children (subject + comparables) --
+        # walk them directly rather than re-searching the whole doc per property.
+        properties_node = find_descendant(root, "PROPERTIES")
+        property_nodes = [c for c in properties_node if local_tag(c.tag) == "PROPERTY"] if properties_node is not None else []
+
+        subject_el = next((p for p in property_nodes if p.get("ValuationUseType") == "SubjectProperty"), None)
+        subject_address_full = property_address(subject_el) if subject_el is not None else None
+        sub_coords = geocode_address(subject_address_full, google_maps_api_key) if subject_address_full else None
+
+        if sub_coords:
+            comp_els = [p for p in property_nodes if p.get("ValuationUseType") == "SalesComparable"]
+            for idx, comp_el in enumerate(comp_els, start=1):
+                comp_addr = property_address(comp_el)
+                reported_miles = comp_reported_distance_miles(comp_el)
+                # Skip comps without BOTH a real address and a real reported distance —
+                # never invent them.
+                if not comp_addr or reported_miles is None:
+                    continue
+                comp_coords = geocode_address(comp_addr, google_maps_api_key)
+                if comp_coords is None:
+                    continue
+                computed_miles = haversine_distance(sub_coords, comp_coords)
+                if abs(computed_miles - reported_miles) > 1.0:
+                    ordinal_el = find_descendant(comp_el, "PropertyOrdinalNumber")
+                    label = ordinal_el.text if ordinal_el is not None and ordinal_el.text else str(idx)
+                    discrepancy_details.append(
+                        f"Comp {label} is {computed_miles:.2f} miles away, but reported as {reported_miles:.2f} miles"
+                    )
 
     if discrepancy_details:
-        xpath, section = get_field_details("Comp2Proximity")
         findings.append({
             "rule_id": "SUPP-006",
             "category": "Supplemental Guidelines",
             "severity": "Warning",
             "message_appraiser": "Comparable property proximity check shows a discrepancy with calculated physical distances. Please verify the reported proximity details.",
             "message_reviewer": f"Location Verification: {'; '.join(discrepancy_details)}.",
-            "field_path": "Comp2Proximity",
-            "xpath": xpath,
-            "section": section or "Sales Comparison Approach",
+            "field_path": "",
+            "xpath": None,
+            "section": "Sales Comparison Approach",
             "values": {"discrepancies": "; ".join(discrepancy_details)},
             "citation": "Fannie Mae Selling Guide B4-1.3-01",
             "appraiser_checked": False,

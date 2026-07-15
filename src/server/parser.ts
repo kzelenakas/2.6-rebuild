@@ -17,6 +17,9 @@ export interface NormalizedReport {
   // True when the XML could not be parsed at all (every field resolves null);
   // callers should skip rule evaluation to avoid a flood of false "missing" findings.
   parse_failed?: boolean;
+  // Delivery photo bytes keyed by filename (Images/ folder of the upload zip), for the
+  // collateral-risk photo rules (CR-105/106/107). Absent/empty for non-zip uploads.
+  images?: Record<string, Buffer>;
 }
 
 export interface StructuralError {

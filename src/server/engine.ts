@@ -171,6 +171,24 @@ async function runPythonSupplementalRules(report: NormalizedReport): Promise<Fin
   });
 }
 
+// Photo rules (CR-105/106/107) are `enabled: false` in collateral_risk/rules.json pending
+// Kevin's sign-off (face-detection accuracy on real photos, quality-threshold tuning --
+// see docs/superpowers/specs/2026-07-10-collateral-risk-photo-checks-design.md). Base64-
+// encoding every delivery photo on every run would be pure waste while that gate holds, so
+// only pay for it once a photo rule is actually enabled -- the same rules.json a run's own
+// evaluate_photos() call already reads, checked here before serializing anything.
+const _PHOTO_LOGIC_TYPES = new Set(["photo_face_detected", "photo_quality_flag"]);
+
+function hasEnabledPhotoRules(): boolean {
+  try {
+    const raw = fs.readFileSync(path.join(process.cwd(), "collateral_risk", "rules.json"), "utf-8");
+    const rules = JSON.parse(raw).rules || [];
+    return rules.some((r: any) => r.enabled !== false && _PHOTO_LOGIC_TYPES.has(r.logic?.type));
+  } catch {
+    return false;
+  }
+}
+
 async function runPythonCollateralRisk(report: NormalizedReport): Promise<Finding[]> {
   return new Promise((resolve) => {
     try {
@@ -192,11 +210,17 @@ async function runPythonCollateralRisk(report: NormalizedReport): Promise<Findin
       let stdoutData = "";
       let stderrData = "";
 
+      const images = report.images || {};
+      const photos: Record<string, string> = {};
+      if (hasEnabledPhotoRules()) {
+        for (const [filename, buf] of Object.entries(images)) {
+          photos[filename] = buf.toString("base64");
+        }
+      }
+
       const payload = JSON.stringify({
-        fields: report.fields,
         xmlString: report.xmlString || "",
-        google_maps_api_key: process.env.VITE_GOOGLE_MAPS_API_KEY || process.env.GOOGLE_MAPS_API_KEY || "",
-        gemini_api_key: process.env.GEMINI_API_KEY || ""
+        photos
       });
 
       pythonProcess.stdout.on("data", (data) => {

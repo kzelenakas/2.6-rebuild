@@ -58,6 +58,24 @@ async function resolveUploadedFile(req: express.Request): Promise<{ buffer: Buff
   return { buffer, filename, objectPath };
 }
 
+// Delivery photos live under Images/ in the UAD zip alongside the XML and PDF.
+// Only needed by the collateral-risk photo rules (CR-105/106/107, disabled pending
+// Kevin's sign-off) -- see engine.ts's runPythonCollateralRisk for the enabled-check
+// gate before these bytes are actually sent anywhere.
+const IMAGE_EXTENSIONS = [".jpg", ".jpeg", ".png", ".gif"];
+
+function extractZipImages(zip: AdmZip): Record<string, Buffer> {
+  const images: Record<string, Buffer> = {};
+  for (const entry of zip.getEntries()) {
+    const name = entry.entryName;
+    const lower = name.toLowerCase();
+    if (lower.startsWith("images/") && IMAGE_EXTENSIONS.some(ext => lower.endsWith(ext))) {
+      images[name] = entry.getData();
+    }
+  }
+  return images;
+}
+
 function getIapEmail(req: express.Request): string {
   const raw = req.headers["x-goog-authenticated-user-email"];
   const header = (Array.isArray(raw) ? raw[0] : raw || "").trim();
@@ -235,6 +253,7 @@ async function startServer() {
       }
 
       let xmlBuffer: Buffer;
+      let images: Record<string, Buffer> = {};
       const filename = uploaded.filename;
 
       if (filename.toLowerCase().endsWith(".zip")) {
@@ -246,6 +265,7 @@ async function startServer() {
             return;
           }
           xmlBuffer = xmlEntry.getData();
+          images = extractZipImages(zip);
         } catch (zipErr: any) {
           res.status(422).json({ error: `Failed to extract ZIP archive: ${zipErr.message}` });
           return;
@@ -256,6 +276,7 @@ async function startServer() {
 
       const xmlString = xmlBuffer.toString("utf-8");
       const { normalized, structural_errors } = parseAndNormalizeXML(xmlString, filename);
+      normalized.images = images;
 
       // Determine active rules profile
       const profileName = req.query.profile as string | undefined;
@@ -344,6 +365,7 @@ async function startServer() {
       }
 
       let xmlBuffer: Buffer;
+      let images: Record<string, Buffer> = {};
       const filename = uploaded.filename;
 
       if (filename.toLowerCase().endsWith(".zip")) {
@@ -355,6 +377,7 @@ async function startServer() {
             return;
           }
           xmlBuffer = xmlEntry.getData();
+          images = extractZipImages(zip);
         } catch (zipErr: any) {
           res.status(422).json({ error: `Failed to extract ZIP archive: ${zipErr.message}` });
           return;
@@ -365,6 +388,7 @@ async function startServer() {
 
       const xmlString = xmlBuffer.toString("utf-8");
       const { normalized, structural_errors } = parseAndNormalizeXML(xmlString, filename);
+      normalized.images = images;
 
       // Evaluate revision with original or current ruleset
       const activeRules = getRules("enabled");

@@ -19,11 +19,12 @@ IDs use a 30000000-40000000 random range, distinct from supplemental_rules'
 20000000-30000000 (engine.py:427-428), so the two Python engines' findings
 never collide when merged into the same array (engine.ts:518-523).
 """
+import base64
 import json
 import random
 import sys
 
-from . import evaluate
+from . import evaluate, evaluate_photos
 
 _ID_LOW, _ID_HIGH = 30_000_000, 40_000_000
 
@@ -54,15 +55,31 @@ def _to_finding(raw: dict) -> dict:
     }
 
 
+def _decode_photos(raw: dict) -> dict[str, bytes]:
+    """{filename: base64 -> filename: bytes}. A photo that fails to decode is dropped,
+    not fatal -- one corrupt/truncated entry shouldn't sink findings for every other
+    photo or the XML-based rules in the same run."""
+    photos = raw.get("photos") or {}
+    decoded = {}
+    for filename, b64 in photos.items():
+        try:
+            decoded[filename] = base64.b64decode(b64)
+        except Exception:
+            continue
+    return decoded
+
+
 def main() -> None:
     try:
         payload = json.loads(sys.stdin.read())
         xml_string = payload.get("xmlString") or ""
-        if not xml_string:
-            print(json.dumps({"findings": []}))
-            return
 
-        findings = evaluate(xml_string.encode("utf-8"))
+        findings = evaluate(xml_string.encode("utf-8")) if xml_string else []
+
+        images = _decode_photos(payload)
+        if images:
+            findings = findings + evaluate_photos(images)
+
         mapped = [_to_finding(f) for f in findings]
         print(json.dumps({"findings": mapped}))
     except Exception as e:  # never let a Python exception surface as a crash/non-zero exit
