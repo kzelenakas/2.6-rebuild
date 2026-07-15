@@ -36,7 +36,18 @@ def field_in_set(logic: dict, doc) -> Finding:
     val = _first(_resolve_field(doc, logic["field"]))
     if val is None or val == "":
         return Finding(triggered=False, values={})
-    return Finding(triggered=val not in logic["allowed"], values={logic["field"]: val})
+    # Two different rule intents share this operator: "must be one of these
+    # allowed values" (flag when NOT in the set -- e.g. CR-031's "outside the
+    # valid Q1-Q6 enumeration") vs "flag when it equals one of these values"
+    # (flag when IN the set -- e.g. CR-038's "flag Q6 specifically"). Only the
+    # first was implemented; CR-038 silently got the inverted result (fired on
+    # every rating except Q6, confirmed 2026-07-14 against a real report
+    # where it fired on Q4). mode defaults to the original "not in" behavior
+    # so CR-030/CR-031 are unaffected.
+    mode = logic.get("mode", "flag_if_not_in")
+    is_member = val in logic["allowed"]
+    triggered = is_member if mode == "flag_if_in" else not is_member
+    return Finding(triggered=triggered, values={logic["field"]: val})
 
 def numeric_range(logic: dict, doc) -> Finding:
     val = _first(_resolve_field(doc, logic["field"]))

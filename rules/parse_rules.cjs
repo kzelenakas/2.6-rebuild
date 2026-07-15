@@ -31,6 +31,21 @@ function parseRule(rule) {
       condPart = condPart.replace(/^\(/, "").replace(/\)$/, "").trim();
     }
 
+    // A condPart containing BOTH "and" and "or" is a compound expression like
+    // "(A and B) or (C and D)" -- this flat parser has no concept of
+    // parenthetical grouping, and previously flattened these into one bag
+    // with a single global operator, which silently turned "(A and B) or (C
+    // and D)" into "A or B or C or D" (any single atom satisfies it). That
+    // produced rules matching the source description at a glance while
+    // firing on cases it never intended (e.g. UAD1103-1106/1113/1159, fixed
+    // 2026-07-14 by hand). Bail to needs_encoding instead of guessing wrong --
+    // a human or the AI suggester (getEncodingSuggestion) can build the
+    // correct grouped conditions (array-of-arrays, OR of AND-groups; see
+    // engine.ts's conditional_field_present) deliberately.
+    if (/\band\b/i.test(condPart) && /\bor\b/i.test(condPart)) {
+      return null;
+    }
+
     // Now parse conditions in condPart
     const conditions = [];
     let operator = "AND";
@@ -38,7 +53,7 @@ function parseRule(rule) {
       if (condPart.toLowerCase().includes(" or ")) {
         operator = "OR";
       }
-      
+
       // Parse individual conditions like Field = "Value" or Field = Value
       const condRegex = /([a-zA-Z_@0-9]+)\s*(?:=|<>\s*""|!=)\s*(?:"([^"]*)"|'([^']*)'|([a-zA-Z_0-9]+))/g;
       let match;
@@ -46,6 +61,15 @@ function parseRule(rule) {
         const fieldName = match[1];
         const val = match[2] || match[3] || match[4] || "";
         conditions.push({ field: fieldName, value: val });
+      }
+
+      // Numeric conditions like "LivingUnitCount > 0" -- previously not
+      // matched by condRegex above (equality-only) and silently dropped from
+      // the encoded logic with no warning (e.g. UAD1104-1106/1113's "and
+      // LivingUnitCount > 0" clause, fixed 2026-07-14 by hand).
+      const numCondRegex = /([a-zA-Z_@0-9]+)\s*(<=|>=|<|>)\s*(-?[0-9]+\.?[0-9]*)/g;
+      while ((match = numCondRegex.exec(condPart)) !== null) {
+        conditions.push({ field: match[1], operator: match[2], value: parseFloat(match[3]) });
       }
 
       // Support field is provided condition e.g. "LicenseExpirationDate for PartyRoleType = Appraiser"
@@ -69,12 +93,20 @@ function parseRule(rule) {
     }
   }
 
-  // 2. Comparison Operations like If DwellingCount < 1
-  const compMatch = sourceLogic.match(/If\s+([a-zA-Z_@0-9]+)\s*(<|>|<=|>=|==|!=|<>)\s*([0-9a-zA-Z_]+)/i);
+  // 2. Comparison Operations like If DwellingCount < 1, or If Amount > 1,000,000,000
+  // RHS must be a clean literal (comma-grouped number, quoted string, or
+  // true/false) -- NOT a bare word. The old bareword capture
+  // ([0-9a-zA-Z_]+) would happily grab the first word of a natural-language
+  // clause like "the number of instances of..." (e.g. UAD1011/UAD1086's "the"),
+  // and stopped at the first comma in a number like "1,000,000,000",
+  // truncating it to "1" (UAD1264, fixed 2026-07-14 by hand). A bareword RHS
+  // that isn't true/false is almost never a real literal in these rule
+  // descriptions, so it's excluded rather than guessed at.
+  const compMatch = sourceLogic.match(/If\s+([a-zA-Z_@0-9]+)\s*(<|>|<=|>=|==|!=|<>)\s*(-?[0-9][0-9,]*\.?[0-9]*|"[^"]*"|true|false)/i);
   if (compMatch && h1Key) {
     let op = compMatch[2];
     if (op === "<>") op = "!=";
-    const compareValRaw = compMatch[3];
+    const compareValRaw = compMatch[3].replace(/^"|"$/g, "").replace(/,/g, "");
     const numVal = parseFloat(compareValRaw);
     return {
       type: "value_comparison",

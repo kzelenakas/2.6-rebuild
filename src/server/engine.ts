@@ -133,6 +133,16 @@ async function runPythonSupplementalRules(report: NormalizedReport): Promise<Fin
         resolve([]);
       });
 
+      // A failed spawn (e.g. QC_PYTHON_BIN pointing at a binary that doesn't
+      // exist -- "python3" vs Windows' "python") surfaces as an 'error' event
+      // on the stdin pipe itself, separately from the ChildProcess 'error'
+      // event above. Without a listener here, that's an unhandled error event
+      // that crashes the entire Node process, not just this one request.
+      pythonProcess.stdin.on("error", (err) => {
+        console.error("Python supplemental rules process stdin error:", err);
+        resolve([]);
+      });
+
       pythonProcess.on("close", (code) => {
         if (code !== 0) {
           console.error(`Python supplemental rules process exited with code ${code}. Stderr: ${stderrData}`);
@@ -199,6 +209,14 @@ async function runPythonCollateralRisk(report: NormalizedReport): Promise<Findin
 
       pythonProcess.on("error", (err) => {
         console.error("Failed to start Python collateral risk process:", err);
+        resolve([]);
+      });
+
+      // See the matching comment in runPythonSupplementalRules above: a
+      // failed spawn surfaces as a separate 'error' event on the stdin pipe,
+      // which crashes the whole process if nothing listens for it here.
+      pythonProcess.stdin.on("error", (err) => {
+        console.error("Python collateral risk process stdin error:", err);
         resolve([]);
       });
 
@@ -344,15 +362,34 @@ export async function evaluateReport(
         const op = (rule.logic.operator || "AND").toUpperCase();
         let conditionsMet = true;
 
+        // Per-condition operator (">","<",">=","<=","!=", default "=="/equality)
+        // for things like "LivingUnitCount > 0" that a plain equality/required
+        // check can't express -- alongside the existing value/values/required
+        // shapes.
         const isMet = (cond: any) => {
           const fullKey = findFieldKey(report, cond.field);
           if (!fullKey) return false;
           const val = report.fields[fullKey]?.value;
           const valStr = val !== null && val !== undefined ? String(val).trim() : "";
-          
+
           if (cond.required) {
             return valStr !== "";
           }
+
+          const condOp = cond.operator || "==";
+          if (condOp !== "==" && condOp !== "=") {
+            const numVal = parseFloat(valStr);
+            const numCompare = parseFloat(String(cond.value));
+            if (isNaN(numVal) || isNaN(numCompare)) return false;
+            switch (condOp) {
+              case ">": return numVal > numCompare;
+              case "<": return numVal < numCompare;
+              case ">=": return numVal >= numCompare;
+              case "<=": return numVal <= numCompare;
+              case "!=": return numVal !== numCompare;
+            }
+          }
+
           if (cond.value !== undefined) {
             if (Array.isArray(cond.value)) {
               return cond.value.map((v: any) => String(v).trim().toLowerCase()).includes(valStr.toLowerCase());
@@ -362,8 +399,23 @@ export async function evaluateReport(
           return false;
         };
 
+        // conditions can be a flat array (existing shape: single AND/OR across
+        // all of them, via `operator`) or an array of arrays -- groups, each
+        // AND'd internally and OR'd against each other -- for descriptions
+        // like "(A and B) or (C and D and E)" that a single flat operator
+        // can't represent. Flattening these into one bag with one operator
+        // (the pre-2026-07-14 behavior) silently turned compound conditions
+        // into "any single atom matches", firing on cases the source rule
+        // never intended (e.g. UAD1103-1106/1113/1159 requiring
+        // manufactured-home fields on a plain site-built dwelling, because
+        // ImprovementType=Dwelling alone satisfied an OR across everything).
+        const isGrouped = conds.length > 0 && Array.isArray(conds[0]);
+        const flatConds: any[] = isGrouped ? conds.flat() : conds;
+
         if (conds.length > 0) {
-          if (op === "OR") {
+          if (isGrouped) {
+            conditionsMet = (conds as any[][]).some((group) => group.every((c) => isMet(c)));
+          } else if (op === "OR") {
             conditionsMet = conds.some((c: any) => isMet(c));
           } else {
             conditionsMet = conds.every((c: any) => isMet(c));
@@ -377,8 +429,8 @@ export async function evaluateReport(
           const isMissing = reqVal === null || reqVal === undefined || String(reqVal).trim() === "";
           triggered = isMissing;
           values[reqField] = reqVal || null;
-          
-          for (const c of conds) {
+
+          for (const c of flatConds) {
             const fKey = findFieldKey(report, c.field);
             if (fKey) values[c.field] = report.fields[fKey]?.value;
           }

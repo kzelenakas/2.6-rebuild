@@ -113,20 +113,55 @@ export function getRulesetVersion(): string {
   return `db-v${changeCounter}-${digest.slice(0, 12)}`;
 }
 
+function getSeedSourcePath(): string | null {
+  let p = path.join(process.cwd(), "rules", "h1_rules.json");
+  if (!fs.existsSync(p)) p = path.join(process.cwd(), "rules", "seed_rules.json");
+  return fs.existsSync(p) ? p : null;
+}
+
+function getSeedSourceHash(): string | null {
+  const p = getSeedSourcePath();
+  if (!p) return null;
+  return crypto.createHash("sha256").update(fs.readFileSync(p)).digest("hex");
+}
+
 export function initDatabase() {
   ensureDataDir();
 
-  // Load Rules
+  // Load Rules. Previously this only seeded when DATA_DIR/rules.json was
+  // completely absent, so a code-level rule fix shipped in a redeploy never
+  // reached an environment that had already booted once -- the persisted
+  // rules.json just kept loading as-is forever (the exact gap that let
+  // UAD1011/UAD1086/UAD1103-1106/UAD1113/UAD1159/UAD1264's bad encoded logic
+  // survive multiple ai-qc-tf deploys). Now the seed source's content hash is
+  // tracked in DATA_DIR/rules_seed_version.txt; a mismatch (or a missing
+  // version marker, e.g. the first boot after this tracking was added)
+  // triggers a full reseed from rules/h1_rules.json, same as a fresh deploy.
+  // This intentionally overwrites any rule customizations made through the
+  // admin UI on a source change -- matches how seedRules() already behaves
+  // for a from-scratch deploy, just no longer gated to "only once ever."
   const rulesPath = path.join(DATA_DIR, "rules.json");
-  if (fs.existsSync(rulesPath)) {
-    try {
-      rules = JSON.parse(fs.readFileSync(rulesPath, "utf-8"));
-    } catch (e) {
-      console.error("Failed to parse rules.json, re-seeding", e);
+  const seedVersionPath = path.join(DATA_DIR, "rules_seed_version.txt");
+  const currentSeedHash = getSeedSourceHash();
+
+  if (fs.existsSync(rulesPath) && fs.existsSync(seedVersionPath)) {
+    const storedSeedHash = fs.readFileSync(seedVersionPath, "utf-8").trim();
+    if (currentSeedHash && storedSeedHash !== currentSeedHash) {
+      console.log("Rule seed source changed since last boot -- reseeding rules.json.");
       seedRules();
+    } else {
+      try {
+        rules = JSON.parse(fs.readFileSync(rulesPath, "utf-8"));
+      } catch (e) {
+        console.error("Failed to parse rules.json, re-seeding", e);
+        seedRules();
+      }
     }
   } else {
     seedRules();
+  }
+  if (currentSeedHash) {
+    fs.writeFileSync(seedVersionPath, currentSeedHash, "utf-8");
   }
 
   // Load Profiles

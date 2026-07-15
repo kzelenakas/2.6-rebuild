@@ -318,10 +318,9 @@
       "severity": "HardStop",
       "enabled": true,
       "logic": {
-        "type": "value_comparison",
-        "operator": "!=",
-        "field": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/AccessoryDwellingUnitTotalCount",
-        "compare_value": "the"
+        "type": "needs_encoding",
+        "source_logic": "If AccessoryDwellingUnitTotalCount <> the number of instances of PROPERTY_UNIT_DETAIL with AccessoryDwellingUnitIndicator = \"true\"",
+        "note": "Cardinality check (compare a count field against the count of matching repeating child elements) -- the encoder previously misread this as a literal-value comparison and captured the word 'the' as compare_value, firing HardStop on every report. No engine operator for count-of-matching-children exists yet; needs one (or a manual encode) before re-enabling."
       },
       "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0100.0019, Message ID UAD1011",
       "messages": {
@@ -2631,10 +2630,9 @@
       "severity": "HardStop",
       "enabled": true,
       "logic": {
-        "type": "value_comparison",
-        "operator": "!=",
-        "field": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/STRUCTURE/STRUCTURE_DETAIL/LivingUnitCount",
-        "compare_value": "the"
+        "type": "needs_encoding",
+        "source_logic": "For each IMPROVEMENT, if LivingUnitCount <> the number of instances of PROPERTY_UNIT",
+        "note": "Same class of bug as UAD1011: cardinality check misread as a literal-value comparison, 'the' captured as compare_value. No count-of-matching-children operator exists yet."
       },
       "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0300.0063, Message ID UAD1086",
       "messages": {
@@ -3177,24 +3175,15 @@
       "logic": {
         "type": "conditional_field_present",
         "conditions": [
-          {
-            "field": "ImprovementType",
-            "value": "Dwelling"
-          },
-          {
-            "field": "ConstructionMethodType",
-            "value": "Manufactured"
-          },
-          {
-            "field": "ImprovementType",
-            "value": "Outbuilding"
-          },
-          {
-            "field": "OutbuildingType",
-            "value": "ManufacturedHome"
-          }
+          [
+            { "field": "ImprovementType", "value": "Dwelling" },
+            { "field": "ConstructionMethodType", "value": "Manufactured" }
+          ],
+          [
+            { "field": "ImprovementType", "value": "Outbuilding" },
+            { "field": "OutbuildingType", "value": "ManufacturedHome" }
+          ]
         ],
-        "operator": "OR",
         "required_field": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/MANUFACTURED_HOME/MANUFACTURED_HOME_DETAIL/ManufacturedHomeAttachedToFoundationIndicator"
       },
       "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0500.0007, Message ID UAD1103",
@@ -3222,28 +3211,17 @@
       "logic": {
         "type": "conditional_field_present",
         "conditions": [
-          {
-            "field": "ImprovementType",
-            "value": "Dwelling"
-          },
-          {
-            "field": "ConstructionMethodType",
-            "value": "Manufactured"
-          },
-          {
-            "field": "ImprovementType",
-            "value": "Outbuilding"
-          },
-          {
-            "field": "OutbuildingType",
-            "value": "ManufacturedHome"
-          },
-          {
-            "field": "OutbuildingRealPropertyIndicator",
-            "value": "true"
-          }
+          [
+            { "field": "ImprovementType", "value": "Dwelling" },
+            { "field": "ConstructionMethodType", "value": "Manufactured" }
+          ],
+          [
+            { "field": "ImprovementType", "value": "Outbuilding" },
+            { "field": "OutbuildingType", "value": "ManufacturedHome" },
+            { "field": "OutbuildingRealPropertyIndicator", "value": "true" },
+            { "field": "LivingUnitCount", "operator": ">", "value": 0 }
+          ]
         ],
-        "operator": "OR",
         "required_field": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/MANUFACTURED_HOME/MANUFACTURED_HOME_DETAIL/ManufacturedHomeHitchWheelsAxlesRemovedIndicator"
       },
       "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0500.0008, Message ID UAD1104",
@@ -3271,28 +3249,17 @@
       "logic": {
         "type": "conditional_field_present",
         "conditions": [
-          {
-            "field": "ImprovementType",
-            "value": "Dwelling"
-          },
-          {
-            "field": "ConstructionMethodType",
-            "value": "Manufactured"
-          },
-          {
-            "field": "ImprovementType",
-            "value": "Outbuilding"
-          },
-          {
-            "field": "OutbuildingType",
-            "value": "ManufacturedHome"
-          },
-          {
-            "field": "OutbuildingRealPropertyIndicator",
-            "value": "true"
-          }
+          [
+            { "field": "ImprovementType", "value": "Dwelling" },
+            { "field": "ConstructionMethodType", "value": "Manufactured" }
+          ],
+          [
+            { "field": "ImprovementType", "value": "Outbuilding" },
+            { "field": "OutbuildingType", "value": "ManufacturedHome" },
+            { "field": "OutbuildingRealPropertyIndicator", "value": "true" },
+            { "field": "LivingUnitCount", "operator": ">", "value": 0 }
+          ]
         ],
-        "operator": "OR",
         "required_field": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/MANUFACTURED_HOME/MANUFACTURED_HOME_DETAIL/ManufacturedHomeHUDCertificateLabelIndicator"
       },
       "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0500.0009, Message ID UAD1105",
@@ -3320,28 +3287,17 @@
       "logic": {
         "type": "conditional_field_present",
         "conditions": [
-          {
-            "field": "ImprovementType",
-            "value": "Dwelling"
-          },
-          {
-            "field": "ConstructionMethodType",
-            "value": "Manufactured"
-          },
-          {
-            "field": "ImprovementType",
-            "value": "Outbuilding"
-          },
-          {
-            "field": "OutbuildingType",
-            "value": "ManufacturedHome"
-          },
-          {
-            "field": "OutbuildingRealPropertyIndicator",
-            "value": "true"
-          }
+          [
+            { "field": "ImprovementType", "value": "Dwelling" },
+            { "field": "ConstructionMethodType", "value": "Manufactured" }
+          ],
+          [
+            { "field": "ImprovementType", "value": "Outbuilding" },
+            { "field": "OutbuildingType", "value": "ManufacturedHome" },
+            { "field": "OutbuildingRealPropertyIndicator", "value": "true" },
+            { "field": "LivingUnitCount", "operator": ">", "value": 0 }
+          ]
         ],
-        "operator": "OR",
         "required_field": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/MANUFACTURED_HOME/MANUFACTURED_HOME_DETAIL/ManufacturedHomeHUDDataPlateAttachedIndicator"
       },
       "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0500.0010, Message ID UAD1106",
@@ -3561,28 +3517,17 @@
       "logic": {
         "type": "conditional_field_present",
         "conditions": [
-          {
-            "field": "ImprovementType",
-            "value": "Dwelling"
-          },
-          {
-            "field": "ConstructionMethodType",
-            "value": "Manufactured"
-          },
-          {
-            "field": "ImprovementType",
-            "value": "Outbuilding"
-          },
-          {
-            "field": "OutbuildingType",
-            "value": "ManufacturedHome"
-          },
-          {
-            "field": "OutbuildingRealPropertyIndicator",
-            "value": "true"
-          }
+          [
+            { "field": "ImprovementType", "value": "Dwelling" },
+            { "field": "ConstructionMethodType", "value": "Manufactured" }
+          ],
+          [
+            { "field": "ImprovementType", "value": "Outbuilding" },
+            { "field": "OutbuildingType", "value": "ManufacturedHome" },
+            { "field": "OutbuildingRealPropertyIndicator", "value": "true" },
+            { "field": "LivingUnitCount", "operator": ">", "value": 0 }
+          ]
         ],
-        "operator": "OR",
         "required_field": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/MANUFACTURED_HOME/MANUFACTURED_HOME_DETAIL/ManufacturedHomeModificationIndicator"
       },
       "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0500.0020, Message ID UAD1113",
@@ -5289,32 +5234,17 @@
       "logic": {
         "type": "conditional_field_present",
         "conditions": [
-          {
-            "field": "ImprovementType",
-            "value": "Dwelling"
-          },
-          {
-            "field": "RentScheduleIndicator",
-            "value": "true"
-          },
-          {
-            "field": "ImprovementType",
-            "value": "Outbuilding"
-          },
-          {
-            "field": "OutbuildingRealPropertyIndicator",
-            "value": "true"
-          },
-          {
-            "field": "AccessoryDwellingUnitIndicator",
-            "value": "true"
-          },
-          {
-            "field": "RentScheduleIndicator",
-            "value": "true"
-          }
+          [
+            { "field": "ImprovementType", "value": "Dwelling" },
+            { "field": "RentScheduleIndicator", "value": "true" }
+          ],
+          [
+            { "field": "ImprovementType", "value": "Outbuilding" },
+            { "field": "OutbuildingRealPropertyIndicator", "value": "true" },
+            { "field": "AccessoryDwellingUnitIndicator", "value": "true" },
+            { "field": "RentScheduleIndicator", "value": "true" }
+          ]
         ],
-        "operator": "OR",
         "required_field": "subject:VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/PROPERTY_UNITS/PROPERTY_UNIT/PROPERTY_UNIT_DETAIL/UnitIncludedInRentScheduleIndicator"
       },
       "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 0700.0065, Message ID UAD1159",
@@ -8484,7 +8414,7 @@
         "type": "value_comparison",
         "operator": ">",
         "field": "doc:VALUATION_ANALYSIS/VALUATION_REPORT/VALUATION_RECONCILIATION/VALUATION_RECONCILIATION_SUMMARY/VALUATION_RECONCILIATION_SUMMARY_DETAIL/OpinionOfValueAmount",
-        "compare_value": 1
+        "compare_value": 1000000000
       },
       "citation": "UAD 3.6 Appendix H-1 v1.4, Unique ID 1300.0017, Message ID UAD1264",
       "messages": {

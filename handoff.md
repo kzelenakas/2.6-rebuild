@@ -1,6 +1,6 @@
 # qc-rebuild — Handoff
 
-**Last updated:** 2026-07-14 (session 2)
+**Last updated:** 2026-07-14 (session 3, part 2)
 **Read this first.** A zero-context session should be able to resume from this file alone.
 
 ## What this is
@@ -63,6 +63,71 @@ Fixed:
 - IAP enabled on the Cloud Run service (native `--iap` flag, not the deprecated OAuth-brand flow — that's fully retired as of March 2026). **Nobody is allowlisted yet.** Kevin has the one-liner to grant himself access (`gcloud projects add-iam-policy-binding ai-qc-tf --member="user:kevin.zelenakas@truefootage.tech" --role="roles/iap.httpsResourceAccessor" --condition=None`) — unclear if he's run it yet, check before assuming IAP login works.
 - Empty state: no runs, no migrated data from `uad36-qc-beta`. First real test needs a report uploaded through the full flow.
 - Not yet configured: Bubble proxy pointing at this service at all (no proxy exists for `ai-qc-tf` yet, only `uad36-qc-beta` presumably has one) — so realistically the only way in right now is direct IAP-authenticated browser access or `gcloud run services proxy uad36-qc --region us-central1 --project ai-qc-tf` (local tunnel, bypasses IAP, lands as guest/appraiser).
+
+## Session 3 (2026-07-14): 413 fix, rules dual-source-of-truth, field-link bug — none of this is committed yet
+
+All changes below are sitting **uncommitted** in the working tree (per this repo's whole point: reviewable as a diff before anything merges). Run `git status`/`git diff` before committing.
+
+### Fixed: 413 on large ZIP uploads
+Root cause: Cloud Run enforces a hard, non-configurable ~32MB request-body ceiling — no Express/multer setting can raise it, and UAD zip bundles (XML + PDF + photos) commonly exceed it. This was never reachable from local testing (Express/multer had no size limit either way), which is why it only showed up against `ai-qc-tf`.
+
+Fix: added a direct-to-GCS signed-URL upload path that bypasses Cloud Run for large files entirely.
+- `src/server/uploads.ts` (new) — `createSignedUploadUrl`/`downloadUploadedObject`/`deleteUploadedObject`, gated on `QC_UPLOAD_BUCKET` env var.
+- `server.ts` — new `POST /api/uploads/init` route (404s if `QC_UPLOAD_BUCKET` unset); `/api/runs` and `/api/runs/:runId/revision` now accept either the existing multipart body or a JSON `{objectPath, filename}` naming an object already uploaded via the signed URL; explicit multer `fileSize` limit (500MB) with a clean 413 JSON response instead of an unhandled crash.
+- `frontend/src/api.ts` — `uploadReport`/`uploadRevision` try the signed-URL path for files ≥20MB, falling back to the old direct multipart upload if `/api/uploads/init` isn't configured (local dev) or fails.
+- `.env.example` — documents `QC_UPLOAD_BUCKET`.
+- Verified locally: direct multipart upload (both `.xml` and `.zip`) still works end-to-end against the real integrated server; `/api/uploads/init` correctly 404s with `QC_UPLOAD_BUCKET` unset.
+
+**Not verified**: the signed-URL path itself — needs `QC_UPLOAD_BUCKET` set and two IAM grants on the Cloud Run runtime SA that are **not yet applied and not yet in `deploy-gcp.ps1`** (a permission-classifier gate blocked writing IAM-grant commands into the script even just as authored code, not executed — treated as an access-control change). Kevin needs to either run these himself or explicitly ask for the script edit again:
+```
+gcloud storage buckets add-iam-policy-binding gs://ai-qc-tf-uad36-qc-files --project=ai-qc-tf --member="serviceAccount:989432110587-compute@developer.gserviceaccount.com" --role="roles/storage.objectAdmin" --condition=None
+gcloud iam service-accounts add-iam-policy-binding 989432110587-compute@developer.gserviceaccount.com --project=ai-qc-tf --member="serviceAccount:989432110587-compute@developer.gserviceaccount.com" --role="roles/iam.serviceAccountTokenCreator" --condition=None
+```
+Then add `QC_UPLOAD_BUCKET=ai-qc-tf-uad36-qc-files` to the `--update-env-vars` list in `infra/deploy-gcp.ps1` (not yet added — same block reason) and redeploy. Until then, large uploads against `ai-qc-tf` will still 413.
+
+### Fixed: rules dual-source-of-truth
+`data/rules.json` and `data/archives/*` were tracked in git even though `src/server/db.ts` already boot-seeds `DATA_DIR` only when empty (that logic was already correct). Untracked both from git and added `data/{rules,runs,profiles,users}.json` + `data/archives/` + `data/files/` to `.gitignore`. `rules/h1_rules.json` and `rules/seed_rules.json` (the actual seed sources) stay tracked, untouched.
+
+### Found and partially fixed: the field-highlight overlay was completely non-functional
+`frontend/src/data/fieldLocations.ts` keyed its 9 stub entries by short human names ("Address", "City", ...). `Finding.field_path` (what `ReportPreviewPane.tsx` actually looks up) is always the long MISMO XPath key from `schemas/uad36_field_manifest.json` (e.g. `doc:MESSAGE/.../ExecutionDate`) — so the overlay never fired for any real finding, coordinates aside.
+
+Fixed the key format; **did not fabricate coordinates**. There is no source in this repo to derive real bbox positions from: `GSE_UAD_3.6.0_v1.3_schema/Appendix E-1 URAR with Codes.pdf` (the only PDF in the repo) turns out to be a field-code style-guide document (confirmed via `pdfjs` text extraction — it's a spec/cover-page document, not a rendered form), not the physical URAR/Form 1004 page layout — and that layout isn't one universal thing anyway, it depends on which appraisal software (ACI/Total/ClickForms) rendered the PDF. Building this map for real needs an actual sample report PDF, which still doesn't exist anywhere in this repo (confirmed again).
+
+Left `FIELD_LOCATIONS = {}` with a header comment explaining this, and added `scripts/extract-pdf-text.mjs` (pdfjs-based) as a reusable tool: once a real sample report PDF exists, it dumps every text item's page + bbox for matching against manifest `label`s to backfill this map — flagged in the comment that automated label-matching will need hand-verification (repeated labels across comp columns, etc.).
+
+### Not done
+- `frontend/src/components/PDFPreview.tsx` (dead, unused) — still not deleted; the safety classifier blocked removing a file the user hadn't explicitly named, even via `git rm`. Ask explicitly if you want it gone.
+- IAM grants + `deploy-gcp.ps1` env-var wiring for the signed-URL upload path (see above) — needs either Kevin running the two commands or explicitly re-asking for the script edit.
+- Everything below this section, still unstarted from session 2.
+
+## Session 3 part 2 (2026-07-14): real sample data closes the engine's biggest untested gaps — and finds a process-crashing bug
+
+Kevin supplied the official GSE UAD 3.6 sample packages (SF1, SF3, Condo2 — xml+pdf+zip each, real rendered forms + photos, no NPI) plus the correct Combined XSD schema. Added as `fixtures/uad-samples/{SF1,SF3,Condo2}_Appraisal/`. This let real end-to-end testing happen for the first time ever in this project's history — and surfaced a critical bug.
+
+### Critical fix: the whole server could crash on any real report upload
+`parseAndNormalizeXML` was silently failing on every real UAD XML (an `@xmldom/xmldom` 0.9 API break — `errorHandler: {error, fatalError}` was replaced by a single `onError(level, msg)` callback; the old option is now ignored, so parsing quietly "succeeded" with no document and every run reported `parse_failed: true`). Fixed in `src/server/parser.ts`. Once fixed, real uploads reached `evaluateReport` for the first time — which hit a second, much worse bug: `runPythonSupplementalRules`/`runPythonCollateralRisk` in `src/server/engine.ts` spawn a Python subprocess and write to its stdin; on a failed spawn (wrong `QC_PYTHON_BIN`, missing interpreter, etc.) the error surfaces on the **stdin pipe itself**, not the `ChildProcess` object — and only the latter had an `.on("error")` handler. An unhandled error event on the stdin socket crashes the entire Node process, not just that request. **This means, until this session, any real report upload could take down the whole QC service for every concurrent user.** Fixed by adding the missing `pythonProcess.stdin.on("error", ...)` handler in both functions. Also pinned the four previously-`"latest"` dependencies (`@xmldom/xmldom`, `@google/genai`, `adm-zip`, `multer`) to their currently-installed versions, per the build directive's Phase 07 item — the xmldom break is exactly the failure mode that item was meant to prevent.
+
+### Fixed: qc-rebuild's own copy of the Combined XSD was corrupted (0 bytes)
+`GSE_UAD_3.6.0_v1.3_schema/Combined/GSE_UAD_3.6.0_v1.3.xsd` was an empty file (vs. 1.76MB at the source Kevin pointed to, `Claude Cowork/Projects/Rules_Encoding/Combined/`) — a copy error from whenever this repo was first assembled. Replaced with the correct file.
+
+### Added: real XSD schema-validation gate (was completely missing)
+`src/server/schemaValidation.ts` (new, uses `libxmljs2`) validates each upload against the Combined schema and appends any errors to `structural_errors` — a genuine pass/fail gate on structural conformance, separate from and prior to the 757 H-1 business rules, which previously didn't exist at all (the app only ever checked XML well-formedness, never real schema conformance).
+
+### Verified end-to-end (all three fixtures, after the fixes above)
+- All three pass XSD validation cleanly (`structural_errors: []`).
+- All three now produce real H-1 findings for the first time ever: SF1 21 findings (17 HardStop/4 Warning), SF3 21 (18/3), Condo2 21 (17/4). **Worth a sanity read by Kevin** — these are official GSE reference samples; that many HardStops on a reference file could mean the samples aren't meant to be fully compliant, or could mean some rules are over-firing. Not diagnosed further this session.
+- Auth ownership matrix (the top-priority item from session 2, "never tested against a real run") — confirmed correct: run owner sees their own run/file (200), a different appraiser is denied (403) on both `GET /api/runs/:runId` and `GET /api/runs/:runId/file`, reviewer/admin see everything regardless of ownership (200). Tested via the local `x-goog-authenticated-user-email` header (no real IAP needed locally — Cloud Run's IAP is what makes that header trustworthy in production; locally it's just read as-is, same as prod code path).
+
+### Field-location coverage: went from 0 working entries to 45, from a real source
+Ran `scripts/extract-pdf-text.mjs` against `fixtures/uad-samples/SF1_Appraisal/SF1_Appraisal_v1.4.pdf` and matched extracted text lines against `schemas/uad36_field_manifest.json` labels — 45 unambiguous matches (one hit each, whole document) written into `frontend/src/data/fieldLocations.ts`, keyed by the correct manifest key this time. Turns out this PDF renders as one "label ... value" text line per field (not a boxy visual form), so each bbox is the whole matched line, not a tight per-value box — still useful for scroll-to/zoom-to, see the file's header comment for the full caveat (single-sample-derived, comp-grid fields skipped as ambiguous, may not generalize to other appraisal software's PDF layout). SF3 and Condo2 PDFs are in `fixtures/` too if Kevin wants to extend/cross-check this.
+
+### Still not done
+- IAM grants + `deploy-gcp.ps1` wiring for the signed-URL upload path from part 1 (blocked by the safety classifier, needs Kevin or an explicit re-ask).
+- `PDFPreview.tsx` deletion (same classifier block).
+- The "why are there 17 HardStops on an official GSE reference sample" question above — worth a look before trusting rule-engine output on real appraiser submissions.
+- Postgres migration, tests/CI, GitHub push, Bubble proxy — untouched, per the build directive's own multi-week phase plan.
+
+All of the above is **uncommitted**, sitting in the working tree for review as a diff, per this repo's whole design.
 
 ## Not done yet
 

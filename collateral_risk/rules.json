@@ -526,6 +526,7 @@
       "logic": {
         "type": "field_in_set",
         "field": "PROPERTY_DETAIL/OverallQualityRatingCode",
+        "mode": "flag_if_in",
         "allowed": [
           "Q6"
         ]
