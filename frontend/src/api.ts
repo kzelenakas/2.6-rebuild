@@ -37,6 +37,38 @@ export function getUserHeaders(): Record<string, string> {
   return headers;
 }
 
+// Cloud Run rejects any request body over ~32MB before it reaches this app --
+// no server-side setting can raise that. Files anywhere near it go straight
+// to GCS via a signed URL instead of through the app server; only the (tiny)
+// follow-up request naming the uploaded object goes through Cloud Run.
+const SIGNED_UPLOAD_THRESHOLD = 20 * 1024 * 1024;
+
+// Returns null (never throws) when direct-to-storage upload isn't configured
+// for this environment (e.g. local dev) or the request fails for any other
+// reason -- callers fall back to the direct multipart upload in that case.
+async function uploadViaSignedUrl(file: File): Promise<{ objectPath: string; filename: string } | null> {
+  try {
+    const initRes = await fetch("/api/uploads/init", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", ...getUserHeaders() },
+      body: JSON.stringify({ filename: file.name }),
+    });
+    if (!initRes.ok) return null;
+    const { uploadUrl, objectPath } = await initRes.json();
+
+    const putRes = await fetch(uploadUrl, {
+      method: "PUT",
+      headers: { "Content-Type": "application/octet-stream" },
+      body: file,
+    });
+    if (!putRes.ok) return null;
+
+    return { objectPath, filename: file.name };
+  } catch {
+    return null;
+  }
+}
+
 export async function uploadReport(
   file: File,
   profile?: string,
@@ -44,20 +76,28 @@ export async function uploadReport(
   appraiserBubbleId?: string,
   bubbleOrderId?: string
 ): Promise<Run> {
-  const body = new FormData();
-  body.append("file", file);
-  
   let url = profile ? `/api/runs?profile=${encodeURIComponent(profile)}` : "/api/runs";
   const params = new URLSearchParams();
   if (appraiserEmail) params.append("appraiser_email", appraiserEmail);
   if (appraiserBubbleId) params.append("appraiser_bubble_id", appraiserBubbleId);
   if (bubbleOrderId) params.append("bubble_order_id", bubbleOrderId);
-  
+
   const queryStr = params.toString();
   if (queryStr) {
     url += (url.includes("?") ? "&" : "?") + queryStr;
   }
 
+  const viaStorage = file.size >= SIGNED_UPLOAD_THRESHOLD ? await uploadViaSignedUrl(file) : null;
+  if (viaStorage) {
+    return handle(await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", ...getUserHeaders() },
+      body: JSON.stringify(viaStorage),
+    }));
+  }
+
+  const body = new FormData();
+  body.append("file", file);
   return handle(await fetch(url, {
     method: "POST",
     headers: getUserHeaders(),
@@ -66,6 +106,15 @@ export async function uploadReport(
 }
 
 export async function uploadRevision(runId: string, file: File): Promise<Run> {
+  const viaStorage = file.size >= SIGNED_UPLOAD_THRESHOLD ? await uploadViaSignedUrl(file) : null;
+  if (viaStorage) {
+    return handle(await fetch(`/api/runs/${runId}/revision`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", ...getUserHeaders() },
+      body: JSON.stringify(viaStorage),
+    }));
+  }
+
   const body = new FormData();
   body.append("file", file);
   return handle(await fetch(`/api/runs/${runId}/revision`, {

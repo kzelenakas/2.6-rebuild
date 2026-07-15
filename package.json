@@ -12,12 +12,14 @@
     "lint": "tsc --noEmit"
   },
   "dependencies": {
-    "@google/genai": "latest",
+    "@google-cloud/storage": "^7.21.0",
+    "@google/genai": "^2.11.0",
     "@tailwindcss/vite": "^4.3.2",
-    "@xmldom/xmldom": "latest",
-    "adm-zip": "latest",
+    "@xmldom/xmldom": "^0.9.10",
+    "adm-zip": "^0.6.0",
     "express": "^4.21.2",
-    "multer": "latest",
+    "libxmljs2": "^0.37.0",
+    "multer": "^2.2.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "tailwindcss": "^4.3.2"

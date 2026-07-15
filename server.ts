@@ -33,9 +33,30 @@ import { initParser, parseAndNormalizeXML, getFieldManifest } from "./src/server
 import { evaluateReport } from "./src/server/engine";
 import { getEncodingSuggestion, tryHeuristicEncode, callGemini, getInteractiveEncodingSuggestion, verifyRuleEncoding, getGoogleGenAI } from "./src/server/suggester";
 import { renderCSV, renderPDF } from "./src/server/exports";
+import { uploadsConfigured, createSignedUploadUrl, downloadUploadedObject, deleteUploadedObject } from "./src/server/uploads";
 
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
-const upload = multer({ storage: multer.memoryStorage() });
+// ponytail: 500MB in-memory cap, not streamed to disk -- fine for this tool's
+// low concurrency. Only reached via the direct-multipart fallback (local dev,
+// or GCS not configured); Cloud Run's own ~32MB request ceiling makes this
+// moot in production, where large files should go through the signed-URL
+// upload flow (/api/uploads/init) instead.
+const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 500 * 1024 * 1024 } });
+
+// Resolves an uploaded file from either the direct multipart path (req.file)
+// or the signed-URL-to-GCS path (req.body.objectPath naming an object this
+// server already handed out a write URL for). Returns null if neither is
+// present so the caller can 422.
+async function resolveUploadedFile(req: express.Request): Promise<{ buffer: Buffer; filename: string; objectPath: string | null } | null> {
+  if (req.file) {
+    return { buffer: req.file.buffer, filename: req.file.originalname || "upload.xml", objectPath: null };
+  }
+  const objectPath = req.body && typeof req.body.objectPath === "string" ? req.body.objectPath : null;
+  if (!objectPath) return null;
+  const filename = (req.body && typeof req.body.filename === "string" && req.body.filename) || "upload.zip";
+  const buffer = await downloadUploadedObject(objectPath);
+  return { buffer, filename, objectPath };
+}
 
 function getIapEmail(req: express.Request): string {
   const raw = req.headers["x-goog-authenticated-user-email"];
@@ -177,20 +198,48 @@ async function startServer() {
     }
   });
 
+  // Direct-to-storage upload handshake: for files large enough to risk Cloud
+  // Run's ~32MB request ceiling, the client PUTs straight to GCS with this
+  // signed URL, then calls POST /api/runs with the returned objectPath
+  // instead of a multipart body. 404s (uploadsConfigured() false) in any
+  // environment without QC_UPLOAD_BUCKET set -- the client falls back to the
+  // direct multipart upload in that case.
+  app.post("/api/uploads/init", async (req, res) => {
+    try {
+      if (!uploadsConfigured()) {
+        res.status(404).json({ error: "Direct-to-storage upload is not configured in this environment" });
+        return;
+      }
+      const filename = String(req.body?.filename || "upload");
+      const result = await createSignedUploadUrl(filename);
+      if (!result) {
+        res.status(500).json({ error: "Failed to create signed upload URL" });
+        return;
+      }
+      res.json(result);
+    } catch (e: any) {
+      res.status(500).json({ error: e.message || String(e) });
+    }
+  });
+
   // Upload / evaluate runs
   app.post("/api/runs", upload.single("file"), async (req, res) => {
     try {
-      if (!req.file) {
-        res.status(422).json({ error: "No file uploaded" });
+      const uploaded = await resolveUploadedFile(req).catch((err: any) => {
+        res.status(422).json({ error: `Failed to retrieve uploaded file: ${err.message}` });
+        return null;
+      });
+      if (!uploaded) {
+        if (!res.headersSent) res.status(422).json({ error: "No file uploaded" });
         return;
       }
 
       let xmlBuffer: Buffer;
-      const filename = req.file.originalname || "upload.xml";
+      const filename = uploaded.filename;
 
       if (filename.toLowerCase().endsWith(".zip")) {
         try {
-          const zip = new AdmZip(req.file.buffer);
+          const zip = new AdmZip(uploaded.buffer);
           const xmlEntry = zip.getEntries().find(e => e.entryName.toLowerCase().endsWith(".xml"));
           if (!xmlEntry) {
             res.status(422).json({ error: "No XML report file found inside the uploaded ZIP archive." });
@@ -202,7 +251,7 @@ async function startServer() {
           return;
         }
       } else {
-        xmlBuffer = req.file.buffer;
+        xmlBuffer = uploaded.buffer;
       }
 
       const xmlString = xmlBuffer.toString("utf-8");
@@ -262,9 +311,10 @@ async function startServer() {
       // Retain original upload
       const filesDir = path.join(DATA_DIR, "files", runId);
       fs.mkdirSync(filesDir, { recursive: true });
-      fs.writeFileSync(path.join(filesDir, filename), req.file.buffer);
+      fs.writeFileSync(path.join(filesDir, filename), uploaded.buffer);
 
       saveRun(run);
+      if (uploaded.objectPath) await deleteUploadedObject(uploaded.objectPath);
       res.json(run);
     } catch (e: any) {
       res.status(500).json({ error: e.message || String(e) });
@@ -284,17 +334,21 @@ async function startServer() {
         return;
       }
 
-      if (!req.file) {
-        res.status(422).json({ error: "No file uploaded" });
+      const uploaded = await resolveUploadedFile(req).catch((err: any) => {
+        res.status(422).json({ error: `Failed to retrieve uploaded file: ${err.message}` });
+        return null;
+      });
+      if (!uploaded) {
+        if (!res.headersSent) res.status(422).json({ error: "No file uploaded" });
         return;
       }
 
       let xmlBuffer: Buffer;
-      const filename = req.file.originalname || "revised_upload.xml";
+      const filename = uploaded.filename;
 
       if (filename.toLowerCase().endsWith(".zip")) {
         try {
-          const zip = new AdmZip(req.file.buffer);
+          const zip = new AdmZip(uploaded.buffer);
           const xmlEntry = zip.getEntries().find(e => e.entryName.toLowerCase().endsWith(".xml"));
           if (!xmlEntry) {
             res.status(422).json({ error: "No XML report file found inside the uploaded ZIP archive." });
@@ -306,7 +360,7 @@ async function startServer() {
           return;
         }
       } else {
-        xmlBuffer = req.file.buffer;
+        xmlBuffer = uploaded.buffer;
       }
 
       const xmlString = xmlBuffer.toString("utf-8");
@@ -339,7 +393,7 @@ async function startServer() {
       // Save revision file to disk
       const filesDir = path.join(DATA_DIR, "files", run.id);
       fs.mkdirSync(filesDir, { recursive: true });
-      fs.writeFileSync(path.join(filesDir, `revised_${filename}`), req.file.buffer);
+      fs.writeFileSync(path.join(filesDir, `revised_${filename}`), uploaded.buffer);
 
       // Add audit log entry
       if (!run.audit_log) run.audit_log = [];
@@ -350,6 +404,7 @@ async function startServer() {
       });
 
       saveRun(run);
+      if (uploaded.objectPath) await deleteUploadedObject(uploaded.objectPath);
       res.json(run);
     } catch (e: any) {
       res.status(500).json({ error: e.message || String(e) });
@@ -1199,6 +1254,17 @@ ${revisionsText}
     } catch (e: any) {
       res.status(500).json({ error: e.message || String(e) });
     }
+  });
+
+  // Multer throws (via next(err)) instead of returning normally when a direct
+  // multipart upload exceeds the fileSize limit above -- without this handler
+  // that becomes an unhandled 500 instead of a clear, actionable 413.
+  app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+    if (err instanceof multer.MulterError && err.code === "LIMIT_FILE_SIZE") {
+      res.status(413).json({ error: "File too large for direct upload. Large reports should use the direct-to-storage upload path." });
+      return;
+    }
+    next(err);
   });
 
   // --- Vite Dev Middleware / Static Assets serving ---

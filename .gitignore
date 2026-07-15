@@ -5,3 +5,16 @@ __pycache__/
 .pytest_cache/
 node_modules/
 frontend/dist/
+
+# Live data store — boot-seeded from rules/h1_rules.json + rules/seed_rules.json
+# into DATA_DIR at startup (see src/server/db.ts). Never the source of truth;
+# tracking it in git caused the dual-source-of-truth bug (live edits diverging
+# from the seed files with no clear which-one-wins rule).
+data/rules.json
+data/runs.json
+data/profiles.json
+data/users.json
+data/archives/
+data/files/
+data/rules_seed_version.txt
+dist/

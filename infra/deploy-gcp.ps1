@@ -130,7 +130,7 @@ $deployArgs = @(
     "--add-cloudsql-instances", $conn,
     "--add-volume", "name=files,type=cloud-storage,bucket=$bucket",
     "--add-volume-mount", "volume=files,mount-path=/data/files",
-    "--update-env-vars", "QC_DB_URL=postgresql+psycopg://postgres:$DbPassword@/qc?host=/cloudsql/$conn,QC_DATA_CLASS=real,QC_AI_BACKEND=stub,QC_FILES_DIR=/data/files,QC_DATA_DIR=/data/files/appdata,GIT_COMMIT=$gitCommit,GCP_PROJECT=$ProjectId",
+    "--update-env-vars", "QC_DB_URL=postgresql+psycopg://postgres:$DbPassword@/qc?host=/cloudsql/$conn,QC_DATA_CLASS=real,QC_AI_BACKEND=stub,QC_FILES_DIR=/data/files,QC_DATA_DIR=/data/files/appdata,QC_UPLOAD_BUCKET=$bucket,GIT_COMMIT=$gitCommit,GCP_PROJECT=$ProjectId",
     "--memory", "1Gi", "--cpu", "1", "--min-instances", "0", "--max-instances", "2"
 )
 if ($secretRefs.Count -gt 0) {
