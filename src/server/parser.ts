@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { DOMParser } from "@xmldom/xmldom";
+import { validateAgainstSchema } from "./schemaValidation";
 
 export interface NormalizedField {
   value: string | null;
@@ -167,17 +168,32 @@ export function parseAndNormalizeXML(xmlString: string, filename: string): {
 
   try {
     doc = new DOMParser({
-      errorHandler: {
-        error: (msg) => { structural_errors.push({ code: "XML_PARSE", message: msg, location: "error" }); },
-        fatalError: (msg) => { throw new Error(msg); }
-      } as any
-    }).parseFromString(xmlString, "text/xml");
+      // @xmldom/xmldom 0.9's error API: a single onError(level, msg) callback
+      // replacing the old errorHandler: {error, fatalError} object (which
+      // this version silently ignores, so parsing "succeeded" with no doc
+      // and every upload reported parse_failed=true regardless of how well-
+      // formed the XML actually was). fatalError still throws from inside
+      // the library itself after calling onError, so only record non-fatal
+      // levels here -- the catch block below handles fatalError once.
+      onError: (level: string, msg: string) => {
+        if (level !== "fatalError") {
+          structural_errors.push({ code: "XML_PARSE", message: msg, location: level });
+        }
+      }
+    } as any).parseFromString(xmlString, "text/xml");
   } catch (e: any) {
     structural_errors.push({
       code: "XML_PARSE",
       message: e.message || String(e),
       location: "line 1"
     });
+  }
+
+  // Only meaningful once the document is at least well-formed -- a schema
+  // validation pass over unparseable XML would just be noise on top of the
+  // XML_PARSE error already recorded above.
+  if (doc) {
+    structural_errors.push(...validateAgainstSchema(xmlString));
   }
 
   const subject = doc ? getSubjectNode(doc) : null;
