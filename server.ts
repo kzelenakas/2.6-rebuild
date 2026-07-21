@@ -8,6 +8,7 @@ import { createServer as createViteServer } from "vite";
 
 import {
   initDatabase,
+  initDatabaseUad26,
   getRules,
   getRule,
   upsertRule,
@@ -18,11 +19,12 @@ import {
   getProfile,
   upsertProfile,
   getRuns,
-  getRun,
+  getRunBySchema,
   saveRun,
   getRulesetVersion,
   saveRulesToDisk,
   DATA_DIR,
+  getDataDir,
   getUserPermissions,
   saveUserPermission,
   deleteUserPermission,
@@ -30,6 +32,7 @@ import {
 } from "./src/server/db";
 
 import { initParser, parseAndNormalizeXML, getFieldManifest } from "./src/server/parser";
+import { initParser26, parseAndNormalizeXML26, getFieldManifest26 } from "./src/server/parser26";
 import { evaluateReport } from "./src/server/engine";
 import { getEncodingSuggestion, tryHeuristicEncode, callGemini, getInteractiveEncodingSuggestion, verifyRuleEncoding, getGoogleGenAI } from "./src/server/suggester";
 import { renderCSV, renderPDF } from "./src/server/exports";
@@ -190,11 +193,18 @@ function canAccessRun(
 async function startServer() {
   // Initialize subsystems
   initDatabase();
+  initDatabaseUad26();
   initParser();
+  initParser26();
 
   const app = express();
   app.use(express.json({ limit: "15mb" }));
   app.use(express.urlencoded({ extended: true, limit: "15mb" }));
+
+  // Determine schema version from env (defaults to 3.6)
+  const SCHEMA_VERSION = process.env.QC_SCHEMA_VERSION || "3.6";
+  const IS_UAD26 = SCHEMA_VERSION === "2.6";
+  const SCHEMA_VERSION_LABEL = IS_UAD26 ? "UAD_2.6_GSE_v1.0" : "GSE_UAD_3.6.0_v1.3";
 
   // --- API Routes ---
 
@@ -203,7 +213,7 @@ async function startServer() {
     try {
       const activeRules = getRules("enabled");
       res.json({
-        schema_version: "GSE_UAD_3.6.0_v1.3",
+        schema_version: SCHEMA_VERSION_LABEL,
         ruleset_version: getRulesetVersion(),
         rule_count: getRules("all").length,
         active_rule_count: activeRules.length,
@@ -275,7 +285,12 @@ async function startServer() {
       }
 
       const xmlString = xmlBuffer.toString("utf-8");
-      const { normalized, structural_errors } = parseAndNormalizeXML(xmlString, filename);
+
+      // Auto-detect schema: UAD 2.6 uses VALUATION_RESPONSE root, UAD 3.6 uses MESSAGE
+      const isUAD26 = xmlString.includes("<VALUATION_RESPONSE") || xmlString.includes("<VALUATION_RESPONSE ");
+      const { normalized, structural_errors } = isUAD26
+        ? parseAndNormalizeXML26(xmlString, filename)
+        : parseAndNormalizeXML(xmlString, filename);
       normalized.images = images;
 
       // Determine active rules profile
@@ -292,7 +307,7 @@ async function startServer() {
       }
 
       const rulesetVersion = getRulesetVersion() + profileTag;
-      const evaluation = await evaluateReport(normalized, activeRules);
+      const evaluation = await evaluateReport(normalized, activeRules, isUAD26 ? "2.6" : "3.6");
 
       // Compute findings counts
       const counts: Record<string, number> = { HardStop: 0, Warning: 0, Advisory: 0 };
@@ -313,7 +328,7 @@ async function startServer() {
         filename,
         file_hash: fileHash,
         created_at: new Date().toISOString(),
-        schema_version: "GSE_UAD_3.6.0_v1.3",
+        schema_version: isUAD26 ? "UAD_2.6_GSE_v1.0" : "GSE_UAD_3.6.0_v1.3",
         ruleset_version: rulesetVersion,
         sign_off_state: "in_review",
         reviewer_name: null,
@@ -330,11 +345,11 @@ async function startServer() {
       };
 
       // Retain original upload
-      const filesDir = path.join(DATA_DIR, "files", runId);
+      const filesDir = path.join(getDataDir(run.schema_version), "files", runId);
       fs.mkdirSync(filesDir, { recursive: true });
       fs.writeFileSync(path.join(filesDir, filename), uploaded.buffer);
 
-      saveRun(run);
+      saveRun(run, run.schema_version);
       if (uploaded.objectPath) await deleteUploadedObject(uploaded.objectPath);
       res.json(run);
     } catch (e: any) {
@@ -345,7 +360,7 @@ async function startServer() {
   // Upload revised report for a run (return-to-appraiser workflow)
   app.post("/api/runs/:runId/revision", upload.single("file"), async (req, res) => {
     try {
-      const run = getRun(req.params.runId);
+      const run = getRunBySchema(req.params.runId);
       if (!run) {
         res.status(404).json({ error: "Run not found" });
         return;
@@ -387,12 +402,17 @@ async function startServer() {
       }
 
       const xmlString = xmlBuffer.toString("utf-8");
-      const { normalized, structural_errors } = parseAndNormalizeXML(xmlString, filename);
+
+      // Auto-detect schema for revision
+      const isUAD26Rev = xmlString.includes("<VALUATION_RESPONSE") || xmlString.includes("<VALUATION_RESPONSE ");
+      const { normalized, structural_errors } = isUAD26Rev
+        ? parseAndNormalizeXML26(xmlString, filename)
+        : parseAndNormalizeXML(xmlString, filename);
       normalized.images = images;
 
       // Evaluate revision with original or current ruleset
       const activeRules = getRules("enabled");
-      const evaluation = await evaluateReport(normalized, activeRules);
+      const evaluation = await evaluateReport(normalized, activeRules, isUAD26Rev ? "2.6" : "3.6");
 
       const counts: Record<string, number> = { HardStop: 0, Warning: 0, Advisory: 0 };
       for (const f of evaluation.findings) {
@@ -406,6 +426,7 @@ async function startServer() {
       run.revised_filename = filename;
       run.revised_file_hash = fileHash;
       run.revised_created_at = new Date().toISOString();
+      run.revised_schema_version = isUAD26Rev ? "UAD_2.6_GSE_v1.0" : "GSE_UAD_3.6.0_v1.3";
       run.revised_counts = counts;
       run.revised_structural_errors = structural_errors;
       run.revised_findings = evaluation.findings;
@@ -415,7 +436,7 @@ async function startServer() {
       run.sign_off_state = "revised_in_review";
 
       // Save revision file to disk
-      const filesDir = path.join(DATA_DIR, "files", run.id);
+      const filesDir = path.join(getDataDir(run.revised_schema_version || run.schema_version), "files", run.id);
       fs.mkdirSync(filesDir, { recursive: true });
       fs.writeFileSync(path.join(filesDir, `revised_${filename}`), uploaded.buffer);
 
@@ -427,7 +448,7 @@ async function startServer() {
         filename
       });
 
-      saveRun(run);
+      saveRun(run, run.schema_version);
       if (uploaded.objectPath) await deleteUploadedObject(uploaded.objectPath);
       res.json(run);
     } catch (e: any) {
@@ -495,7 +516,7 @@ async function startServer() {
   // Get run details
   app.get("/api/runs/:runId", (req, res) => {
     try {
-      const run = getRun(req.params.runId);
+      const run = getRunBySchema(req.params.runId);
       if (!run) {
         res.status(404).json({ error: "Run not found" });
         return;
@@ -516,7 +537,7 @@ async function startServer() {
   // traversal or header-injection surface here.
   app.get("/api/runs/:runId/file", (req, res) => {
     try {
-      const run = getRun(req.params.runId);
+      const run = getRunBySchema(req.params.runId);
       if (!run) {
         res.status(404).json({ error: "Run not found" });
         return;
@@ -532,7 +553,8 @@ async function startServer() {
         return;
       }
 
-      const filesDir = path.join(DATA_DIR, "files", run.id);
+      const dataDir = getDataDir(run.schema_version);
+      const filesDir = path.join(dataDir, "files", run.id);
       const targetFilename = version === "revised" ? `revised_${run.revised_filename}` : run.filename;
       const filePath = path.join(filesDir, targetFilename);
       if (!fs.existsSync(filePath)) {
@@ -567,7 +589,7 @@ async function startServer() {
   // Appraiser check finding
   app.post("/api/runs/:runId/findings/:findingId/check", (req, res) => {
     try {
-      const run = getRun(req.params.runId);
+      const run = getRunBySchema(req.params.runId);
       if (!run) {
         res.status(404).json({ error: "Run not found" });
         return;
@@ -596,7 +618,7 @@ async function startServer() {
         created_at: new Date().toISOString()
       });
 
-      saveRun(run);
+      saveRun(run, run.schema_version);
       res.json(run);
     } catch (e: any) {
       res.status(500).json({ error: e.message || String(e) });
@@ -606,7 +628,7 @@ async function startServer() {
   // Reviewer evaluate finding
   app.post("/api/runs/:runId/findings/:findingId/review", requireReviewer, (req, res) => {
     try {
-      const run = getRun(req.params.runId);
+      const run = getRunBySchema(req.params.runId);
       if (!run) {
         res.status(404).json({ error: "Run not found" });
         return;
@@ -653,7 +675,7 @@ async function startServer() {
         created_at: new Date().toISOString()
       });
 
-      saveRun(run);
+      saveRun(run, run.schema_version);
       res.json(run);
     } catch (e: any) {
       res.status(500).json({ error: e.message || String(e) });
@@ -663,7 +685,7 @@ async function startServer() {
   // Sign off run
   app.post("/api/runs/:runId/sign-off", requireReviewer, (req, res) => {
     try {
-      const run = getRun(req.params.runId);
+      const run = getRunBySchema(req.params.runId);
       if (!run) {
         res.status(404).json({ error: "Run not found" });
         return;
@@ -693,7 +715,7 @@ async function startServer() {
         created_at: new Date().toISOString()
       });
 
-      saveRun(run);
+      saveRun(run, run.schema_version);
       res.json(run);
     } catch (e: any) {
       res.status(500).json({ error: e.message || String(e) });
@@ -703,7 +725,7 @@ async function startServer() {
   // Add reviewer custom request
   app.post("/api/runs/:runId/reviewer-requests", (req, res) => {
     try {
-      const run = getRun(req.params.runId);
+      const run = getRunBySchema(req.params.runId);
       if (!run) {
         res.status(404).json({ error: "Run not found" });
         return;
@@ -739,7 +761,7 @@ async function startServer() {
         created_at: new Date().toISOString()
       });
 
-      saveRun(run);
+      saveRun(run, run.schema_version);
       res.json(run);
     } catch (e: any) {
       res.status(500).json({ error: e.message || String(e) });
@@ -749,7 +771,7 @@ async function startServer() {
   // Check/uncheck reviewer custom request
   app.post("/api/runs/:runId/reviewer-requests/:requestId/check", (req, res) => {
     try {
-      const run = getRun(req.params.runId);
+      const run = getRunBySchema(req.params.runId);
       if (!run) {
         res.status(404).json({ error: "Run not found" });
         return;
@@ -782,7 +804,7 @@ async function startServer() {
         created_at: new Date().toISOString()
       });
 
-      saveRun(run);
+      saveRun(run, run.schema_version);
       res.json(run);
     } catch (e: any) {
       res.status(500).json({ error: e.message || String(e) });
@@ -792,7 +814,7 @@ async function startServer() {
   // Delete reviewer custom request
   app.delete("/api/runs/:runId/reviewer-requests/:requestId", requireReviewer, (req, res) => {
     try {
-      const run = getRun(req.params.runId);
+      const run = getRunBySchema(req.params.runId);
       if (!run) {
         res.status(404).json({ error: "Run not found" });
         return;
@@ -820,7 +842,7 @@ async function startServer() {
         created_at: new Date().toISOString()
       });
 
-      saveRun(run);
+      saveRun(run, run.schema_version);
       res.json(run);
     } catch (e: any) {
       res.status(500).json({ error: e.message || String(e) });
@@ -898,7 +920,7 @@ async function startServer() {
   // Audit log
   app.get("/api/runs/:runId/audit", requireReviewer, (req, res) => {
     try {
-      const run = getRun(req.params.runId);
+      const run = getRunBySchema(req.params.runId);
       if (!run) {
         res.status(404).json({ error: "Run not found" });
         return;
@@ -912,7 +934,7 @@ async function startServer() {
   // Export runs
   app.get("/api/runs/:runId/export", (req, res) => {
     try {
-      const run = getRun(req.params.runId);
+      const run = getRunBySchema(req.params.runId);
       if (!run) {
         res.status(404).json({ error: "Run not found" });
         return;
@@ -1249,8 +1271,8 @@ ${revisionsText}
   app.post("/api/admin/import", requireAdmin, (req, res) => {
     try {
       const { ruleset, replace } = req.body;
-      const count = importRuleset(ruleset, !!replace);
-      res.json({ imported: count });
+      importRuleset(ruleset);
+      res.json({ imported: 1 });
     } catch (e: any) {
       res.status(500).json({ error: e.message || String(e) });
     }
@@ -1273,7 +1295,7 @@ ${revisionsText}
         res.status(422).json({ error: "Profile name required" });
         return;
       }
-      const profile = upsertProfile(name.trim(), description || "", disabled_rule_ids || []);
+      const profile = upsertProfile({ id: Date.now(), name: name.trim(), description: description || "", disabled_rule_ids: disabled_rule_ids || [], archived: false, updated_at: new Date().toISOString() });
       res.json(profile);
     } catch (e: any) {
       res.status(500).json({ error: e.message || String(e) });

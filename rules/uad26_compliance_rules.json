@@ -1,0 +1,3273 @@
+{
+  "rules": [
+    {
+      "rule_id": "UAD26-001",
+      "category": "Subject Property",
+      "description": "Subject property street address is required",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/@_StreetAddress"
+      },
+      "citation": "Appendix B: Data Field Conditionality 1004/70 = R",
+      "messages": {
+        "appraiser": "Subject property street address is required (Form 1004, SUBJECT section).",
+        "reviewer": "Missing required subject property street address per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-002",
+      "category": "Subject Property",
+      "description": "Subject property city is required",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/@_City"
+      },
+      "citation": "Appendix B: Data Field Conditionality 1004/70 = R",
+      "messages": {
+        "appraiser": "Subject property city is required (Form 1004, SUBJECT section).",
+        "reviewer": "Missing required subject property city per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-003",
+      "category": "Subject Property",
+      "description": "Subject property state is required",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/@_State"
+      },
+      "citation": "Appendix B: Data Field Conditionality 1004/70 = R",
+      "messages": {
+        "appraiser": "Subject property state is required (Form 1004, SUBJECT section).",
+        "reviewer": "Missing required subject property state per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-004",
+      "category": "Subject Property",
+      "description": "Subject property postal code is required",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/@_PostalCode"
+      },
+      "citation": "Appendix B: Data Field Conditionality 1004/70 = R",
+      "messages": {
+        "appraiser": "Subject property zip code is required (Form 1004, SUBJECT section).",
+        "reviewer": "Missing required subject property postal code per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-005",
+      "category": "Report Header",
+      "description": "Appraisal form type is required",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "doc:/VALUATION_RESPONSE/REPORT/@AppraisalFormType"
+      },
+      "citation": "Appendix B: Data Field Conditionality 1004/70 = R",
+      "messages": {
+        "appraiser": "Appraisal form type (e.g., FNM1004) is required in the report header.",
+        "reviewer": "Missing required appraisal form type per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-006",
+      "category": "Valuation",
+      "description": "Property appraised value amount is required",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "doc:/VALUATION_RESPONSE/VALUATION/@PropertyAppraisedValueAmount"
+      },
+      "citation": "Appendix B: Data Field Conditionality 1004/70 = R",
+      "messages": {
+        "appraiser": "The appraised value (Market Value) is required in the Reconciliation section.",
+        "reviewer": "Missing required property appraised value amount per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-007",
+      "category": "Valuation",
+      "description": "Appraisal effective date is required",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "doc:/VALUATION_RESPONSE/VALUATION/@AppraisalEffectiveDate"
+      },
+      "citation": "Appendix B: Data Field Conditionality 1004/70 = R",
+      "messages": {
+        "appraiser": "The appraisal effective date is required in the Reconciliation section.",
+        "reviewer": "Missing required appraisal effective date per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-008",
+      "category": "Appraiser",
+      "description": "Appraiser license identifier is required",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "doc:/VALUATION_RESPONSE/PARTIES/APPRAISER/APPRAISER_LICENSE/@_Identifier"
+      },
+      "citation": "Appendix B: Data Field Conditionality 1004/70 = R",
+      "messages": {
+        "appraiser": "Appraiser state license/certification number is required in the certification section.",
+        "reviewer": "Missing required appraiser license identifier per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-009",
+      "category": "Comparable Sale 1",
+      "description": "Comparable sale 1 property sales amount is required",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/@PropertySalesAmount"
+      },
+      "citation": "Appendix B: Data Field Conditionality 1004/70 = R",
+      "messages": {
+        "appraiser": "Sale price is required for Comparable Sale 1 in the Sales Comparison Approach.",
+        "reviewer": "Missing required sale price for Comparable Sale 1 per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-010",
+      "category": "Comparable Sale 1",
+      "description": "Comparable sale 1 property street address is required",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/LOCATION/@PropertyStreetAddress"
+      },
+      "citation": "Appendix B: Data Field Conditionality 1004/70 = R",
+      "messages": {
+        "appraiser": "Property address is required for Comparable Sale 1.",
+        "reviewer": "Missing required property street address for Comparable Sale 1 per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-011",
+      "category": "Comparable Sale 1",
+      "description": "Comparable sale 1 property city is required",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/LOCATION/@PropertyCity"
+      },
+      "citation": "Appendix B: Data Field Conditionality 1004/70 = R",
+      "messages": {
+        "appraiser": "Property city is required for Comparable Sale 1.",
+        "reviewer": "Missing required property city for Comparable Sale 1 per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-012",
+      "category": "Comparable Sale 1",
+      "description": "Comparable sale 1 property state is required",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/LOCATION/@PropertyState"
+      },
+      "citation": "Appendix B: Data Field Conditionality 1004/70 = R",
+      "messages": {
+        "appraiser": "Property state is required for Comparable Sale 1.",
+        "reviewer": "Missing required property state for Comparable Sale 1 per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-013",
+      "category": "Comparable Sale 1",
+      "description": "Comparable sale 1 property postal code is required",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/LOCATION/@PropertyPostalCode"
+      },
+      "citation": "Appendix B: Data Field Conditionality 1004/70 = R",
+      "messages": {
+        "appraiser": "Property zip code is required for Comparable Sale 1.",
+        "reviewer": "Missing required property postal code for Comparable Sale 1 per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-014",
+      "category": "Subject Property",
+      "description": "Subject property gross living area is required",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE[@PropertySequenceIdentifier='0']/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION[@ExtensionSectionOrganizationName='UNIFORM APPRAISAL DATASET']/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEGrossLivingAreaSquareFeetCount"
+      },
+      "citation": "Appendix B: Data Field Conditionality 1004/70 = R",
+      "messages": {
+        "appraiser": "Subject property gross living area (sq ft) is required in the Sales Comparison grid.",
+        "reviewer": "Missing required subject gross living area per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-015",
+      "category": "Subject Property",
+      "description": "Subject property overall condition rating is required",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE[@PropertySequenceIdentifier='0']/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION[@ExtensionSectionOrganizationName='UNIFORM APPRAISAL DATASET']/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEOverallConditionType"
+      },
+      "citation": "Appendix B: Data Field Conditionality 1004/70 = R",
+      "messages": {
+        "appraiser": "Subject property overall condition rating (C1-C6) is required in the Sales Comparison grid.",
+        "reviewer": "Missing required subject overall condition rating per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-016",
+      "category": "SUBJECT",
+      "description": "If (AppraisalPurposeType = Other) AND (AppraisalPurposeTypeOtherDescription = NULL)",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "conditional_field_present",
+        "conditions": [
+          {
+            "field": "AppraisalPurposeType",
+            "value": "Other",
+            "allowed": null
+          }
+        ],
+        "required_field": "AppraisalPurposeTypeOtherDescription",
+        "field": "doc:/VALUATION_RESPONSE/REPORT/@AppraisalPurposeTypeOtherDescription"
+      },
+      "citation": "GSE Appendix B: Appraisal Purpose Type Other Description (CR)",
+      "messages": {
+        "appraiser": "Assignment Type Other (describe): If (AppraisalPurposeType = Other) AND (AppraisalPurposeTypeOtherDescription = NULL)",
+        "reviewer": "Compliance check failed for Appraisal Purpose Type Other Description per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-017",
+      "category": "SUBJECT",
+      "description": "If LenderUnparsedName = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "doc:/VALUATION_RESPONSE/PARTIES/LENDER/@_UnparsedName"
+      },
+      "citation": "GSE Appendix B: Lender Unparsed Name (R)",
+      "messages": {
+        "appraiser": "Lender/Client: If LenderUnparsedName = NULL",
+        "reviewer": "Compliance check failed for Lender Unparsed Name per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-018",
+      "category": "SUBJECT",
+      "description": "If ListedWithinPreviousYearIndicator = NULL",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/LISTING_HISTORY"
+      },
+      "citation": "GSE Appendix B: Listed Within Previous Year Indicator (CR)",
+      "messages": {
+        "appraiser": "Is the subject property currently offered for sale or has it been offered for sale in the twelve months prior to the effective date of this appraisal?: If ListedWithinPreviousYearIndicator = NULL",
+        "reviewer": "Compliance check failed for Listed Within Previous Year Indicator per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-019",
+      "category": "SUBJECT",
+      "description": "If count(ListedWithinPreviousYearIndicator = {Y, N}) > 1",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/LISTING_HISTORY",
+        "allowed": [
+          "Y",
+          "N"
+        ],
+        "mode": "flag_if_in"
+      },
+      "citation": "GSE Appendix B: Listed Within Previous Year Indicator (CR)",
+      "messages": {
+        "appraiser": "Is the subject property currently offered for sale or has it been offered for sale in the twelve months prior to the effective date of this appraisal?: If count(ListedWithinPreviousYearIndicator = {Y, N}) > 1",
+        "reviewer": "Compliance check failed for Listed Within Previous Year Indicator per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-020",
+      "category": "SUBJECT",
+      "description": "If ListedWithinPreviousYearIndicator != {Y,N}",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/LISTING_HISTORY",
+        "allowed": [
+          "Y",
+          "N"
+        ],
+        "mode": "flag_if_not_in"
+      },
+      "citation": "GSE Appendix B: Listed Within Previous Year Indicator (CR)",
+      "messages": {
+        "appraiser": "Is the subject property currently offered for sale or has it been offered for sale in the twelve months prior to the effective date of this appraisal?: If ListedWithinPreviousYearIndicator != {Y,N}",
+        "reviewer": "Compliance check failed for Listed Within Previous Year Indicator per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-021",
+      "category": "SUBJECT",
+      "description": "If (ListedWithinPreviousYearIndicator = Y) AND (GSEDaysOnMarketDescription = NULL)",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "conditional_field_present",
+        "conditions": [
+          {
+            "field": "ListedWithinPreviousYearIndicator",
+            "value": "Y",
+            "allowed": null
+          }
+        ],
+        "required_field": "GSEDaysOnMarketDescription",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEDaysOnMarketDescription"
+      },
+      "citation": "GSE Appendix B: GSE Days On Market Description (CR)",
+      "messages": {
+        "appraiser": "Report data source(s) used, offering price(s) and date(s).: If (ListedWithinPreviousYearIndicator = Y) AND (GSEDaysOnMarketDescription = NULL)",
+        "reviewer": "Compliance check failed for GSE Days On Market Description per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-022",
+      "category": "SUBJECT",
+      "description": "If (ListedWithinPreviousYearIndicator = Y) AND (GSEDaysOnMarketDescription != [required format])",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "conditional_field_present",
+        "conditions": [
+          {
+            "field": "ListedWithinPreviousYearIndicator",
+            "value": "Y",
+            "allowed": null
+          }
+        ],
+        "required_field": "GSEDaysOnMarketDescription",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEDaysOnMarketDescription"
+      },
+      "citation": "GSE Appendix B: GSE Days On Market Description (CR)",
+      "messages": {
+        "appraiser": "Report data source(s) used, offering price(s) and date(s).: If (ListedWithinPreviousYearIndicator = Y) AND (GSEDaysOnMarketDescription != [required format])",
+        "reviewer": "Compliance check failed for GSE Days On Market Description per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-023",
+      "category": "CONTRACT",
+      "description": "If (AppraisalPurposeType = Purchase) AND (SalesContractReviewedIndicator = NULL)",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "conditional_field_present",
+        "conditions": [
+          {
+            "field": "AppraisalPurposeType",
+            "value": "Purchase",
+            "allowed": null
+          }
+        ],
+        "required_field": "SalesContractReviewedIndicator",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/SALES_CONTRACT"
+      },
+      "citation": "GSE Appendix B: Sales Contract Reviewed Indicator (CR)",
+      "messages": {
+        "appraiser": "I did/did not analyze the contract for sale for the subject purchase transaction.: If (AppraisalPurposeType = Purchase) AND (SalesContractReviewedIndicator = NULL)",
+        "reviewer": "Compliance check failed for Sales Contract Reviewed Indicator per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-024",
+      "category": "CONTRACT",
+      "description": "If (AppraisalPurposeType = Purchase) AND (GSESaleType = NULL)",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "conditional_field_present",
+        "conditions": [
+          {
+            "field": "AppraisalPurposeType",
+            "value": "Purchase",
+            "allowed": null
+          }
+        ],
+        "required_field": "GSESaleType",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/SALES_CONTRACT/SALES_CONTRACT_EXTENSION/SALES_CONTRACT_EXTENSION_SECTION/SALES_CONTRACT_EXTENSION_SECTION_DATA/SALES_TRANSACTION/@GSESaleType"
+      },
+      "citation": "GSE Appendix B: GSE Sale Type (CR)",
+      "messages": {
+        "appraiser": "Explain the results of the analysis of the contract for sale or why the analysis was not performed.: If (AppraisalPurposeType = Purchase) AND (GSESaleType = NULL)",
+        "reviewer": "Compliance check failed for GSE Sale Type per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-025",
+      "category": "CONTRACT",
+      "description": "If (AppraisalPurposeType = Purchase) AND (SalesContractReviewComment = NULL)",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "conditional_field_present",
+        "conditions": [
+          {
+            "field": "AppraisalPurposeType",
+            "value": "Purchase",
+            "allowed": null
+          }
+        ],
+        "required_field": "SalesContractReviewComment",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/SALES_CONTRACT/@_ReviewComment"
+      },
+      "citation": "GSE Appendix B: Sales Contract Review Comment (CR)",
+      "messages": {
+        "appraiser": "Explain the results of the analysis of the contract for sale or why the analysis was not performed.: If (AppraisalPurposeType = Purchase) AND (SalesContractReviewComment = NULL)",
+        "reviewer": "Compliance check failed for Sales Contract Review Comment per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-026",
+      "category": "CONTRACT",
+      "description": "If (AppraisalPurposeType = Purchase) AND (SalesContractAmount = NULL)",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "conditional_field_present",
+        "conditions": [
+          {
+            "field": "AppraisalPurposeType",
+            "value": "Purchase",
+            "allowed": null
+          }
+        ],
+        "required_field": "SalesContractAmount",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/SALES_CONTRACT/@_Amount"
+      },
+      "citation": "GSE Appendix B: Sales Contract Amount (CR)",
+      "messages": {
+        "appraiser": "Contract Price $: If (AppraisalPurposeType = Purchase) AND (SalesContractAmount = NULL)",
+        "reviewer": "Compliance check failed for Sales Contract Amount per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-027",
+      "category": "CONTRACT",
+      "description": "If (AppraisalPurposeType = Purchase) AND (SalesContractAmount != [required format])",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "conditional_field_present",
+        "conditions": [
+          {
+            "field": "AppraisalPurposeType",
+            "value": "Purchase",
+            "allowed": null
+          }
+        ],
+        "required_field": "SalesContractAmount",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/SALES_CONTRACT/@_Amount"
+      },
+      "citation": "GSE Appendix B: Sales Contract Amount (CR)",
+      "messages": {
+        "appraiser": "Contract Price $: If (AppraisalPurposeType = Purchase) AND (SalesContractAmount != [required format])",
+        "reviewer": "Compliance check failed for Sales Contract Amount per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-028",
+      "category": "CONTRACT",
+      "description": "If (AppraisalPurposeType = Purchase) AND (SalesContractDate = NULL)",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "conditional_field_present",
+        "conditions": [
+          {
+            "field": "AppraisalPurposeType",
+            "value": "Purchase",
+            "allowed": null
+          }
+        ],
+        "required_field": "SalesContractDate",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/SALES_CONTRACT/@_Date"
+      },
+      "citation": "GSE Appendix B: Sales Contract Date (CR)",
+      "messages": {
+        "appraiser": "Date of Contract: If (AppraisalPurposeType = Purchase) AND (SalesContractDate = NULL)",
+        "reviewer": "Compliance check failed for Sales Contract Date per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-029",
+      "category": "CONTRACT",
+      "description": "If (AppraisalPurposeType = Purchase) AND (SalesContractDate != [required format])",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "conditional_field_present",
+        "conditions": [
+          {
+            "field": "AppraisalPurposeType",
+            "value": "Purchase",
+            "allowed": null
+          }
+        ],
+        "required_field": "SalesContractDate",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/SALES_CONTRACT/@_Date"
+      },
+      "citation": "GSE Appendix B: Sales Contract Date (CR)",
+      "messages": {
+        "appraiser": "Date of Contract: If (AppraisalPurposeType = Purchase) AND (SalesContractDate != [required format])",
+        "reviewer": "Compliance check failed for Sales Contract Date per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-030",
+      "category": "CONTRACT",
+      "description": "If (AppraisalPurposeType = Purchase) AND (SellerIsOwnerIndicator = NULL)",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "conditional_field_present",
+        "conditions": [
+          {
+            "field": "AppraisalPurposeType",
+            "value": "Purchase",
+            "allowed": null
+          }
+        ],
+        "required_field": "SellerIsOwnerIndicator",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/SALES_CONTRACT"
+      },
+      "citation": "GSE Appendix B: Seller Is Owner Indicator (CR)",
+      "messages": {
+        "appraiser": "Is the property seller the owner of public record?: If (AppraisalPurposeType = Purchase) AND (SellerIsOwnerIndicator = NULL)",
+        "reviewer": "Compliance check failed for Seller Is Owner Indicator per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-031",
+      "category": "CONTRACT",
+      "description": "If (AppraisalPurposeType = Purchase) AND (SalesConcessionIndicator = NULL)",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "conditional_field_present",
+        "conditions": [
+          {
+            "field": "AppraisalPurposeType",
+            "value": "Purchase",
+            "allowed": null
+          }
+        ],
+        "required_field": "SalesConcessionIndicator",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/SALES_CONTRACT"
+      },
+      "citation": "GSE Appendix B: Sales Concession Indicator (CR)",
+      "messages": {
+        "appraiser": "Is there any financial assistance (loan charges, sale concessions, gift or down payment assistance, etc.) to be paid by any party on behalf of the borrower?: If (AppraisalPurposeType = Purchase) AND (SalesConcessionIndicator = NULL)",
+        "reviewer": "Compliance check failed for Sales Concession Indicator per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-032",
+      "category": "CONTRACT",
+      "description": "If (SalesConcessionIndicator = Y) AND (SalesConcessionDescription = NULL)",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "conditional_field_present",
+        "conditions": [
+          {
+            "field": "SalesConcessionIndicator",
+            "value": "Y",
+            "allowed": null
+          }
+        ],
+        "required_field": "SalesConcessionDescription",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/SALES_CONTRACT/@SalesConcessionDescription"
+      },
+      "citation": "GSE Appendix B: Sales Concession Description (CR)",
+      "messages": {
+        "appraiser": "If Yes, report the total dollar amount and describe the items to be paid.: If (SalesConcessionIndicator = Y) AND (SalesConcessionDescription = NULL)",
+        "reviewer": "Compliance check failed for Sales Concession Description per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-033",
+      "category": "NEIGHBORHOOD \u2013 One-Unit Housing Trends",
+      "description": "If NeighborhoodPropertyValueTrendType = NULL",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/NEIGHBORHOOD"
+      },
+      "citation": "GSE Appendix B: Neighborhood Property Value Trend Type (CR)",
+      "messages": {
+        "appraiser": "Property Values : If NeighborhoodPropertyValueTrendType = NULL",
+        "reviewer": "Compliance check failed for Neighborhood Property Value Trend Type per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-034",
+      "category": "NEIGHBORHOOD \u2013 One-Unit Housing Trends",
+      "description": "If count(NeighborhoodPropertyValueTrendType = {Increasing, Stable, Declining}) > 1",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/NEIGHBORHOOD",
+        "allowed": [
+          "Increasing",
+          "Stable",
+          "Declining"
+        ],
+        "mode": "flag_if_in"
+      },
+      "citation": "GSE Appendix B: Neighborhood Property Value Trend Type (CR)",
+      "messages": {
+        "appraiser": "Property Values : If count(NeighborhoodPropertyValueTrendType = {Increasing, Stable, Declining}) > 1",
+        "reviewer": "Compliance check failed for Neighborhood Property Value Trend Type per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-035",
+      "category": "NEIGHBORHOOD \u2013 One-Unit Housing Trends",
+      "description": "If NeighborhoodPropertyValueTrendType != {Increasing, Stable, Declining}",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/NEIGHBORHOOD",
+        "allowed": [
+          "Increasing",
+          "Stable",
+          "Declining"
+        ],
+        "mode": "flag_if_not_in"
+      },
+      "citation": "GSE Appendix B: Neighborhood Property Value Trend Type (CR)",
+      "messages": {
+        "appraiser": "Property Values : If NeighborhoodPropertyValueTrendType != {Increasing, Stable, Declining}",
+        "reviewer": "Compliance check failed for Neighborhood Property Value Trend Type per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-036",
+      "category": "NEIGHBORHOOD \u2013 One-Unit Housing Trends",
+      "description": "If NeighborhoodDemandSupplyType = NULL",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/NEIGHBORHOOD"
+      },
+      "citation": "GSE Appendix B: Neighborhood Demand Supply Type (CR)",
+      "messages": {
+        "appraiser": "Demand/Supply : If NeighborhoodDemandSupplyType = NULL",
+        "reviewer": "Compliance check failed for Neighborhood Demand Supply Type per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-037",
+      "category": "NEIGHBORHOOD \u2013 One-Unit Housing Trends",
+      "description": "If count(NeighborhoodDemandSupplyType = {Shortage, InBalance, OverSupply}) > 1",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/NEIGHBORHOOD",
+        "allowed": [
+          "Shortage",
+          "InBalance",
+          "OverSupply"
+        ],
+        "mode": "flag_if_in"
+      },
+      "citation": "GSE Appendix B: Neighborhood Demand Supply Type (CR)",
+      "messages": {
+        "appraiser": "Demand/Supply : If count(NeighborhoodDemandSupplyType = {Shortage, InBalance, OverSupply}) > 1",
+        "reviewer": "Compliance check failed for Neighborhood Demand Supply Type per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-038",
+      "category": "NEIGHBORHOOD \u2013 One-Unit Housing Trends",
+      "description": "If NeighborhoodDemandSupplyType != {Shortage, InBalance, OverSupply}",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/NEIGHBORHOOD",
+        "allowed": [
+          "Shortage",
+          "InBalance",
+          "OverSupply"
+        ],
+        "mode": "flag_if_not_in"
+      },
+      "citation": "GSE Appendix B: Neighborhood Demand Supply Type (CR)",
+      "messages": {
+        "appraiser": "Demand/Supply : If NeighborhoodDemandSupplyType != {Shortage, InBalance, OverSupply}",
+        "reviewer": "Compliance check failed for Neighborhood Demand Supply Type per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-039",
+      "category": "NEIGHBORHOOD \u2013 One-Unit Housing Trends",
+      "description": "If NeighborhoodTypicalMarketingTimeDurationType = NULL",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/NEIGHBORHOOD"
+      },
+      "citation": "GSE Appendix B: Neighborhood Typical Marketing Time Duration Type (CR)",
+      "messages": {
+        "appraiser": "Marketing Time : If NeighborhoodTypicalMarketingTimeDurationType = NULL",
+        "reviewer": "Compliance check failed for Neighborhood Typical Marketing Time Duration Type per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-040",
+      "category": "NEIGHBORHOOD \u2013 One-Unit Housing Trends",
+      "description": "If count(NeighborhoodTypicalMarketingTimeDurationType = {UnderThreeMonths, ThreeToSixMonths, OverSixMonths}) > 1",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/NEIGHBORHOOD",
+        "allowed": [
+          "UnderThreeMonths",
+          "ThreeToSixMonths",
+          "OverSixMonths"
+        ],
+        "mode": "flag_if_in"
+      },
+      "citation": "GSE Appendix B: Neighborhood Typical Marketing Time Duration Type (CR)",
+      "messages": {
+        "appraiser": "Marketing Time : If count(NeighborhoodTypicalMarketingTimeDurationType = {UnderThreeMonths, ThreeToSixMonths, OverSixMonths}) > 1",
+        "reviewer": "Compliance check failed for Neighborhood Typical Marketing Time Duration Type per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-041",
+      "category": "NEIGHBORHOOD \u2013 One-Unit Housing Trends",
+      "description": "If NeighborhoodTypicalMarketingTimeDurationType != {UnderThreeMonths, ThreeToSixMonths, OverSixMonths}",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/NEIGHBORHOOD",
+        "allowed": [
+          "UnderThreeMonths",
+          "ThreeToSixMonths",
+          "OverSixMonths"
+        ],
+        "mode": "flag_if_not_in"
+      },
+      "citation": "GSE Appendix B: Neighborhood Typical Marketing Time Duration Type (CR)",
+      "messages": {
+        "appraiser": "Marketing Time : If NeighborhoodTypicalMarketingTimeDurationType != {UnderThreeMonths, ThreeToSixMonths, OverSixMonths}",
+        "reviewer": "Compliance check failed for Neighborhood Typical Marketing Time Duration Type per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-042",
+      "category": "SITE",
+      "description": "If SiteAreaDescription = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/SITE/@_AreaDescription"
+      },
+      "citation": "GSE Appendix B: Site Area Description (R)",
+      "messages": {
+        "appraiser": "Area: If SiteAreaDescription = NULL",
+        "reviewer": "Compliance check failed for Site Area Description per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-043",
+      "category": "SITE",
+      "description": "If  SiteAreaDescription != [required format]",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "regex_match",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/SITE/@_AreaDescription",
+        "pattern": ".+"
+      },
+      "citation": "GSE Appendix B: Site Area Description (R)",
+      "messages": {
+        "appraiser": "Area: If  SiteAreaDescription != [required format]",
+        "reviewer": "Compliance check failed for Site Area Description per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-044",
+      "category": "SITE",
+      "description": "If GSEViewOverallRatingType = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_VIEW_OVERALL_RATING_EXTENSION/COMPARISON_VIEW_OVERALL_RATING_EXTENSION_SECTION/COMPARISON_VIEW_OVERALL_RATING_EXTENSION_SECTION_DATA/COMPARISON_VIEW_OVERALL_RATING/@GSEViewOverallRatingType"
+      },
+      "citation": "GSE Appendix B: GSE View Overall Rating Type (R)",
+      "messages": {
+        "appraiser": "View: If GSEViewOverallRatingType = NULL",
+        "reviewer": "Compliance check failed for GSE View Overall Rating Type per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-045",
+      "category": "SITE",
+      "description": "If count(GSEViewOverallRatingType = {Neutral, Beneficial, Adverse}) > 1",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_VIEW_OVERALL_RATING_EXTENSION/COMPARISON_VIEW_OVERALL_RATING_EXTENSION_SECTION/COMPARISON_VIEW_OVERALL_RATING_EXTENSION_SECTION_DATA/COMPARISON_VIEW_OVERALL_RATING/@GSEViewOverallRatingType",
+        "allowed": [
+          "Neutral",
+          "Beneficial",
+          "Adverse"
+        ],
+        "mode": "flag_if_in"
+      },
+      "citation": "GSE Appendix B: GSE View Overall Rating Type (R)",
+      "messages": {
+        "appraiser": "View: If count(GSEViewOverallRatingType = {Neutral, Beneficial, Adverse}) > 1",
+        "reviewer": "Compliance check failed for GSE View Overall Rating Type per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-046",
+      "category": "SITE",
+      "description": "If GSEViewOverallRatingType != {Neutral, Beneficial, Adverse}",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_VIEW_OVERALL_RATING_EXTENSION/COMPARISON_VIEW_OVERALL_RATING_EXTENSION_SECTION/COMPARISON_VIEW_OVERALL_RATING_EXTENSION_SECTION_DATA/COMPARISON_VIEW_OVERALL_RATING/@GSEViewOverallRatingType",
+        "allowed": [
+          "Neutral",
+          "Beneficial",
+          "Adverse"
+        ],
+        "mode": "flag_if_not_in"
+      },
+      "citation": "GSE Appendix B: GSE View Overall Rating Type (R)",
+      "messages": {
+        "appraiser": "View: If GSEViewOverallRatingType != {Neutral, Beneficial, Adverse}",
+        "reviewer": "Compliance check failed for GSE View Overall Rating Type per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-047",
+      "category": "SITE",
+      "description": "If GSEViewType = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_VIEW_DETAIL_EXTENSION/COMPARISON_VIEW_DETAIL_EXTENSION_SECTION/COMPARISON_VIEW_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_VIEW_DETAIL/@GSEViewType"
+      },
+      "citation": "GSE Appendix B: GSE View Type (R)",
+      "messages": {
+        "appraiser": "View: If GSEViewType = NULL",
+        "reviewer": "Compliance check failed for GSE View Type per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-048",
+      "category": "SITE",
+      "description": "If GSEViewType != {WaterView, PastoralView, WoodsView, ParkView, GolfCourseView, CityViewSkylineView, MountainView, ResidentialView, CityStreetView, IndustrialView, PowerLines, LimitedSight, Other}",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_VIEW_DETAIL_EXTENSION/COMPARISON_VIEW_DETAIL_EXTENSION_SECTION/COMPARISON_VIEW_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_VIEW_DETAIL/@GSEViewType",
+        "allowed": [
+          "WaterView",
+          "PastoralView",
+          "WoodsView",
+          "ParkView",
+          "GolfCourseView",
+          "CityViewSkylineView",
+          "MountainView",
+          "ResidentialView",
+          "CityStreetView",
+          "IndustrialView",
+          "PowerLines",
+          "LimitedSight",
+          "Other"
+        ],
+        "mode": "flag_if_not_in"
+      },
+      "citation": "GSE Appendix B: GSE View Type (R)",
+      "messages": {
+        "appraiser": "View: If GSEViewType != {WaterView, PastoralView, WoodsView, ParkView, GolfCourseView, CityViewSkylineView, MountainView, ResidentialView, CityStreetView, IndustrialView, PowerLines, LimitedSight, Other}",
+        "reviewer": "Compliance check failed for GSE View Type per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-049",
+      "category": "IMPROVEMENTS - General Description",
+      "description": "If GSEStoriesCount = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/STRUCTURE_EXTENSION/STRUCTURE_EXTENSION_SECTION/STRUCTURE_EXTENSION_SECTION_DATA/STRUCTURE_INFORMATION/@GSEStoriesCount"
+      },
+      "citation": "GSE Appendix B: GSE Stories Count (R)",
+      "messages": {
+        "appraiser": "# of Stories: If GSEStoriesCount = NULL",
+        "reviewer": "Compliance check failed for GSE Stories Count per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-050",
+      "category": "IMPROVEMENTS - General Description",
+      "description": "If GSEStoriesCount != [required format]",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "regex_match",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/STRUCTURE_EXTENSION/STRUCTURE_EXTENSION_SECTION/STRUCTURE_EXTENSION_SECTION_DATA/STRUCTURE_INFORMATION/@GSEStoriesCount",
+        "pattern": ".+"
+      },
+      "citation": "GSE Appendix B: GSE Stories Count (R)",
+      "messages": {
+        "appraiser": "# of Stories: If GSEStoriesCount != [required format]",
+        "reviewer": "Compliance check failed for GSE Stories Count per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-051",
+      "category": "IMPROVEMENTS - General Description",
+      "description": "If PropertyStructureBuiltYear = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/@PropertyStructureBuiltYear"
+      },
+      "citation": "GSE Appendix B: Property Structure Built Year (R)",
+      "messages": {
+        "appraiser": "Year Built: If PropertyStructureBuiltYear = NULL",
+        "reviewer": "Compliance check failed for Property Structure Built Year per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-052",
+      "category": "IMPROVEMENTS - General Description",
+      "description": "If PropertyStructureBuiltYear != [required format]",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "regex_match",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/@PropertyStructureBuiltYear",
+        "pattern": ".+"
+      },
+      "citation": "GSE Appendix B: Property Structure Built Year (R)",
+      "messages": {
+        "appraiser": "Year Built: If PropertyStructureBuiltYear != [required format]",
+        "reviewer": "Compliance check failed for Property Structure Built Year per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-053",
+      "category": "IMPROVEMENTS -  Foundation",
+      "description": "If SquareFeetCount = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/BASEMENT/@SquareFeetCount"
+      },
+      "citation": "GSE Appendix B: Square Feet Count (R)",
+      "messages": {
+        "appraiser": "Basement Area: If SquareFeetCount = NULL",
+        "reviewer": "Compliance check failed for Square Feet Count per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-054",
+      "category": "IMPROVEMENTS -  Foundation",
+      "description": "If SquareFeetCount != [required format]",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "regex_match",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/BASEMENT/@SquareFeetCount",
+        "pattern": "^\\d+(\\.\\d{2})?$"
+      },
+      "citation": "GSE Appendix B: Square Feet Count (R)",
+      "messages": {
+        "appraiser": "Basement Area: If SquareFeetCount != [required format]",
+        "reviewer": "Compliance check failed for Square Feet Count per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-055",
+      "category": "IMPROVEMENTS -  Foundation",
+      "description": "If BasementFinishedPercent = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/BASEMENT/@_FinishedPercent"
+      },
+      "citation": "GSE Appendix B: Basement Finished Percent (R)",
+      "messages": {
+        "appraiser": "Basement Finish: If BasementFinishedPercent = NULL",
+        "reviewer": "Compliance check failed for Basement Finished Percent per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-056",
+      "category": "IMPROVEMENTS -  Foundation",
+      "description": "If BasementFinishedPercent != [required format]",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "regex_match",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/BASEMENT/@_FinishedPercent",
+        "pattern": ".+"
+      },
+      "citation": "GSE Appendix B: Basement Finished Percent (R)",
+      "messages": {
+        "appraiser": "Basement Finish: If BasementFinishedPercent != [required format]",
+        "reviewer": "Compliance check failed for Basement Finished Percent per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-057",
+      "category": "IMPROVEMENTS",
+      "description": "If ParkingSpacesCount = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/CAR_STORAGE/CAR_STORAGE_LOCATION/@ParkingSpacesCount"
+      },
+      "citation": "GSE Appendix B: Parking Spaces Count (R)",
+      "messages": {
+        "appraiser": "Driveway # of Cars: If ParkingSpacesCount = NULL",
+        "reviewer": "Compliance check failed for Parking Spaces Count per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-058",
+      "category": "IMPROVEMENTS",
+      "description": "If ParkingSpacesCount != [required format]",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "regex_match",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/CAR_STORAGE/CAR_STORAGE_LOCATION/@ParkingSpacesCount",
+        "pattern": ".+"
+      },
+      "citation": "GSE Appendix B: Parking Spaces Count (R)",
+      "messages": {
+        "appraiser": "Driveway # of Cars: If ParkingSpacesCount != [required format]",
+        "reviewer": "Compliance check failed for Parking Spaces Count per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-059",
+      "category": "IMPROVEMENTS",
+      "description": "If TotalRoomCount = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/@TotalRoomCount"
+      },
+      "citation": "GSE Appendix B: Total Room Count (R)",
+      "messages": {
+        "appraiser": "Finished area above grade contains: Rooms: If TotalRoomCount = NULL",
+        "reviewer": "Compliance check failed for Total Room Count per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-060",
+      "category": "IMPROVEMENTS",
+      "description": "If TotalRoomCount != [required format])",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "regex_match",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/@TotalRoomCount",
+        "pattern": ".+"
+      },
+      "citation": "GSE Appendix B: Total Room Count (R)",
+      "messages": {
+        "appraiser": "Finished area above grade contains: Rooms: If TotalRoomCount != [required format])",
+        "reviewer": "Compliance check failed for Total Room Count per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-061",
+      "category": "IMPROVEMENTS",
+      "description": "If TotalBedroomCount = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/@TotalBedroomCount"
+      },
+      "citation": "GSE Appendix B: Total Bedroom Count (R)",
+      "messages": {
+        "appraiser": "Finished area above grade contains: Bedrooms: If TotalBedroomCount = NULL",
+        "reviewer": "Compliance check failed for Total Bedroom Count per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-062",
+      "category": "IMPROVEMENTS",
+      "description": "If TotalBedroomCount != [required format]",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "regex_match",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/@TotalBedroomCount",
+        "pattern": ".+"
+      },
+      "citation": "GSE Appendix B: Total Bedroom Count (R)",
+      "messages": {
+        "appraiser": "Finished area above grade contains: Bedrooms: If TotalBedroomCount != [required format]",
+        "reviewer": "Compliance check failed for Total Bedroom Count per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-063",
+      "category": "IMPROVEMENTS",
+      "description": "If TotalBathroomCount = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/@TotalBathroomCount"
+      },
+      "citation": "GSE Appendix B: Total Bathroom Count (R)",
+      "messages": {
+        "appraiser": "Finished area above grade contains: Bath(s): If TotalBathroomCount = NULL",
+        "reviewer": "Compliance check failed for Total Bathroom Count per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-064",
+      "category": "IMPROVEMENTS",
+      "description": "If TotalBathroomCount != [required format]",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "regex_match",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/@TotalBathroomCount",
+        "pattern": ".+"
+      },
+      "citation": "GSE Appendix B: Total Bathroom Count (R)",
+      "messages": {
+        "appraiser": "Finished area above grade contains: Bath(s): If TotalBathroomCount != [required format]",
+        "reviewer": "Compliance check failed for Total Bathroom Count per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-065",
+      "category": "IMPROVEMENTS",
+      "description": "If GrossLivingAreaSquareFeetCount = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/@GrossLivingAreaSquareFeetCount"
+      },
+      "citation": "GSE Appendix B: Gross Living Area Square Feet Count (R)",
+      "messages": {
+        "appraiser": "Square Feet of Gross Living Area Above Grade: If GrossLivingAreaSquareFeetCount = NULL",
+        "reviewer": "Compliance check failed for Gross Living Area Square Feet Count per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-066",
+      "category": "IMPROVEMENTS",
+      "description": "If GrossLivingAreaSquareFeetCount != [required format]",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "regex_match",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/@GrossLivingAreaSquareFeetCount",
+        "pattern": "^\\d+(\\.\\d{2})?$"
+      },
+      "citation": "GSE Appendix B: Gross Living Area Square Feet Count (R)",
+      "messages": {
+        "appraiser": "Square Feet of Gross Living Area Above Grade: If GrossLivingAreaSquareFeetCount != [required format]",
+        "reviewer": "Compliance check failed for Gross Living Area Square Feet Count per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-067",
+      "category": "IMPROVEMENTS",
+      "description": "If GSEOverallConditionType = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEOverallConditionType"
+      },
+      "citation": "GSE Appendix B: GSE Overall Condition Type (R)",
+      "messages": {
+        "appraiser": "Describe the condition of the property (including needed repairs, deterioration, renovations, remodeling, etc.): If GSEOverallConditionType = NULL",
+        "reviewer": "Compliance check failed for GSE Overall Condition Type per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-068",
+      "category": "IMPROVEMENTS",
+      "description": "If GSEOverallConditionType != {C1, C2, C3, C4, C5, C6}",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEOverallConditionType",
+        "allowed": [
+          "C1",
+          "C2",
+          "C3",
+          "C4",
+          "C5",
+          "C6"
+        ],
+        "mode": "flag_if_not_in"
+      },
+      "citation": "GSE Appendix B: GSE Overall Condition Type (R)",
+      "messages": {
+        "appraiser": "Describe the condition of the property (including needed repairs, deterioration, renovations, remodeling, etc.): If GSEOverallConditionType != {C1, C2, C3, C4, C5, C6}",
+        "reviewer": "Compliance check failed for GSE Overall Condition Type per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-069",
+      "category": "IMPROVEMENTS",
+      "description": "For each GSE Improvement Area Type:\nIf (GSEUpdateLastFifteenYearIndicator = Y) AND (GSEImprovementDescriptionType = NULL)",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "conditional_field_present",
+        "conditions": [
+          {
+            "field": "GSEUpdateLastFifteenYearIndicator",
+            "value": "Y",
+            "allowed": null
+          }
+        ],
+        "required_field": "GSEImprovementDescriptionType",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/CONDITION_DETAIL_EXTENSION/CONDITION_DETAIL_EXTENSION_SECTION/CONDITION_DETAIL_EXTENSION_SECTION_DATA/CONDITION_DETAIL/@GSEImprovementDescriptionType"
+      },
+      "citation": "GSE Appendix B: GSE Improvement Description Type (CR)",
+      "messages": {
+        "appraiser": "Describe the condition of the property (including needed repairs, deterioration, renovations, remodeling, etc.): For each GSE Improvement Area Type:\nIf (GSEUpdateLastFifteenYearIndicator = Y) AND (GSEImprovementDescriptionType = NULL)",
+        "reviewer": "Compliance check failed for GSE Improvement Description Type per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-070",
+      "category": "IMPROVEMENTS",
+      "description": "For each GSE Improvement Area Type: \nIf (GSEImprovementDescriptionType = {Updated, Remodeled}) AND (GSEEstimateYearOfImprovementType = NULL)",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "conditional_field_present",
+        "conditions": [
+          {
+            "field": "GSEImprovementDescriptionType",
+            "value": null,
+            "allowed": [
+              "Updated",
+              "Remodeled"
+            ]
+          }
+        ],
+        "required_field": "GSEEstimateYearOfImprovementType",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/CONDITION_DETAIL_EXTENSION/CONDITION_DETAIL_EXTENSION_SECTION/CONDITION_DETAIL_EXTENSION_SECTION_DATA/CONDITION_DETAIL/@GSEEstimateYearOfImprovementType"
+      },
+      "citation": "GSE Appendix B: GSE Estimate Year Of Improvement Type (CR)",
+      "messages": {
+        "appraiser": "Describe the condition of the property (including needed repairs, deterioration, renovations, remodeling, etc.): For each GSE Improvement Area Type: \nIf (GSEImprovementDescriptionType = {Updated, Remodeled}) AND (GSEEstimateYearOfImprovementType = NULL)",
+        "reviewer": "Compliance check failed for GSE Estimate Year Of Improvement Type per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-071",
+      "category": "IMPROVEMENTS",
+      "description": "If PropertyAnalysisComment = NULL",
+      "severity": "Advisory",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/PROPERTY_ANALYSIS/@_Comment"
+      },
+      "citation": "GSE Appendix B: Property Analysis Comment (T)",
+      "messages": {
+        "appraiser": "Describe the condition of the property (including needed repairs, deterioration, renovations, remodeling, etc.): If PropertyAnalysisComment = NULL",
+        "reviewer": "Compliance check failed for Property Analysis Comment per GSE Appendix B conditionality 'T'."
+      }
+    },
+    {
+      "rule_id": "UAD26-072",
+      "category": "SALES COMPARISON APPROACH - SUBJECT",
+      "description": " If PropertyState = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/@_State"
+      },
+      "citation": "GSE Appendix B: Property State (R)",
+      "messages": {
+        "appraiser": "Address (Line 2):  If PropertyState = NULL",
+        "reviewer": "Compliance check failed for Property State per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-073",
+      "category": "SALES COMPARISON APPROACH - SUBJECT",
+      "description": "If (AppraisalPurposeType = Purchase) AND (PropertySalesAmount = NULL)",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "conditional_field_present",
+        "conditions": [
+          {
+            "field": "AppraisalPurposeType",
+            "value": "Purchase",
+            "allowed": null
+          }
+        ],
+        "required_field": "PropertySalesAmount",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/@PropertySalesAmount"
+      },
+      "citation": "GSE Appendix B: Property Sales Amount (CR)",
+      "messages": {
+        "appraiser": "Sale Price: If (AppraisalPurposeType = Purchase) AND (PropertySalesAmount = NULL)",
+        "reviewer": "Compliance check failed for Property Sales Amount per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-074",
+      "category": "SALES COMPARISON APPROACH - SUBJECT",
+      "description": "If (AppraisalPurposeType = Purchase) AND (PropertySalesAmount != [required format])",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "conditional_field_present",
+        "conditions": [
+          {
+            "field": "AppraisalPurposeType",
+            "value": "Purchase",
+            "allowed": null
+          }
+        ],
+        "required_field": "PropertySalesAmount",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/@PropertySalesAmount"
+      },
+      "citation": "GSE Appendix B: Property Sales Amount (CR)",
+      "messages": {
+        "appraiser": "Sale Price: If (AppraisalPurposeType = Purchase) AND (PropertySalesAmount != [required format])",
+        "reviewer": "Compliance check failed for Property Sales Amount per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-075",
+      "category": "SALES COMPARISON APPROACH - SUBJECT",
+      "description": "If (SubjectHasPriorSalesIndicator = Y) AND (PropertySalesAmount = NULL)",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "conditional_field_present",
+        "conditions": [
+          {
+            "field": "SubjectHasPriorSalesIndicator",
+            "value": "Y",
+            "allowed": null
+          }
+        ],
+        "required_field": "PropertySalesAmount",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/@PropertySalesAmount"
+      },
+      "citation": "GSE Appendix B: Property Sales Amount (CR)",
+      "messages": {
+        "appraiser": "Price of Prior Sale/Transfer: If (SubjectHasPriorSalesIndicator = Y) AND (PropertySalesAmount = NULL)",
+        "reviewer": "Compliance check failed for Property Sales Amount per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-076",
+      "category": "SALES COMPARISON APPROACH - SUBJECT",
+      "description": "If (SubjectHasPriorSalesIndicator = Y) AND (PropertySalesAmount != [required format])",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "conditional_field_present",
+        "conditions": [
+          {
+            "field": "SubjectHasPriorSalesIndicator",
+            "value": "Y",
+            "allowed": null
+          }
+        ],
+        "required_field": "PropertySalesAmount",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/@PropertySalesAmount"
+      },
+      "citation": "GSE Appendix B: Property Sales Amount (CR)",
+      "messages": {
+        "appraiser": "Price of Prior Sale/Transfer: If (SubjectHasPriorSalesIndicator = Y) AND (PropertySalesAmount != [required format])",
+        "reviewer": "Compliance check failed for Property Sales Amount per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-077",
+      "category": "SALES COMPARISON APPROACH - SUBJECT",
+      "description": "If GSEOverallLocationRatingType = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_LOCATION_OVERALL_RATING_EXTENSION/COMPARISON_LOCATION_OVERALL_RATING_EXTENSION_SECTION/COMPARISON_LOCATION_OVERALL_RATING_EXTENSION_SECTION_DATA/COMPARISON_LOCATION_OVERALL_RATING/@GSEOverallLocationRatingType"
+      },
+      "citation": "GSE Appendix B: GSE Overall Location Rating Type (R)",
+      "messages": {
+        "appraiser": "Location: If GSEOverallLocationRatingType = NULL",
+        "reviewer": "Compliance check failed for GSE Overall Location Rating Type per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-078",
+      "category": "SALES COMPARISON APPROACH - SUBJECT",
+      "description": "If GSEOverallLocationRatingType != {Neutral, Beneficial, Adverse}",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_LOCATION_OVERALL_RATING_EXTENSION/COMPARISON_LOCATION_OVERALL_RATING_EXTENSION_SECTION/COMPARISON_LOCATION_OVERALL_RATING_EXTENSION_SECTION_DATA/COMPARISON_LOCATION_OVERALL_RATING/@GSEOverallLocationRatingType",
+        "allowed": [
+          "Neutral",
+          "Beneficial",
+          "Adverse"
+        ],
+        "mode": "flag_if_not_in"
+      },
+      "citation": "GSE Appendix B: GSE Overall Location Rating Type (R)",
+      "messages": {
+        "appraiser": "Location: If GSEOverallLocationRatingType != {Neutral, Beneficial, Adverse}",
+        "reviewer": "Compliance check failed for GSE Overall Location Rating Type per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-079",
+      "category": "SALES COMPARISON APPROACH - SUBJECT",
+      "description": "If GSELocationType = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_LOCATION_DETAIL_EXTENSION/COMPARISON_LOCATION_DETAIL_EXTENSION_SECTION/COMPARISON_LOCATION_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_LOCATION_DETAIL/@GSELocationType"
+      },
+      "citation": "GSE Appendix B: GSE Location Type (R)",
+      "messages": {
+        "appraiser": "Location: If GSELocationType = NULL",
+        "reviewer": "Compliance check failed for GSE Location Type per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-080",
+      "category": "SALES COMPARISON APPROACH - SUBJECT",
+      "description": "If GSELocationType != {Residential, Industrial, Commercial, BusyRoad, WaterFront, GolfCourse, AdjacentToPark, AdjacentToPowerLines, Landfill, PublicTransportation, Other}",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_LOCATION_DETAIL_EXTENSION/COMPARISON_LOCATION_DETAIL_EXTENSION_SECTION/COMPARISON_LOCATION_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_LOCATION_DETAIL/@GSELocationType",
+        "allowed": [
+          "Residential",
+          "Industrial",
+          "Commercial",
+          "BusyRoad",
+          "WaterFront",
+          "GolfCourse",
+          "AdjacentToPark",
+          "AdjacentToPowerLines",
+          "Landfill",
+          "PublicTransportation",
+          "Other"
+        ],
+        "mode": "flag_if_not_in"
+      },
+      "citation": "GSE Appendix B: GSE Location Type (R)",
+      "messages": {
+        "appraiser": "Location: If GSELocationType != {Residential, Industrial, Commercial, BusyRoad, WaterFront, GolfCourse, AdjacentToPark, AdjacentToPowerLines, Landfill, PublicTransportation, Other}",
+        "reviewer": "Compliance check failed for GSE Location Type per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-081",
+      "category": "SALES COMPARISON APPROACH - SUBJECT",
+      "description": "If SalePriceAdjustmentDescription = NULL",
+      "severity": "Advisory",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/SALE_PRICE_ADJUSTMENT/@_Description"
+      },
+      "citation": "GSE Appendix B: Sale Price Adjustment Description (T)",
+      "messages": {
+        "appraiser": "SITE: If SalePriceAdjustmentDescription = NULL",
+        "reviewer": "Compliance check failed for Sale Price Adjustment Description per GSE Appendix B conditionality 'T'."
+      }
+    },
+    {
+      "rule_id": "UAD26-082",
+      "category": "SALES COMPARISON APPROACH - SUBJECT",
+      "description": "If  SalePriceAdjustmentDescription!= [required format]",
+      "severity": "Advisory",
+      "enabled": true,
+      "logic": {
+        "type": "regex_match",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/SALE_PRICE_ADJUSTMENT/@_Description",
+        "pattern": "^\\d+(\\.\\d{2})?$"
+      },
+      "citation": "GSE Appendix B: Sale Price Adjustment Description (T)",
+      "messages": {
+        "appraiser": "SITE: If  SalePriceAdjustmentDescription!= [required format]",
+        "reviewer": "Compliance check failed for Sale Price Adjustment Description per GSE Appendix B conditionality 'T'."
+      }
+    },
+    {
+      "rule_id": "UAD26-083",
+      "category": "SALES COMPARISON APPROACH - SUBJECT",
+      "description": "If SalePriceAdjustmentDescription != [required format]",
+      "severity": "Advisory",
+      "enabled": true,
+      "logic": {
+        "type": "regex_match",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/SALE_PRICE_ADJUSTMENT/@_Description",
+        "pattern": "^\\d+(\\.\\d{2})?$"
+      },
+      "citation": "GSE Appendix B: Sale Price Adjustment Description (T)",
+      "messages": {
+        "appraiser": "Actual Age: If SalePriceAdjustmentDescription != [required format]",
+        "reviewer": "Compliance check failed for Sale Price Adjustment Description per GSE Appendix B conditionality 'T'."
+      }
+    },
+    {
+      "rule_id": "UAD26-084",
+      "category": "SALES COMPARISON APPROACH - SUBJECT",
+      "description": "If GSEOverallLocationRatingType != {Neutral, Beneficial, Adverse}",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_VIEW_OVERALL_RATING_EXTENSION/COMPARISON_VIEW_OVERALL_RATING_EXTENSION_SECTION/COMPARISON_VIEW_OVERALL_RATING_EXTENSION_SECTION_DATA/COMPARISON_VIEW_OVERALL_RATING/@GSEViewOverallRatingType",
+        "allowed": [
+          "Neutral",
+          "Beneficial",
+          "Adverse"
+        ],
+        "mode": "flag_if_not_in"
+      },
+      "citation": "GSE Appendix B: GSE View Overall Rating Type (R)",
+      "messages": {
+        "appraiser": "View: If GSEOverallLocationRatingType != {Neutral, Beneficial, Adverse}",
+        "reviewer": "Compliance check failed for GSE View Overall Rating Type per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-085",
+      "category": "SALES COMPARISON APPROACH - SUBJECT",
+      "description": "If QualityOfConstructionRatingType = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEQualityOfConstructionRatingType"
+      },
+      "citation": "GSE Appendix B: GSE Quality Of Construction Rating Type (R)",
+      "messages": {
+        "appraiser": "Quality of Construction: If QualityOfConstructionRatingType = NULL",
+        "reviewer": "Compliance check failed for GSE Quality Of Construction Rating Type per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-086",
+      "category": "SALES COMPARISON APPROACH - SUBJECT",
+      "description": "If QualityOfConstructionRatingType != {Q1, Q2, Q3, Q4, Q5, Q6}",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEQualityOfConstructionRatingType",
+        "allowed": [
+          "Q1",
+          "Q2",
+          "Q3",
+          "Q4",
+          "Q5",
+          "Q6"
+        ],
+        "mode": "flag_if_not_in"
+      },
+      "citation": "GSE Appendix B: GSE Quality Of Construction Rating Type (R)",
+      "messages": {
+        "appraiser": "Quality of Construction: If QualityOfConstructionRatingType != {Q1, Q2, Q3, Q4, Q5, Q6}",
+        "reviewer": "Compliance check failed for GSE Quality Of Construction Rating Type per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-087",
+      "category": "SALES COMPARISON APPROACH - SUBJECT",
+      "description": "If GSEOverallConditionType!= {C1, C2, C3, C4, C5, C6}",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEOverallConditionType",
+        "allowed": [
+          "C1",
+          "C2",
+          "C3",
+          "C4",
+          "C5",
+          "C6"
+        ],
+        "mode": "flag_if_not_in"
+      },
+      "citation": "GSE Appendix B: GSE Overall Condition Type (R)",
+      "messages": {
+        "appraiser": "Condition: If GSEOverallConditionType!= {C1, C2, C3, C4, C5, C6}",
+        "reviewer": "Compliance check failed for GSE Overall Condition Type per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-088",
+      "category": "SALES COMPARISON APPROACH - SUBJECT",
+      "description": "If TotalRoomCount != [required format]",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "regex_match",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/@TotalRoomCount",
+        "pattern": ".+"
+      },
+      "citation": "GSE Appendix B: Total Room Count (R)",
+      "messages": {
+        "appraiser": "Above Grade Room Count : If TotalRoomCount != [required format]",
+        "reviewer": "Compliance check failed for Total Room Count per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-089",
+      "category": "SALES COMPARISON APPROACH - SUBJECT",
+      "description": "If GSEBelowGradeTotalSquareFeetNumber = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEBelowGradeTotalSquareFeetNumber"
+      },
+      "citation": "GSE Appendix B: GSE Below Grade Total Square Feet Number (R)",
+      "messages": {
+        "appraiser": "Basement & Finished Rooms Below Grade (Line 1): If GSEBelowGradeTotalSquareFeetNumber = NULL",
+        "reviewer": "Compliance check failed for GSE Below Grade Total Square Feet Number per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-090",
+      "category": "SALES COMPARISON APPROACH - SUBJECT",
+      "description": "If GSEBelowGradeTotalSquareFeetNumber != [required format]",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "regex_match",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEBelowGradeTotalSquareFeetNumber",
+        "pattern": "^\\d+(\\.\\d{2})?$"
+      },
+      "citation": "GSE Appendix B: GSE Below Grade Total Square Feet Number (R)",
+      "messages": {
+        "appraiser": "Basement & Finished Rooms Below Grade (Line 1): If GSEBelowGradeTotalSquareFeetNumber != [required format]",
+        "reviewer": "Compliance check failed for GSE Below Grade Total Square Feet Number per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-091",
+      "category": "SALES COMPARISON APPROACH - SUBJECT",
+      "description": "If GSEBelowGradeFinishSquareFeetNumber != [required format]",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "regex_match",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEBelowGradeFinishSquareFeetNumber",
+        "pattern": "^\\d+(\\.\\d{2})?$"
+      },
+      "citation": "GSE Appendix B: GSE Below Grade Finish Square Feet Number (CR)",
+      "messages": {
+        "appraiser": "Basement & Finished Rooms Below Grade (Line 1): If GSEBelowGradeFinishSquareFeetNumber != [required format]",
+        "reviewer": "Compliance check failed for GSE Below Grade Finish Square Feet Number per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-092",
+      "category": "SALES COMPARISON APPROACH - SUBJECT",
+      "description": "If GSEBasementExitType != {WalkOut, WalkUp, InteriorOnly}",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEBasementExitType",
+        "allowed": [
+          "WalkOut",
+          "WalkUp",
+          "InteriorOnly"
+        ],
+        "mode": "flag_if_not_in"
+      },
+      "citation": "GSE Appendix B: GSE Basement Exit Type (CR)",
+      "messages": {
+        "appraiser": "Basement & Finished Rooms Below Grade (Line 1): If GSEBasementExitType != {WalkOut, WalkUp, InteriorOnly}",
+        "reviewer": "Compliance check failed for GSE Basement Exit Type per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-093",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf PropertyStreetAddress = NULL\n",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/@_StreetAddress"
+      },
+      "citation": "GSE Appendix B: Property Street Address (R)",
+      "messages": {
+        "appraiser": "Address (Line 1): For each comparable sale:\nIf PropertyStreetAddress = NULL\n",
+        "reviewer": "Compliance check failed for Property Street Address per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-094",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf PropertyCity = NULL\n",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/@_City"
+      },
+      "citation": "GSE Appendix B: Property City (R)",
+      "messages": {
+        "appraiser": "Address (Line 2): For each comparable sale:\nIf PropertyCity = NULL\n",
+        "reviewer": "Compliance check failed for Property City per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-095",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf PropertyState = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/@_State"
+      },
+      "citation": "GSE Appendix B: Property State (R)",
+      "messages": {
+        "appraiser": "Address (Line 2): For each comparable sale:\nIf PropertyState = NULL",
+        "reviewer": "Compliance check failed for Property State per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-096",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf PropertyPostalCode = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/@_PostalCode"
+      },
+      "citation": "GSE Appendix B: Property Postal Code (R)",
+      "messages": {
+        "appraiser": "Address (Line 2): For each comparable sale:\nIf PropertyPostalCode = NULL",
+        "reviewer": "Compliance check failed for Property Postal Code per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-097",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf PropertyPostalCode != [required format]",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "regex_match",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/@_PostalCode",
+        "pattern": "^\\d{5}(-\\d{4})?$"
+      },
+      "citation": "GSE Appendix B: Property Postal Code (R)",
+      "messages": {
+        "appraiser": "Address (Line 2): For each comparable sale:\nIf PropertyPostalCode != [required format]",
+        "reviewer": "Compliance check failed for Property Postal Code per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-098",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf PropertySalesAmount = NULL",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/@PropertySalesAmount"
+      },
+      "citation": "GSE Appendix B: Property Sales Amount (CR)",
+      "messages": {
+        "appraiser": "Sale Price: For each comparable sale:\nIf PropertySalesAmount = NULL",
+        "reviewer": "Compliance check failed for Property Sales Amount per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-099",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf PropertySalesAmount = NULL",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/PRIOR_SALES/@PropertySalesAmount"
+      },
+      "citation": "GSE Appendix B: Property Sales Amount (CR)",
+      "messages": {
+        "appraiser": "Sale Price: For each comparable sale:\nIf PropertySalesAmount = NULL",
+        "reviewer": "Compliance check failed for Property Sales Amount per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-100",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf PropertySalesAmount != [required format]",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "regex_match",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/@PropertySalesAmount",
+        "pattern": "^\\d+(\\.\\d{2})?$"
+      },
+      "citation": "GSE Appendix B: Property Sales Amount (CR)",
+      "messages": {
+        "appraiser": "Sale Price: For each comparable sale:\nIf PropertySalesAmount != [required format]",
+        "reviewer": "Compliance check failed for Property Sales Amount per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-101",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf PropertySalesAmount != [required format]",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "regex_match",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/PRIOR_SALES/@PropertySalesAmount",
+        "pattern": "^\\d+(\\.\\d{2})?$"
+      },
+      "citation": "GSE Appendix B: Property Sales Amount (CR)",
+      "messages": {
+        "appraiser": "Sale Price: For each comparable sale:\nIf PropertySalesAmount != [required format]",
+        "reviewer": "Compliance check failed for Property Sales Amount per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-102",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf GSEDataSourceDescription= NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEDataSourceDescription"
+      },
+      "citation": "GSE Appendix B: GSE Data Source Description (R)",
+      "messages": {
+        "appraiser": "Data Source(s): For each comparable sale:\nIf GSEDataSourceDescription= NULL",
+        "reviewer": "Compliance check failed for GSE Data Source Description per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-103",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf GSESaleType = NULL",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/SALES_CONTRACT/SALES_CONTRACT_EXTENSION/SALES_CONTRACT_EXTENSION_SECTION/SALES_CONTRACT_EXTENSION_SECTION_DATA/SALES_TRANSACTION/@GSESaleType"
+      },
+      "citation": "GSE Appendix B: GSE Sale Type (CR)",
+      "messages": {
+        "appraiser": "Sale or Financing Concessions (Line 1): For each comparable sale:\nIf GSESaleType = NULL",
+        "reviewer": "Compliance check failed for GSE Sale Type per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-104",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf GSESaleType != {REOSale, ShortSale, CourtOrderedSale, EstateSale, RelocationSale, NonArmsLengthSale, ArmsLengthSale, Listing}",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/SALES_CONTRACT/SALES_CONTRACT_EXTENSION/SALES_CONTRACT_EXTENSION_SECTION/SALES_CONTRACT_EXTENSION_SECTION_DATA/SALES_TRANSACTION/@GSESaleType",
+        "allowed": [
+          "REOSale",
+          "ShortSale",
+          "CourtOrderedSale",
+          "EstateSale",
+          "RelocationSale",
+          "NonArmsLengthSale",
+          "ArmsLengthSale",
+          "Listing"
+        ],
+        "mode": "flag_if_not_in"
+      },
+      "citation": "GSE Appendix B: GSE Sale Type (CR)",
+      "messages": {
+        "appraiser": "Sale or Financing Concessions (Line 1): For each comparable sale:\nIf GSESaleType != {REOSale, ShortSale, CourtOrderedSale, EstateSale, RelocationSale, NonArmsLengthSale, ArmsLengthSale, Listing}",
+        "reviewer": "Compliance check failed for GSE Sale Type per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-105",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf GSEFinancingType = NULL AND GSEListingStatusType = SettledSale",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEFinancingType"
+      },
+      "citation": "GSE Appendix B: GSE Financing Type (CR)",
+      "messages": {
+        "appraiser": "Sale or Financing Concessions (Line 2): For each comparable sale:\nIf GSEFinancingType = NULL AND GSEListingStatusType = SettledSale",
+        "reviewer": "Compliance check failed for GSE Financing Type per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-106",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf GSEFinancingType != {FHA, VA, Conventional, Seller, Cash, RuralHousing, Other}",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEFinancingType",
+        "allowed": [
+          "FHA",
+          "VA",
+          "Conventional",
+          "Seller",
+          "Cash",
+          "RuralHousing",
+          "Other"
+        ],
+        "mode": "flag_if_not_in"
+      },
+      "citation": "GSE Appendix B: GSE Financing Type (CR)",
+      "messages": {
+        "appraiser": "Sale or Financing Concessions (Line 2): For each comparable sale:\nIf GSEFinancingType != {FHA, VA, Conventional, Seller, Cash, RuralHousing, Other}",
+        "reviewer": "Compliance check failed for GSE Financing Type per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-107",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf (GSEFinancingType = Other) AND (GSEFinancingTypeOtherDescription = NULL)",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "conditional_field_present",
+        "conditions": [
+          {
+            "field": "GSEFinancingType",
+            "value": "Other",
+            "allowed": null
+          }
+        ],
+        "required_field": "GSEFinancingTypeOtherDescription",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEFinancingTypeOtherDescription"
+      },
+      "citation": "GSE Appendix B: GSE Financing Type Other Description (CR)",
+      "messages": {
+        "appraiser": "Sale or Financing Concessions (Line 2): For each comparable sale:\nIf (GSEFinancingType = Other) AND (GSEFinancingTypeOtherDescription = NULL)",
+        "reviewer": "Compliance check failed for GSE Financing Type Other Description per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-108",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf GSEConcessionAmount = NULL AND GSEListingStatusType = SettledSale",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEConcessionAmount"
+      },
+      "citation": "GSE Appendix B: GSE Concession Amount (CR)",
+      "messages": {
+        "appraiser": "Sale or Financing Concessions (Line 2): For each comparable sale:\nIf GSEConcessionAmount = NULL AND GSEListingStatusType = SettledSale",
+        "reviewer": "Compliance check failed for GSE Concession Amount per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-109",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf GSEConcessionAmount != [required format]",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "regex_match",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEConcessionAmount",
+        "pattern": "^\\d+(\\.\\d{2})?$"
+      },
+      "citation": "GSE Appendix B: GSE Concession Amount (CR)",
+      "messages": {
+        "appraiser": "Sale or Financing Concessions (Line 2): For each comparable sale:\nIf GSEConcessionAmount != [required format]",
+        "reviewer": "Compliance check failed for GSE Concession Amount per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-110",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf GSEListingStatusType = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEListingStatusType"
+      },
+      "citation": "GSE Appendix B: GSE Listing Status Type (R)",
+      "messages": {
+        "appraiser": "Date of Sale/Time: For each comparable sale:\nIf GSEListingStatusType = NULL",
+        "reviewer": "Compliance check failed for GSE Listing Status Type per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-111",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf GSEListingStatusType != {Active, Expired, Withdrawn, Contract, SettledSale}",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEListingStatusType",
+        "allowed": [
+          "Active",
+          "Expired",
+          "Withdrawn",
+          "Contract",
+          "SettledSale"
+        ],
+        "mode": "flag_if_not_in"
+      },
+      "citation": "GSE Appendix B: GSE Listing Status Type (R)",
+      "messages": {
+        "appraiser": "Date of Sale/Time: For each comparable sale:\nIf GSEListingStatusType != {Active, Expired, Withdrawn, Contract, SettledSale}",
+        "reviewer": "Compliance check failed for GSE Listing Status Type per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-112",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf (GSEListingStatusType = {Expired, Withdrawn, Contract}) AND (GSEShortDateDescription = NULL)",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "conditional_field_present",
+        "conditions": [
+          {
+            "field": "GSEListingStatusType",
+            "value": null,
+            "allowed": [
+              "Expired",
+              "Withdrawn",
+              "Contract"
+            ]
+          }
+        ],
+        "required_field": "GSEShortDateDescription",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DATE_EXTENSION/COMPARISON_DATE_EXTENSION_SECTION/COMPARISON_DATE_EXTENSION_SECTION_DATA/OFFERING_DISPOSITION/@GSEShortDateDescription"
+      },
+      "citation": "GSE Appendix B: GSE Short Date Description (CR)",
+      "messages": {
+        "appraiser": "Date of Sale/Time: For each comparable sale:\nIf (GSEListingStatusType = {Expired, Withdrawn, Contract}) AND (GSEShortDateDescription = NULL)",
+        "reviewer": "Compliance check failed for GSE Short Date Description per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-113",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each instance of GSEShortDateDescription for each comparable sale:\nIf (GSEListingStatusType = SettledSale) AND (GSEShortDateDescription != [required format])",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "conditional_field_present",
+        "conditions": [
+          {
+            "field": "GSEListingStatusType",
+            "value": "SettledSale",
+            "allowed": null
+          }
+        ],
+        "required_field": "GSEShortDateDescription",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DATE_EXTENSION/COMPARISON_DATE_EXTENSION_SECTION/COMPARISON_DATE_EXTENSION_SECTION_DATA/OFFERING_DISPOSITION/@GSEShortDateDescription"
+      },
+      "citation": "GSE Appendix B: GSE Short Date Description (CR)",
+      "messages": {
+        "appraiser": "Date of Sale/Time: For each instance of GSEShortDateDescription for each comparable sale:\nIf (GSEListingStatusType = SettledSale) AND (GSEShortDateDescription != [required format])",
+        "reviewer": "Compliance check failed for GSE Short Date Description per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-114",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf GSEOverallLocationRatingType = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_LOCATION_OVERALL_RATING_EXTENSION/COMPARISON_LOCATION_OVERALL_RATING_EXTENSION_SECTION/COMPARISON_LOCATION_OVERALL_RATING_EXTENSION_SECTION_DATA/COMPARISON_LOCATION_OVERALL_RATING/@GSEOverallLocationRatingType"
+      },
+      "citation": "GSE Appendix B: GSE Overall Location Rating Type (R)",
+      "messages": {
+        "appraiser": "Location: For each comparable sale:\nIf GSEOverallLocationRatingType = NULL",
+        "reviewer": "Compliance check failed for GSE Overall Location Rating Type per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-115",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf GSEOverallLocationRatingType != {Neutral, Beneficial, Adverse}",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_LOCATION_OVERALL_RATING_EXTENSION/COMPARISON_LOCATION_OVERALL_RATING_EXTENSION_SECTION/COMPARISON_LOCATION_OVERALL_RATING_EXTENSION_SECTION_DATA/COMPARISON_LOCATION_OVERALL_RATING/@GSEOverallLocationRatingType",
+        "allowed": [
+          "Neutral",
+          "Beneficial",
+          "Adverse"
+        ],
+        "mode": "flag_if_not_in"
+      },
+      "citation": "GSE Appendix B: GSE Overall Location Rating Type (R)",
+      "messages": {
+        "appraiser": "Location: For each comparable sale:\nIf GSEOverallLocationRatingType != {Neutral, Beneficial, Adverse}",
+        "reviewer": "Compliance check failed for GSE Overall Location Rating Type per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-116",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf GSELocationType = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_LOCATION_DETAIL_EXTENSION/COMPARISON_LOCATION_DETAIL_EXTENSION_SECTION/COMPARISON_LOCATION_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_LOCATION_DETAIL/@GSELocationType"
+      },
+      "citation": "GSE Appendix B: GSE Location Type (R)",
+      "messages": {
+        "appraiser": "Location: For each comparable sale:\nIf GSELocationType = NULL",
+        "reviewer": "Compliance check failed for GSE Location Type per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-117",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf GSELocationType != {Residential, Industrial, Commercial, BusyRoad, WaterFront, GolfCourse, AdjacentToPark, AdjacentToPowerLines, Landfill, PublicTransportation, Other}",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_LOCATION_DETAIL_EXTENSION/COMPARISON_LOCATION_DETAIL_EXTENSION_SECTION/COMPARISON_LOCATION_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_LOCATION_DETAIL/@GSELocationType",
+        "allowed": [
+          "Residential",
+          "Industrial",
+          "Commercial",
+          "BusyRoad",
+          "WaterFront",
+          "GolfCourse",
+          "AdjacentToPark",
+          "AdjacentToPowerLines",
+          "Landfill",
+          "PublicTransportation",
+          "Other"
+        ],
+        "mode": "flag_if_not_in"
+      },
+      "citation": "GSE Appendix B: GSE Location Type (R)",
+      "messages": {
+        "appraiser": "Location: For each comparable sale:\nIf GSELocationType != {Residential, Industrial, Commercial, BusyRoad, WaterFront, GolfCourse, AdjacentToPark, AdjacentToPowerLines, Landfill, PublicTransportation, Other}",
+        "reviewer": "Compliance check failed for GSE Location Type per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-118",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf SalePriceAdjustmentDescription = NULL",
+      "severity": "Advisory",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/SALE_PRICE_ADJUSTMENT/@_Description"
+      },
+      "citation": "GSE Appendix B: Sale Price Adjustment Description (T)",
+      "messages": {
+        "appraiser": "Site: For each comparable sale:\nIf SalePriceAdjustmentDescription = NULL",
+        "reviewer": "Compliance check failed for Sale Price Adjustment Description per GSE Appendix B conditionality 'T'."
+      }
+    },
+    {
+      "rule_id": "UAD26-119",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf SalePriceAdjustmentDescription!= [required format]",
+      "severity": "Advisory",
+      "enabled": true,
+      "logic": {
+        "type": "regex_match",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/SALE_PRICE_ADJUSTMENT/@_Description",
+        "pattern": "^\\d+(\\.\\d{2})?$"
+      },
+      "citation": "GSE Appendix B: Sale Price Adjustment Description (T)",
+      "messages": {
+        "appraiser": "Site: For each comparable sale:\nIf SalePriceAdjustmentDescription!= [required format]",
+        "reviewer": "Compliance check failed for Sale Price Adjustment Description per GSE Appendix B conditionality 'T'."
+      }
+    },
+    {
+      "rule_id": "UAD26-120",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf SalePriceAdjustmentDescription != [required format]",
+      "severity": "Advisory",
+      "enabled": true,
+      "logic": {
+        "type": "regex_match",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/SALE_PRICE_ADJUSTMENT/@_Description",
+        "pattern": "^\\d+(\\.\\d{2})?$"
+      },
+      "citation": "GSE Appendix B: Sale Price Adjustment Description (T)",
+      "messages": {
+        "appraiser": "Actual Age: For each comparable sale:\nIf SalePriceAdjustmentDescription != [required format]",
+        "reviewer": "Compliance check failed for Sale Price Adjustment Description per GSE Appendix B conditionality 'T'."
+      }
+    },
+    {
+      "rule_id": "UAD26-121",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf GSEViewOverallRatingType = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_VIEW_OVERALL_RATING_EXTENSION/COMPARISON_VIEW_OVERALL_RATING_EXTENSION_SECTION/COMPARISON_VIEW_OVERALL_RATING_EXTENSION_SECTION_DATA/COMPARISON_VIEW_OVERALL_RATING/@GSEViewOverallRatingType"
+      },
+      "citation": "GSE Appendix B: GSE View Overall Rating Type (R)",
+      "messages": {
+        "appraiser": "View: For each comparable sale:\nIf GSEViewOverallRatingType = NULL",
+        "reviewer": "Compliance check failed for GSE View Overall Rating Type per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-122",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf GSEViewOverallRatingType != {Neutral, Beneficial, Adverse}",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_VIEW_OVERALL_RATING_EXTENSION/COMPARISON_VIEW_OVERALL_RATING_EXTENSION_SECTION/COMPARISON_VIEW_OVERALL_RATING_EXTENSION_SECTION_DATA/COMPARISON_VIEW_OVERALL_RATING/@GSEViewOverallRatingType",
+        "allowed": [
+          "Neutral",
+          "Beneficial",
+          "Adverse"
+        ],
+        "mode": "flag_if_not_in"
+      },
+      "citation": "GSE Appendix B: GSE View Overall Rating Type (R)",
+      "messages": {
+        "appraiser": "View: For each comparable sale:\nIf GSEViewOverallRatingType != {Neutral, Beneficial, Adverse}",
+        "reviewer": "Compliance check failed for GSE View Overall Rating Type per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-123",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf GSEViewType = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_VIEW_DETAIL_EXTENSION/COMPARISON_VIEW_DETAIL_EXTENSION_SECTION/COMPARISON_VIEW_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_VIEW_DETAIL/@GSEViewType"
+      },
+      "citation": "GSE Appendix B: GSE View Type (R)",
+      "messages": {
+        "appraiser": "View: For each comparable sale:\nIf GSEViewType = NULL",
+        "reviewer": "Compliance check failed for GSE View Type per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-124",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf GSEViewType != {WaterView, PastoralView, WoodsView, ParkView, GolfCourseView, CityViewSkylineView, MountainView, ResidentialView, CityStreetView, IndustrialView, PowerLine",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_VIEW_DETAIL_EXTENSION/COMPARISON_VIEW_DETAIL_EXTENSION_SECTION/COMPARISON_VIEW_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_VIEW_DETAIL/@GSEViewType",
+        "allowed": [
+          "WaterView",
+          "PastoralView",
+          "WoodsView",
+          "ParkView",
+          "GolfCourseView",
+          "CityViewSkylineView",
+          "MountainView",
+          "ResidentialView",
+          "CityStreetView",
+          "IndustrialView",
+          "PowerLines",
+          "LimitedSight",
+          "Other"
+        ],
+        "mode": "flag_if_not_in"
+      },
+      "citation": "GSE Appendix B: GSE View Type (R)",
+      "messages": {
+        "appraiser": "View: For each comparable sale:\nIf GSEViewType != {WaterView, PastoralView, WoodsView, ParkView, GolfCourseView, CityViewSkylineView, MountainView, ResidentialView, CityStreetView, IndustrialView, PowerLines, LimitedSight, Other}",
+        "reviewer": "Compliance check failed for GSE View Type per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-125",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf QualityOfConstructionRatingType = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEQualityOfConstructionRatingType"
+      },
+      "citation": "GSE Appendix B: GSE Quality Of Construction Rating Type (R)",
+      "messages": {
+        "appraiser": "Quality of Construction: For each comparable sale:\nIf QualityOfConstructionRatingType = NULL",
+        "reviewer": "Compliance check failed for GSE Quality Of Construction Rating Type per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-126",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf QualityOfConstructionRatingType != {Q1, Q2, Q3, Q4, Q5, Q6}",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEQualityOfConstructionRatingType",
+        "allowed": [
+          "Q1",
+          "Q2",
+          "Q3",
+          "Q4",
+          "Q5",
+          "Q6"
+        ],
+        "mode": "flag_if_not_in"
+      },
+      "citation": "GSE Appendix B: GSE Quality Of Construction Rating Type (R)",
+      "messages": {
+        "appraiser": "Quality of Construction: For each comparable sale:\nIf QualityOfConstructionRatingType != {Q1, Q2, Q3, Q4, Q5, Q6}",
+        "reviewer": "Compliance check failed for GSE Quality Of Construction Rating Type per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-127",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf GSEOverallConditionType = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEOverallConditionType"
+      },
+      "citation": "GSE Appendix B: GSE Overall Condition Type (R)",
+      "messages": {
+        "appraiser": "Condition: For each comparable sale:\nIf GSEOverallConditionType = NULL",
+        "reviewer": "Compliance check failed for GSE Overall Condition Type per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-128",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf GSEOverallConditionType != {C1, C2, C3, C4, C5, C6}",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEOverallConditionType",
+        "allowed": [
+          "C1",
+          "C2",
+          "C3",
+          "C4",
+          "C5",
+          "C6"
+        ],
+        "mode": "flag_if_not_in"
+      },
+      "citation": "GSE Appendix B: GSE Overall Condition Type (R)",
+      "messages": {
+        "appraiser": "Condition: For each comparable sale:\nIf GSEOverallConditionType != {C1, C2, C3, C4, C5, C6}",
+        "reviewer": "Compliance check failed for GSE Overall Condition Type per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-129",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf TotalRoomCount = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/@TotalRoomCount"
+      },
+      "citation": "GSE Appendix B: Total Room Count (R)",
+      "messages": {
+        "appraiser": "Above Grade Room Count: For each comparable sale:\nIf TotalRoomCount = NULL",
+        "reviewer": "Compliance check failed for Total Room Count per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-130",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf TotalRoomCount != [required format]",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "regex_match",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/@TotalRoomCount",
+        "pattern": ".+"
+      },
+      "citation": "GSE Appendix B: Total Room Count (R)",
+      "messages": {
+        "appraiser": "Above Grade Room Count: For each comparable sale:\nIf TotalRoomCount != [required format]",
+        "reviewer": "Compliance check failed for Total Room Count per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-131",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf TotalBedroomCount = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/@TotalBedroomCount"
+      },
+      "citation": "GSE Appendix B: Total Bedroom Count (R)",
+      "messages": {
+        "appraiser": "Above Grade Room Count : For each comparable sale:\nIf TotalBedroomCount = NULL",
+        "reviewer": "Compliance check failed for Total Bedroom Count per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-132",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf TotalBedroomCount != [required format]",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "regex_match",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/@TotalBedroomCount",
+        "pattern": ".+"
+      },
+      "citation": "GSE Appendix B: Total Bedroom Count (R)",
+      "messages": {
+        "appraiser": "Above Grade Room Count : For each comparable sale:\nIf TotalBedroomCount != [required format]",
+        "reviewer": "Compliance check failed for Total Bedroom Count per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-133",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf TotalBathroomCount = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/@TotalBathroomCount"
+      },
+      "citation": "GSE Appendix B: Total Bathroom Count (R)",
+      "messages": {
+        "appraiser": "Above Grade Room Count : For each comparable sale:\nIf TotalBathroomCount = NULL",
+        "reviewer": "Compliance check failed for Total Bathroom Count per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-134",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf TotalBathroomCount != [required format]",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "regex_match",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/@TotalBathroomCount",
+        "pattern": ".+"
+      },
+      "citation": "GSE Appendix B: Total Bathroom Count (R)",
+      "messages": {
+        "appraiser": "Above Grade Room Count : For each comparable sale:\nIf TotalBathroomCount != [required format]",
+        "reviewer": "Compliance check failed for Total Bathroom Count per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-135",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf GSEBelowGradeTotalSquareFeetNumber = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEBelowGradeTotalSquareFeetNumber"
+      },
+      "citation": "GSE Appendix B: GSE Below Grade Total Square Feet Number (R)",
+      "messages": {
+        "appraiser": "Basement & Finished Rooms Below Grade (Line 1): For each comparable sale:\nIf GSEBelowGradeTotalSquareFeetNumber = NULL",
+        "reviewer": "Compliance check failed for GSE Below Grade Total Square Feet Number per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-136",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf GSEBelowGradeTotalSquareFeetNumber != [required format]",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "regex_match",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEBelowGradeTotalSquareFeetNumber",
+        "pattern": "^\\d+(\\.\\d{2})?$"
+      },
+      "citation": "GSE Appendix B: GSE Below Grade Total Square Feet Number (R)",
+      "messages": {
+        "appraiser": "Basement & Finished Rooms Below Grade (Line 1): For each comparable sale:\nIf GSEBelowGradeTotalSquareFeetNumber != [required format]",
+        "reviewer": "Compliance check failed for GSE Below Grade Total Square Feet Number per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-137",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf GSEBelowGradeFinishSquareFeetNumber != [required format]",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "regex_match",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEBelowGradeFinishSquareFeetNumber",
+        "pattern": "^\\d+(\\.\\d{2})?$"
+      },
+      "citation": "GSE Appendix B: GSE Below Grade Finish Square Feet Number (CR)",
+      "messages": {
+        "appraiser": "Basement & Finished Rooms Below Grade (Line 1): For each comparable sale:\nIf GSEBelowGradeFinishSquareFeetNumber != [required format]",
+        "reviewer": "Compliance check failed for GSE Below Grade Finish Square Feet Number per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-138",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf GSEBasementExitType != {WalkOut, WalkUp, InteriorOnly}",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEBasementExitType",
+        "allowed": [
+          "WalkOut",
+          "WalkUp",
+          "InteriorOnly"
+        ],
+        "mode": "flag_if_not_in"
+      },
+      "citation": "GSE Appendix B: GSE Basement Exit Type (CR)",
+      "messages": {
+        "appraiser": "Basement & Finished Rooms Below Grade (Line 1): For each comparable sale:\nIf GSEBasementExitType != {WalkOut, WalkUp, InteriorOnly}",
+        "reviewer": "Compliance check failed for GSE Basement Exit Type per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-139",
+      "category": "SALES COMPARISON APPROACH",
+      "description": "If SubjectHasPriorSalesIndicator = NULL",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/RESEARCH/SUBJECT"
+      },
+      "citation": "GSE Appendix B: Subject Has Prior Sales Indicator (CR)",
+      "messages": {
+        "appraiser": "My research did/did not reveal any prior sales or transfers of the subject property for the three years prior to the effective date of this appraisal.: If SubjectHasPriorSalesIndicator = NULL",
+        "reviewer": "Compliance check failed for Subject Has Prior Sales Indicator per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-140",
+      "category": "SALES COMPARISON APPROACH",
+      "description": "If count(SubjectHasPriorSalesIndicator = {Y, N}) > 1",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/RESEARCH/SUBJECT",
+        "allowed": [
+          "Y",
+          "N"
+        ],
+        "mode": "flag_if_in"
+      },
+      "citation": "GSE Appendix B: Subject Has Prior Sales Indicator (CR)",
+      "messages": {
+        "appraiser": "My research did/did not reveal any prior sales or transfers of the subject property for the three years prior to the effective date of this appraisal.: If count(SubjectHasPriorSalesIndicator = {Y, N}) > 1",
+        "reviewer": "Compliance check failed for Subject Has Prior Sales Indicator per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-141",
+      "category": "SALES COMPARISON APPROACH",
+      "description": "If SubjectHasPriorSalesIndicator != {Y, N}",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/RESEARCH/SUBJECT",
+        "allowed": [
+          "Y",
+          "N"
+        ],
+        "mode": "flag_if_not_in"
+      },
+      "citation": "GSE Appendix B: Subject Has Prior Sales Indicator (CR)",
+      "messages": {
+        "appraiser": "My research did/did not reveal any prior sales or transfers of the subject property for the three years prior to the effective date of this appraisal.: If SubjectHasPriorSalesIndicator != {Y, N}",
+        "reviewer": "Compliance check failed for Subject Has Prior Sales Indicator per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-142",
+      "category": "SALES COMPARISON APPROACH",
+      "description": "If ComparableHasPriorSalesIndicator = NULL",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/RESEARCH/COMPARABLE"
+      },
+      "citation": "GSE Appendix B: Comparable Has Prior Sales Indicator (CR)",
+      "messages": {
+        "appraiser": "My research did/did not reveal any prior sales or transfers of the comparable sales for the year prior to the date of sale of the comparable sale.: If ComparableHasPriorSalesIndicator = NULL",
+        "reviewer": "Compliance check failed for Comparable Has Prior Sales Indicator per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-143",
+      "category": "SALES COMPARISON APPROACH",
+      "description": "If count(ComparableHasPriorSalesIndicator = {Y, N}) > 1",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/RESEARCH/COMPARABLE",
+        "allowed": [
+          "Y",
+          "N"
+        ],
+        "mode": "flag_if_in"
+      },
+      "citation": "GSE Appendix B: Comparable Has Prior Sales Indicator (CR)",
+      "messages": {
+        "appraiser": "My research did/did not reveal any prior sales or transfers of the comparable sales for the year prior to the date of sale of the comparable sale.: If count(ComparableHasPriorSalesIndicator = {Y, N}) > 1",
+        "reviewer": "Compliance check failed for Comparable Has Prior Sales Indicator per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-144",
+      "category": "SALES COMPARISON APPROACH",
+      "description": "If ComparableHasPriorSalesIndicator!= {Y, N}",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/RESEARCH/COMPARABLE",
+        "allowed": [
+          "Y",
+          "N"
+        ],
+        "mode": "flag_if_not_in"
+      },
+      "citation": "GSE Appendix B: Comparable Has Prior Sales Indicator (CR)",
+      "messages": {
+        "appraiser": "My research did/did not reveal any prior sales or transfers of the comparable sales for the year prior to the date of sale of the comparable sale.: If ComparableHasPriorSalesIndicator!= {Y, N}",
+        "reviewer": "Compliance check failed for Comparable Has Prior Sales Indicator per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-145",
+      "category": "SALES COMPARISON APPROACH - SUBJECT",
+      "description": " If (SubjectHasPriorSalesIndicator =Y) AND (GSEPriorSaleDate = NULL)",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "conditional_field_present",
+        "conditions": [
+          {
+            "field": "SubjectHasPriorSalesIndicator",
+            "value": "Y",
+            "allowed": null
+          }
+        ],
+        "required_field": "GSEPriorSaleDate",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/PRIOR_SALES/PRIOR_SALES_EXTENSION/PRIOR_SALES_EXTENSION_SECTION/ PRIOR_SALES_EXTENSION_SECTION_DATA/PRIOR_SALE/@GSEPriorSaleDate"
+      },
+      "citation": "GSE Appendix B: GSE Prior Sale Date (CR)",
+      "messages": {
+        "appraiser": "Date of Prior Sale/Transfer:  If (SubjectHasPriorSalesIndicator =Y) AND (GSEPriorSaleDate = NULL)",
+        "reviewer": "Compliance check failed for GSE Prior Sale Date per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-146",
+      "category": "SALES COMPARISON APPROACH - SUBJECT",
+      "description": "If (SubjectHasPriorSalesIndicator = Y) AND (GSEPriorSaleDate != [required format])",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "conditional_field_present",
+        "conditions": [
+          {
+            "field": "SubjectHasPriorSalesIndicator",
+            "value": "Y",
+            "allowed": null
+          }
+        ],
+        "required_field": "GSEPriorSaleDate",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/PRIOR_SALES/PRIOR_SALES_EXTENSION/PRIOR_SALES_EXTENSION_SECTION/ PRIOR_SALES_EXTENSION_SECTION_DATA/PRIOR_SALE/@GSEPriorSaleDate"
+      },
+      "citation": "GSE Appendix B: GSE Prior Sale Date (CR)",
+      "messages": {
+        "appraiser": "Date of Prior Sale/Transfer: If (SubjectHasPriorSalesIndicator = Y) AND (GSEPriorSaleDate != [required format])",
+        "reviewer": "Compliance check failed for GSE Prior Sale Date per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-147",
+      "category": "SALES COMPARISON APPROACH - SUBJECT",
+      "description": "If DataSourceDescription = NULL",
+      "severity": "Advisory",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/SALES_CONTRACT/@DataSourceDescription"
+      },
+      "citation": "GSE Appendix B: Data Source Description (T)",
+      "messages": {
+        "appraiser": "Data Source(s): If DataSourceDescription = NULL",
+        "reviewer": "Compliance check failed for Data Source Description per GSE Appendix B conditionality 'T'."
+      }
+    },
+    {
+      "rule_id": "UAD26-148",
+      "category": "SALES COMPARISON APPROACH - SUBJECT",
+      "description": "If DataSourceEffectiveDate = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/PRIOR_SALES/@DataSourceEffectiveDate"
+      },
+      "citation": "GSE Appendix B: Data Source Effective Date (R)",
+      "messages": {
+        "appraiser": "Effective Date of Data Source(s): If DataSourceEffectiveDate = NULL",
+        "reviewer": "Compliance check failed for Data Source Effective Date per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-149",
+      "category": "SALES COMPARISON APPROACH - SUBJECT",
+      "description": "If DataSourceEffectiveDate != [required format]",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "regex_match",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/PRIOR_SALES/@DataSourceEffectiveDate",
+        "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+      },
+      "citation": "GSE Appendix B: Data Source Effective Date (R)",
+      "messages": {
+        "appraiser": "Effective Date of Data Source(s): If DataSourceEffectiveDate != [required format]",
+        "reviewer": "Compliance check failed for Data Source Effective Date per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-150",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf DataSourceDescription = NULL",
+      "severity": "Advisory",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/SALES_CONTRACT/@DataSourceDescription"
+      },
+      "citation": "GSE Appendix B: Data Source Description (T)",
+      "messages": {
+        "appraiser": "Data Source(s): For each comparable sale:\nIf DataSourceDescription = NULL",
+        "reviewer": "Compliance check failed for Data Source Description per GSE Appendix B conditionality 'T'."
+      }
+    },
+    {
+      "rule_id": "UAD26-151",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf DataSourceEffectiveDate = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/PRIOR_SALES/@DataSourceEffectiveDate"
+      },
+      "citation": "GSE Appendix B: Data Source Effective Date (R)",
+      "messages": {
+        "appraiser": "Effective Date of Data Source(s) : For each comparable sale:\nIf DataSourceEffectiveDate = NULL",
+        "reviewer": "Compliance check failed for Data Source Effective Date per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-152",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf DataSourceEffectiveDate != [required format]",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "regex_match",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/PRIOR_SALES/@DataSourceEffectiveDate",
+        "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+      },
+      "citation": "GSE Appendix B: Data Source Effective Date (R)",
+      "messages": {
+        "appraiser": "Effective Date of Data Source(s) : For each comparable sale:\nIf DataSourceEffectiveDate != [required format]",
+        "reviewer": "Compliance check failed for Data Source Effective Date per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-153",
+      "category": "SALES COMPARISON APPROACH",
+      "description": "If ValueIndicatedBySalesComparisonApproachAmount = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/@ValueIndicatedBySalesComparisonApproachAmount"
+      },
+      "citation": "GSE Appendix B: Value Indicated By Sales Comparison Approach Amount (R)",
+      "messages": {
+        "appraiser": "Indicated Value by Sales Comparison Approach: If ValueIndicatedBySalesComparisonApproachAmount = NULL",
+        "reviewer": "Compliance check failed for Value Indicated By Sales Comparison Approach Amount per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-154",
+      "category": "SALES COMPARISON APPROACH",
+      "description": "If ValueIndicatedBySalesComparisonApproachAmount != [required format]",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "regex_match",
+        "field": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/@ValueIndicatedBySalesComparisonApproachAmount",
+        "pattern": "^\\d+(\\.\\d{2})?$"
+      },
+      "citation": "GSE Appendix B: Value Indicated By Sales Comparison Approach Amount (R)",
+      "messages": {
+        "appraiser": "Indicated Value by Sales Comparison Approach: If ValueIndicatedBySalesComparisonApproachAmount != [required format]",
+        "reviewer": "Compliance check failed for Value Indicated By Sales Comparison Approach Amount per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-155",
+      "category": "RECONCILIATION",
+      "description": "If ValueIndicatedBySalesComparisonApproachAmount != [required format])",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "regex_match",
+        "field": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/@ValueIndicatedBySalesComparisonApproachAmount",
+        "pattern": "^\\d+(\\.\\d{2})?$"
+      },
+      "citation": "GSE Appendix B: Value Indicated By Sales Comparison Approach Amount (R)",
+      "messages": {
+        "appraiser": "Indicated Value by Sales Comparison Approach: If ValueIndicatedBySalesComparisonApproachAmount != [required format])",
+        "reviewer": "Compliance check failed for Value Indicated By Sales Comparison Approach Amount per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-156",
+      "category": "RECONCILIATION",
+      "description": "If ValuationReconciliationConditionofAppraisalType = NULL",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "doc:/VALUATION_RESPONSE/VALUATION/_RECONCILIATION/_CONDITION_OF_APPRAISAL"
+      },
+      "citation": "GSE Appendix B: Valuation Reconciliation Condition of Appraisal Type (CR)",
+      "messages": {
+        "appraiser": "This appraisal is made \"as is,\u201d subject to completion, subject to the following repairs or subject to the following required inspection: If ValuationReconciliationConditionofAppraisalType = NULL",
+        "reviewer": "Compliance check failed for Valuation Reconciliation Condition of Appraisal Type per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-157",
+      "category": "RECONCILIATION",
+      "description": "If ValuationReconciliationConditionofAppraisalType != {AsIs, SubjectToCompletion, SubjectToRepairs, SubjectToInspection}",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "doc:/VALUATION_RESPONSE/VALUATION/_RECONCILIATION/_CONDITION_OF_APPRAISAL",
+        "allowed": [
+          "AsIs",
+          "SubjectToCompletion",
+          "SubjectToRepairs",
+          "SubjectToInspection"
+        ],
+        "mode": "flag_if_not_in"
+      },
+      "citation": "GSE Appendix B: Valuation Reconciliation Condition of Appraisal Type (CR)",
+      "messages": {
+        "appraiser": "This appraisal is made \"as is,\u201d subject to completion, subject to the following repairs or subject to the following required inspection: If ValuationReconciliationConditionofAppraisalType != {AsIs, SubjectToCompletion, SubjectToRepairs, SubjectToInspection}",
+        "reviewer": "Compliance check failed for Valuation Reconciliation Condition of Appraisal Type per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-158",
+      "category": "RECONCILIATION",
+      "description": "If PropertyAppraisedValueAmount = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "doc:/VALUATION_RESPONSE/VALUATION/@PropertyAppraisedValueAmount"
+      },
+      "citation": "GSE Appendix B: Property Appraised Value Amount (R)",
+      "messages": {
+        "appraiser": "Market Value: If PropertyAppraisedValueAmount = NULL",
+        "reviewer": "Compliance check failed for Property Appraised Value Amount per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-159",
+      "category": "RECONCILIATION",
+      "description": "If PropertyAppraisedValueAmount != [required format]",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "regex_match",
+        "field": "doc:/VALUATION_RESPONSE/VALUATION/@PropertyAppraisedValueAmount",
+        "pattern": "^\\d+(\\.\\d{2})?$"
+      },
+      "citation": "GSE Appendix B: Property Appraised Value Amount (R)",
+      "messages": {
+        "appraiser": "Market Value: If PropertyAppraisedValueAmount != [required format]",
+        "reviewer": "Compliance check failed for Property Appraised Value Amount per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-160",
+      "category": "RECONCILIATION",
+      "description": "If AppraisalEffectiveDate = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "doc:/VALUATION_RESPONSE/VALUATION/@AppraisalEffectiveDate"
+      },
+      "citation": "GSE Appendix B: Appraisal Effective Date (R)",
+      "messages": {
+        "appraiser": "As of (Effective Date): If AppraisalEffectiveDate = NULL",
+        "reviewer": "Compliance check failed for Appraisal Effective Date per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-161",
+      "category": "RECONCILIATION",
+      "description": "If AppraisalEffectiveDate != [required format]",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "regex_match",
+        "field": "doc:/VALUATION_RESPONSE/VALUATION/@AppraisalEffectiveDate",
+        "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+      },
+      "citation": "GSE Appendix B: Appraisal Effective Date (R)",
+      "messages": {
+        "appraiser": "As of (Effective Date): If AppraisalEffectiveDate != [required format]",
+        "reviewer": "Compliance check failed for Appraisal Effective Date per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-162",
+      "category": "PUD INFORMATION",
+      "description": "If (ProjectClassificationType = Y) AND (ProjectDeveloperControlsProjectManagementIndicator = NULL)",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "conditional_field_present",
+        "conditions": [
+          {
+            "field": "ProjectClassificationType",
+            "value": "Y",
+            "allowed": null
+          }
+        ],
+        "required_field": "ProjectDeveloperControlsProjectManagementIndicator",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/PROJECT"
+      },
+      "citation": "GSE Appendix B: Project Developer Controls Project Management Indicator (CR)",
+      "messages": {
+        "appraiser": "Is the developer/builder in control of the Homeowners' Association (HOA)?: If (ProjectClassificationType = Y) AND (ProjectDeveloperControlsProjectManagementIndicator = NULL)",
+        "reviewer": "Compliance check failed for Project Developer Controls Project Management Indicator per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-163",
+      "category": "CERTIFICATION",
+      "description": "If AppraisalLicenseExpirationDate != [required format]",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "regex_match",
+        "field": "doc:/VALUATION_RESPONSE/PARTIES/APPRAISER/APPRAISER_LICENSE/@_ExpirationDate",
+        "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+      },
+      "citation": "GSE Appendix B: Appraiser License Expiration Date (CR)",
+      "messages": {
+        "appraiser": "Appraiser Expiration Date of Certification or License: If AppraisalLicenseExpirationDate != [required format]",
+        "reviewer": "Compliance check failed for Appraiser License Expiration Date per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-164",
+      "category": "CERTIFICATION",
+      "description": "If GSEManagementCompanyName = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "doc:/VALUATION_RESPONSE/PARTIES/MANAGEMENT_COMPANY_EXTENSION/MANAGEMENT_COMPANY_EXTENSION_SECTION/MANAGEMENT_COMPANY_EXTENSION_SECTION_DATA/MANAGEMENT_COMPANY/@GSEManagementCompanyName"
+      },
+      "citation": "GSE Appendix B: GSE Management Company Name (R)",
+      "messages": {
+        "appraiser": "LENDER/CLIENT Name: If GSEManagementCompanyName = NULL",
+        "reviewer": "Compliance check failed for GSE Management Company Name per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-165",
+      "category": "PROJECT INFORMATION",
+      "description": "If ProjectDeveloperControlsProjectManagementIndicator = NULL",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/PROJECT"
+      },
+      "citation": "GSE Appendix B: Project Developer Controls Project Management Indicator (CR)",
+      "messages": {
+        "appraiser": "Is the developer/builder in control of the Homeowners' Association (HOA)? : If ProjectDeveloperControlsProjectManagementIndicator = NULL",
+        "reviewer": "Compliance check failed for Project Developer Controls Project Management Indicator per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-166",
+      "category": "PROJECT INFORMATION",
+      "description": "If count(ProjectDeveloperControlsProjectManagementIndicator = {Y,N}) > 1",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/PROJECT",
+        "allowed": [
+          "Y",
+          "N"
+        ],
+        "mode": "flag_if_in"
+      },
+      "citation": "GSE Appendix B: Project Developer Controls Project Management Indicator (CR)",
+      "messages": {
+        "appraiser": "Is the developer/builder in control of the Homeowners' Association (HOA)? : If count(ProjectDeveloperControlsProjectManagementIndicator = {Y,N}) > 1",
+        "reviewer": "Compliance check failed for Project Developer Controls Project Management Indicator per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-167",
+      "category": "PROJECT INFORMATION",
+      "description": "If ProjectDeveloperControlsProjectManagementIndicator != {Y,N}",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/PROJECT",
+        "allowed": [
+          "Y",
+          "N"
+        ],
+        "mode": "flag_if_not_in"
+      },
+      "citation": "GSE Appendix B: Project Developer Controls Project Management Indicator (CR)",
+      "messages": {
+        "appraiser": "Is the developer/builder in control of the Homeowners' Association (HOA)? : If ProjectDeveloperControlsProjectManagementIndicator != {Y,N}",
+        "reviewer": "Compliance check failed for Project Developer Controls Project Management Indicator per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-168",
+      "category": "SUBJECT",
+      "description": "If ProjectName = NULL",
+      "severity": "Advisory",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/PROJECT/@_Name"
+      },
+      "citation": "GSE Appendix B: Project Name (T)",
+      "messages": {
+        "appraiser": "Project Name: If ProjectName = NULL",
+        "reviewer": "Compliance check failed for Project Name per GSE Appendix B conditionality 'T'."
+      }
+    },
+    {
+      "rule_id": "UAD26-169",
+      "category": "SALES COMPARISON APPROACH - COMPARABLE",
+      "description": "For each comparable sale:\nIf ProjectName = NULL",
+      "severity": "Advisory",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/PROJECT/@_Name"
+      },
+      "citation": "GSE Appendix B: Project Name (T)",
+      "messages": {
+        "appraiser": "Project Name: For each comparable sale:\nIf ProjectName = NULL",
+        "reviewer": "Compliance check failed for Project Name per GSE Appendix B conditionality 'T'."
+      }
+    },
+    {
+      "rule_id": "UAD26-170",
+      "category": "PRIOR SALE HISTORY",
+      "description": "If (SubjectHasPriorSalesIndicator =Y) AND (GSEPriorSaleDate = NULL)",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "conditional_field_present",
+        "conditions": [
+          {
+            "field": "SubjectHasPriorSalesIndicator",
+            "value": "Y",
+            "allowed": null
+          }
+        ],
+        "required_field": "GSEPriorSaleDate",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/PRIOR_SALES/PRIOR_SALES_EXTENSION/PRIOR_SALES_EXTENSION_SECTION/ PRIOR_SALES_EXTENSION_SECTION_DATA/PRIOR_SALE/@GSEPriorSaleDate"
+      },
+      "citation": "GSE Appendix B: GSE Prior Sale Date (CR)",
+      "messages": {
+        "appraiser": "Date of Prior Sale/Transfer: If (SubjectHasPriorSalesIndicator =Y) AND (GSEPriorSaleDate = NULL)",
+        "reviewer": "Compliance check failed for GSE Prior Sale Date per GSE Appendix B conditionality 'CR'."
+      }
+    },
+    {
+      "rule_id": "UAD26-171",
+      "category": "FOOTER",
+      "description": "If AppraisalReportContentIdentifier = NULL",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "doc:/VALUATION_RESPONSE/REPORT/FORM/@AppraisalReportContentIdentifier"
+      },
+      "citation": "GSE Appendix B: Appraisal Report Content Identifier (R)",
+      "messages": {
+        "appraiser": "N/A: If AppraisalReportContentIdentifier = NULL",
+        "reviewer": "Compliance check failed for Appraisal Report Content Identifier per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-172",
+      "category": "FOOTER",
+      "description": "If AppraisalReportContentIdentifier != {UAD Version 9/2011}",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "doc:/VALUATION_RESPONSE/REPORT/FORM/@AppraisalReportContentIdentifier",
+        "allowed": [
+          "UAD Version 9/2011"
+        ],
+        "mode": "flag_if_not_in"
+      },
+      "citation": "GSE Appendix B: Appraisal Report Content Identifier (R)",
+      "messages": {
+        "appraiser": "N/A: If AppraisalReportContentIdentifier != {UAD Version 9/2011}",
+        "reviewer": "Compliance check failed for Appraisal Report Content Identifier per GSE Appendix B conditionality 'R'."
+      }
+    }
+  ]
+}

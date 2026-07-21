@@ -1,0 +1,244 @@
+{
+  "rules": [
+    {
+      "rule_id": "UAD26-001",
+      "category": "Subject Property",
+      "description": "Subject property street address is required",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/@_StreetAddress"
+      },
+      "citation": "Appendix B: Data Field Conditionality 1004/70 = R",
+      "messages": {
+        "appraiser": "Subject property street address is required (Form 1004, SUBJECT section).",
+        "reviewer": "Missing required subject property street address per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-002",
+      "category": "Subject Property",
+      "description": "Subject property city is required",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/@_City"
+      },
+      "citation": "Appendix B: Data Field Conditionality 1004/70 = R",
+      "messages": {
+        "appraiser": "Subject property city is required (Form 1004, SUBJECT section).",
+        "reviewer": "Missing required subject property city per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-003",
+      "category": "Subject Property",
+      "description": "Subject property state is required",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/@_State"
+      },
+      "citation": "Appendix B: Data Field Conditionality 1004/70 = R",
+      "messages": {
+        "appraiser": "Subject property state is required (Form 1004, SUBJECT section).",
+        "reviewer": "Missing required subject property state per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-004",
+      "category": "Subject Property",
+      "description": "Subject property postal code is required",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/PROPERTY/@_PostalCode"
+      },
+      "citation": "Appendix B: Data Field Conditionality 1004/70 = R",
+      "messages": {
+        "appraiser": "Subject property zip code is required (Form 1004, SUBJECT section).",
+        "reviewer": "Missing required subject property postal code per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-005",
+      "category": "Report Header",
+      "description": "Appraisal form type is required",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "doc:/VALUATION_RESPONSE/REPORT/@AppraisalFormType"
+      },
+      "citation": "Appendix B: Data Field Conditionality 1004/70 = R",
+      "messages": {
+        "appraiser": "Appraisal form type (e.g., FNM1004) is required in the report header.",
+        "reviewer": "Missing required appraisal form type per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-006",
+      "category": "Valuation",
+      "description": "Property appraised value amount is required",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "doc:/VALUATION_RESPONSE/VALUATION/@PropertyAppraisedValueAmount"
+      },
+      "citation": "Appendix B: Data Field Conditionality 1004/70 = R",
+      "messages": {
+        "appraiser": "The appraised value (Market Value) is required in the Reconciliation section.",
+        "reviewer": "Missing required property appraised value amount per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-007",
+      "category": "Valuation",
+      "description": "Appraisal effective date is required",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "doc:/VALUATION_RESPONSE/VALUATION/@AppraisalEffectiveDate"
+      },
+      "citation": "Appendix B: Data Field Conditionality 1004/70 = R",
+      "messages": {
+        "appraiser": "The appraisal effective date is required in the Reconciliation section.",
+        "reviewer": "Missing required appraisal effective date per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-008",
+      "category": "Appraiser",
+      "description": "Appraiser license identifier is required",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "doc:/VALUATION_RESPONSE/PARTIES/APPRAISER/APPRAISER_LICENSE/@_Identifier"
+      },
+      "citation": "Appendix B: Data Field Conditionality 1004/70 = R",
+      "messages": {
+        "appraiser": "Appraiser state license/certification number is required in the certification section.",
+        "reviewer": "Missing required appraiser license identifier per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-009",
+      "category": "Comparable Sale 1",
+      "description": "Comparable sale 1 property sales amount is required",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/@PropertySalesAmount"
+      },
+      "citation": "Appendix B: Data Field Conditionality 1004/70 = R",
+      "messages": {
+        "appraiser": "Sale price is required for Comparable Sale 1 in the Sales Comparison Approach.",
+        "reviewer": "Missing required sale price for Comparable Sale 1 per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-010",
+      "category": "Comparable Sale 1",
+      "description": "Comparable sale 1 property street address is required",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/LOCATION/@PropertyStreetAddress"
+      },
+      "citation": "Appendix B: Data Field Conditionality 1004/70 = R",
+      "messages": {
+        "appraiser": "Property address is required for Comparable Sale 1.",
+        "reviewer": "Missing required property street address for Comparable Sale 1 per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-011",
+      "category": "Comparable Sale 1",
+      "description": "Comparable sale 1 property city is required",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/LOCATION/@PropertyCity"
+      },
+      "citation": "Appendix B: Data Field Conditionality 1004/70 = R",
+      "messages": {
+        "appraiser": "Property city is required for Comparable Sale 1.",
+        "reviewer": "Missing required property city for Comparable Sale 1 per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-012",
+      "category": "Comparable Sale 1",
+      "description": "Comparable sale 1 property state is required",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/LOCATION/@PropertyState"
+      },
+      "citation": "Appendix B: Data Field Conditionality 1004/70 = R",
+      "messages": {
+        "appraiser": "Property state is required for Comparable Sale 1.",
+        "reviewer": "Missing required property state for Comparable Sale 1 per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-013",
+      "category": "Comparable Sale 1",
+      "description": "Comparable sale 1 property postal code is required",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/LOCATION/@PropertyPostalCode"
+      },
+      "citation": "Appendix B: Data Field Conditionality 1004/70 = R",
+      "messages": {
+        "appraiser": "Property zip code is required for Comparable Sale 1.",
+        "reviewer": "Missing required property postal code for Comparable Sale 1 per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-014",
+      "category": "Subject Property",
+      "description": "Subject property gross living area is required",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE[@PropertySequenceIdentifier='0']/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION[@ExtensionSectionOrganizationName='UNIFORM APPRAISAL DATASET']/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEGrossLivingAreaSquareFeetCount"
+      },
+      "citation": "Appendix B: Data Field Conditionality 1004/70 = R",
+      "messages": {
+        "appraiser": "Subject property gross living area (sq ft) is required in the Sales Comparison grid.",
+        "reviewer": "Missing required subject gross living area per GSE Appendix B conditionality 'R'."
+      }
+    },
+    {
+      "rule_id": "UAD26-015",
+      "category": "Subject Property",
+      "description": "Subject property overall condition rating is required",
+      "severity": "HardStop",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "subject:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE[@PropertySequenceIdentifier='0']/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION[@ExtensionSectionOrganizationName='UNIFORM APPRAISAL DATASET']/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEOverallConditionType"
+      },
+      "citation": "Appendix B: Data Field Conditionality 1004/70 = R",
+      "messages": {
+        "appraiser": "Subject property overall condition rating (C1-C6) is required in the Sales Comparison grid.",
+        "reviewer": "Missing required subject overall condition rating per GSE Appendix B conditionality 'R'."
+      }
+    }
+  ]
+}

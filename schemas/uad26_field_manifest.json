@@ -1,0 +1,2562 @@
+{
+  "name": "uad26-field-manifest",
+  "source": "Generated from Appendix B: GSE Appraisal Forms Mapping (Form FNM 1004 FRE 70)",
+  "fields": [
+    {
+      "key": "doc:/VALUATION_RESPONSE/REPORT/@AppraisalFormType",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/REPORT/",
+      "element": "AppraisalFormType",
+      "label": "N/A",
+      "section": "N/A",
+      "conditionality": "R"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/REPORT/EMBEDDED_FILE/DOCUMENT",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/REPORT/EMBEDDED_FILE/",
+      "element": "DOCUMENT",
+      "label": "N/A",
+      "section": "N/A",
+      "conditionality": "R"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/REPORT/@_TitleDescription",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/REPORT/",
+      "element": "_TitleDescription",
+      "label": "BLANK",
+      "section": "HEADER",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/REPORT/@AppraiserFileIdentifier",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/REPORT/",
+      "element": "AppraiserFileIdentifier",
+      "label": "File #",
+      "section": "HEADER",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/REPORT/@AppraiserAdditionalFileIdentifierName",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/REPORT/",
+      "element": "AppraiserAdditionalFileIdentifierName",
+      "label": "BLANK",
+      "section": "HEADER",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/REPORT/@AppraiserAdditionalFileIdentifier",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/REPORT/",
+      "element": "AppraiserAdditionalFileIdentifier",
+      "label": "BLANK",
+      "section": "HEADER",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/@_StreetAddress",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/",
+      "element": "_StreetAddress",
+      "label": "Property Address",
+      "section": "SUBJECT",
+      "conditionality": "R"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/@_City",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/",
+      "element": "_City",
+      "label": "City",
+      "section": "SUBJECT",
+      "conditionality": "R"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/@_State",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/",
+      "element": "_State",
+      "label": "State",
+      "section": "SUBJECT",
+      "conditionality": "R"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/@_PostalCode",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/",
+      "element": "_PostalCode",
+      "label": "Zip Code",
+      "section": "SUBJECT",
+      "conditionality": "R"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/PARTIES/BORROWER/BORROWER_EXTENSION/BORROWER_EXTENSION_SECTION/BORROWER_EXTENSION_SECTION_DATA/BORROWER_NAME/@GSEBorrowerName",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/PARTIES/BORROWER/BORROWER_EXTENSION/BORROWER_EXTENSION_SECTION/BORROWER_EXTENSION_SECTION_DATA/BORROWER_NAME/",
+      "element": "GSEBorrowerName",
+      "label": "Borrower",
+      "section": "SUBJECT",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/_OWNER/PROPERTY_OWNER_EXTENSION/PROPERTY_OWNER_EXTENSION_SECTION/PROPERTY_OWNER_EXTENSION_SECTION_DATA/PROPERTY_OWNER/@GSEPropertyOwnerName",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/_OWNER/PROPERTY_OWNER_EXTENSION/PROPERTY_OWNER_EXTENSION_SECTION/PROPERTY_OWNER_EXTENSION_SECTION_DATA/PROPERTY_OWNER/",
+      "element": "GSEPropertyOwnerName",
+      "label": "Owner of Public Record",
+      "section": "SUBJECT",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/@_County",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/",
+      "element": "_County",
+      "label": "County",
+      "section": "SUBJECT",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/_LEGAL_DESCRIPTION/@_TextDescription",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/_LEGAL_DESCRIPTION/",
+      "element": "_TextDescription",
+      "label": "Legal Description",
+      "section": "SUBJECT",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/_IDENTIFICATION/PROPERTY_IDENTIFICATION_EXTENSION/PROPERTY_IDENTIFICATION_EXTENSION_SECTION/PROPERTY_IDENTIFICATION_EXTENSION_SECTION_DATA/PARCEL_IDENTIFIER/@GSEAssessorsParcelIdentifier",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/_IDENTIFICATION/PROPERTY_IDENTIFICATION_EXTENSION/PROPERTY_IDENTIFICATION_EXTENSION_SECTION/PROPERTY_IDENTIFICATION_EXTENSION_SECTION_DATA/PARCEL_IDENTIFIER/",
+      "element": "GSEAssessorsParcelIdentifier",
+      "label": "Assessor's Parcel #",
+      "section": "SUBJECT",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/_TAX/@_YearIdentifier",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/_TAX/",
+      "element": "_YearIdentifier",
+      "label": "Tax Year",
+      "section": "SUBJECT",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/_TAX/PROPERTY_TAX_EXTENSION/PROPERTY_TAX_EXTENSION_SECTION/PROPERTY_TAX_EXTENSION_SECTION_DATA/PROPERTY_TAX_AMOUNT/@GSEPropertyTaxTotalTaxAmount",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/_TAX/PROPERTY_TAX_EXTENSION/PROPERTY_TAX_EXTENSION_SECTION/PROPERTY_TAX_EXTENSION_SECTION_DATA/PROPERTY_TAX_AMOUNT/",
+      "element": "GSEPropertyTaxTotalTaxAmount",
+      "label": "R.E. Taxes $",
+      "section": "SUBJECT",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/NEIGHBORHOOD/@_Name",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/NEIGHBORHOOD/",
+      "element": "_Name",
+      "label": "Neighborhood Name",
+      "section": "SUBJECT",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/_IDENTIFICATION/@MapReferenceIdentifier",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/_IDENTIFICATION/",
+      "element": "MapReferenceIdentifier",
+      "label": "Map Reference",
+      "section": "SUBJECT",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/_IDENTIFICATION/@CensusTractIdentifier",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/_IDENTIFICATION/",
+      "element": "CensusTractIdentifier",
+      "label": "Census Tract",
+      "section": "SUBJECT",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/PROPERTY ",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/",
+      "element": "PROPERTY ",
+      "label": "Occupant Owner",
+      "section": "SUBJECT",
+      "conditionality": "CR"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/PROPERTY",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/",
+      "element": "PROPERTY",
+      "label": "Occupant Vacant",
+      "section": "SUBJECT",
+      "conditionality": "CR"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/_TAX/@_TotalSpecialTaxAmount",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/_TAX/",
+      "element": "_TotalSpecialTaxAmount",
+      "label": "Special Assessments $",
+      "section": "SUBJECT",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/PROPERTY_EXTENSION/ PROPERTY_EXTENSION_SECTION/PROPERTY_EXTENSION_SECTION_DATA/PROPERTY_TYPE/@GSE_PUDIndicator",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/PROPERTY_EXTENSION/ PROPERTY_EXTENSION_SECTION/PROPERTY_EXTENSION_SECTION_DATA/PROPERTY_TYPE/",
+      "element": "GSE_PUDIndicator",
+      "label": "PUD",
+      "section": "SUBJECT",
+      "conditionality": "R"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/PROJECT/_PER_UNIT_FEE/@_Amount",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/PROJECT/_PER_UNIT_FEE/",
+      "element": "_Amount",
+      "label": "HOA $",
+      "section": "SUBJECT",
+      "conditionality": "R"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/PROJECT/_PER_UNIT_FEE",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/PROJECT/",
+      "element": "_PER_UNIT_FEE",
+      "label": "HOA $ Per Year",
+      "section": "SUBJECT",
+      "conditionality": "CR"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/@_RightsTypeOtherDescription",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/",
+      "element": "_RightsTypeOtherDescription",
+      "label": "Property Rights Appraised Other (describe)",
+      "section": "SUBJECT",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/REPORT",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/",
+      "element": "REPORT",
+      "label": "Assignment Type Purchase Transaction",
+      "section": "SUBJECT",
+      "conditionality": "CR"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/REPORT/@AppraisalPurposeTypeOtherDescription",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/REPORT/",
+      "element": "AppraisalPurposeTypeOtherDescription",
+      "label": "Assignment Type Other (describe)",
+      "section": "SUBJECT",
+      "conditionality": "CR"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/PARTIES/LENDER/@_UnparsedName",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/PARTIES/LENDER/",
+      "element": "_UnparsedName",
+      "label": "Lender/Client",
+      "section": "SUBJECT",
+      "conditionality": "R"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/PARTIES/LENDER/@AppraisalFormsUnparsedAddress",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/PARTIES/LENDER/",
+      "element": "AppraisalFormsUnparsedAddress",
+      "label": "Lender/Client Address",
+      "section": "SUBJECT",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/LISTING_HISTORY",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/",
+      "element": "LISTING_HISTORY",
+      "label": "Is the subject property currently offered for sale or has it been offered for sale in the twelve months prior to the effective date of the appraisal?   Yes",
+      "section": "SUBJECT",
+      "conditionality": "CR"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEDaysOnMarketDescription",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/",
+      "element": "GSEDaysOnMarketDescription",
+      "label": "Report data source(s) used, offering price(s), and date(s).",
+      "section": "SUBJECT",
+      "conditionality": "CR"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/LISTING_HISTORY/@ListedWithinPreviousYearDescription",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/LISTING_HISTORY/",
+      "element": "ListedWithinPreviousYearDescription",
+      "label": "Report data source(s) used, offering price(s), and date(s).",
+      "section": "SUBJECT",
+      "conditionality": "R"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/SALES_CONTRACT",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/",
+      "element": "SALES_CONTRACT",
+      "label": "I did analyze the contract for sale for the subject purchase transaction.",
+      "section": "CONTRACT",
+      "conditionality": "CR"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/SALES_CONTRACT/SALES_CONTRACT_EXTENSION/SALES_CONTRACT_EXTENSION_SECTION/SALES_CONTRACT_EXTENSION_SECTION_DATA/SALES_TRANSACTION/@GSESaleType",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/SALES_CONTRACT/SALES_CONTRACT_EXTENSION/SALES_CONTRACT_EXTENSION_SECTION/SALES_CONTRACT_EXTENSION_SECTION_DATA/SALES_TRANSACTION/",
+      "element": "GSESaleType",
+      "label": "Explain the results of the analysis of the contract for sale or why the analysis was not performed.",
+      "section": "CONTRACT",
+      "conditionality": "CR"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/SALES_CONTRACT/@_ReviewComment",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/SALES_CONTRACT/",
+      "element": "_ReviewComment",
+      "label": "Explain the results of the analysis of the contract for sale or why the analysis was not performed.",
+      "section": "CONTRACT",
+      "conditionality": "CR"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/SALES_CONTRACT/@_Amount",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/SALES_CONTRACT/",
+      "element": "_Amount",
+      "label": "Contract Price $",
+      "section": "CONTRACT",
+      "conditionality": "CR"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/SALES_CONTRACT/@_Date",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/SALES_CONTRACT/",
+      "element": "_Date",
+      "label": "Date of Contract",
+      "section": "CONTRACT",
+      "conditionality": "CR"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/SALES_CONTRACT/@DataSourceDescription",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/SALES_CONTRACT/",
+      "element": "DataSourceDescription",
+      "label": "Contract Data Source(s)",
+      "section": "CONTRACT",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/SALES_CONTRACT/@SalesConcessionAmount",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/SALES_CONTRACT/",
+      "element": "SalesConcessionAmount",
+      "label": "If Yes, report the total dollar amount and describe the items to be paid.",
+      "section": "CONTRACT",
+      "conditionality": "CR"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/SALES_CONTRACT/SALES_CONCESSION_EXTENSION/SALES_CONCESSION_EXTENSION_SECTION/SALES_CONCESSION_EXTENSION_SECTION_DATA/SALES_CONCESSION/@GSEUndefinedConcessionAmountIndicator",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/SALES_CONTRACT/SALES_CONCESSION_EXTENSION/SALES_CONCESSION_EXTENSION_SECTION/SALES_CONCESSION_EXTENSION_SECTION_DATA/SALES_CONCESSION/",
+      "element": "GSEUndefinedConcessionAmountIndicator",
+      "label": "If Yes, report the total dollar amount and describe the items to be paid.",
+      "section": "CONTRACT",
+      "conditionality": "CR"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/SALES_CONTRACT/@SalesConcessionDescription",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/SALES_CONTRACT/",
+      "element": "SalesConcessionDescription",
+      "label": "If Yes, report the total dollar amount and describe the items to be paid.",
+      "section": "CONTRACT",
+      "conditionality": "CR"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/NEIGHBORHOOD",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/",
+      "element": "NEIGHBORHOOD",
+      "label": "Location Urban",
+      "section": "NEIGHBORHOOD",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/NEIGHBORHOOD/_HOUSING/@_LowPriceAmount",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/NEIGHBORHOOD/_HOUSING/",
+      "element": "_LowPriceAmount",
+      "label": "One-Unit Housing Price $ (000) Low",
+      "section": "NEIGHBORHOOD",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/NEIGHBORHOOD/_HOUSING/@_HighPriceAmount",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/NEIGHBORHOOD/_HOUSING/",
+      "element": "_HighPriceAmount",
+      "label": "One-Unit Housing Price $ (000) High",
+      "section": "NEIGHBORHOOD",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/NEIGHBORHOOD/_HOUSING/@_PredominantPriceAmount",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/NEIGHBORHOOD/_HOUSING/",
+      "element": "_PredominantPriceAmount",
+      "label": "One-Unit Housing Price $ (000) Pred.",
+      "section": "NEIGHBORHOOD",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/NEIGHBORHOOD/_HOUSING/@_NewestYearsCount",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/NEIGHBORHOOD/_HOUSING/",
+      "element": "_NewestYearsCount",
+      "label": "One-Unit Housing Age (yrs) Low",
+      "section": "NEIGHBORHOOD",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/NEIGHBORHOOD/_HOUSING/@_OldestYearsCount",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/NEIGHBORHOOD/_HOUSING/",
+      "element": "_OldestYearsCount",
+      "label": "One-Unit Housing Age (yrs) High",
+      "section": "NEIGHBORHOOD",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/NEIGHBORHOOD/_HOUSING/@_PredominantAgeYearsCount",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/NEIGHBORHOOD/_HOUSING/",
+      "element": "_PredominantAgeYearsCount",
+      "label": "One-Unit Housing Age (yrs) Pred.",
+      "section": "NEIGHBORHOOD",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/NEIGHBORHOOD/_PRESENT_LAND_USE/@_Percent",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/NEIGHBORHOOD/_PRESENT_LAND_USE/",
+      "element": "_Percent",
+      "label": "Present Land Use % One-Unit",
+      "section": "NEIGHBORHOOD",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/NEIGHBORHOOD/NEIGHBORHOOD_EXTENSION/NEIGHBORHOOD_EXTENSION_SECTION/NEIGHBORHOOD_EXTENSION_SECTION_DATA/NEIGHBORHOOD_BOUNDARIES/@GSENeighborhoodBoundariesDescription",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/NEIGHBORHOOD/NEIGHBORHOOD_EXTENSION/NEIGHBORHOOD_EXTENSION_SECTION/NEIGHBORHOOD_EXTENSION_SECTION_DATA/NEIGHBORHOOD_BOUNDARIES/",
+      "element": "GSENeighborhoodBoundariesDescription",
+      "label": "Neighborhood Boundaries",
+      "section": "NEIGHBORHOOD",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/NEIGHBORHOOD/@_Description",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/NEIGHBORHOOD/",
+      "element": "_Description",
+      "label": "Neighborhood Description",
+      "section": "NEIGHBORHOOD",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/NEIGHBORHOOD/@_MarketConditionsDescription",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/NEIGHBORHOOD/",
+      "element": "_MarketConditionsDescription",
+      "label": "Market Conditions",
+      "section": "NEIGHBORHOOD",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/SITE/@_DimensionsDescription",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/SITE/",
+      "element": "_DimensionsDescription",
+      "label": "Dimensions",
+      "section": "SITE",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/SITE/@_AreaDescription",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/SITE/",
+      "element": "_AreaDescription",
+      "label": "Area",
+      "section": "SITE",
+      "conditionality": "R"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/SITE/SITE_FEATURE/@_Comment",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/SITE/SITE_FEATURE/",
+      "element": "_Comment",
+      "label": "Shape",
+      "section": "SITE",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_VIEW_OVERALL_RATING_EXTENSION/COMPARISON_VIEW_OVERALL_RATING_EXTENSION_SECTION/COMPARISON_VIEW_OVERALL_RATING_EXTENSION_SECTION_DATA/COMPARISON_VIEW_OVERALL_RATING/@GSEViewOverallRatingType",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_VIEW_OVERALL_RATING_EXTENSION/COMPARISON_VIEW_OVERALL_RATING_EXTENSION_SECTION/COMPARISON_VIEW_OVERALL_RATING_EXTENSION_SECTION_DATA/COMPARISON_VIEW_OVERALL_RATING/",
+      "element": "GSEViewOverallRatingType",
+      "label": "View",
+      "section": "SITE",
+      "conditionality": "R"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_VIEW_DETAIL_EXTENSION/COMPARISON_VIEW_DETAIL_EXTENSION_SECTION/COMPARISON_VIEW_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_VIEW_DETAIL/@GSEViewType",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_VIEW_DETAIL_EXTENSION/COMPARISON_VIEW_DETAIL_EXTENSION_SECTION/COMPARISON_VIEW_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_VIEW_DETAIL/",
+      "element": "GSEViewType",
+      "label": "View",
+      "section": "SITE",
+      "conditionality": "R"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_VIEW_DETAIL_EXTENSION/COMPARISON_VIEW_DETAIL_EXTENSION_SECTION/COMPARISON_VIEW_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_VIEW_DETAIL/@GSEViewTypeOtherDescription",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_VIEW_DETAIL_EXTENSION/COMPARISON_VIEW_DETAIL_EXTENSION_SECTION/COMPARISON_VIEW_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_VIEW_DETAIL/",
+      "element": "GSEViewTypeOtherDescription",
+      "label": "View",
+      "section": "SITE",
+      "conditionality": "CR"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/SITE/@_ZoningClassificationIdentifier",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/SITE/",
+      "element": "_ZoningClassificationIdentifier",
+      "label": "Specific Zoning Classification",
+      "section": "SITE",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/SITE/@_ZoningClassificationDescription",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/SITE/",
+      "element": "_ZoningClassificationDescription",
+      "label": "Zoning Description",
+      "section": "SITE",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/SITE",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/",
+      "element": "SITE",
+      "label": "Zoning Compliance Legal",
+      "section": "SITE",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/SITE/@_ZoningComplianceDescription",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/SITE/",
+      "element": "_ZoningComplianceDescription",
+      "label": "Zoning Compliance Illegal (describe)",
+      "section": "SITE",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/SITE/@HighestBestUseDescription",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/SITE/",
+      "element": "HighestBestUseDescription",
+      "label": "Is the highest and best use of subject as improved (or as proposed per plans and specifications) the present use? If No, describe",
+      "section": "SITE",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/SITE/SITE_UTILITY/@_PublicIndicator",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/SITE/SITE_UTILITY/",
+      "element": "_PublicIndicator",
+      "label": "Utilities Electricity Public",
+      "section": "SITE",
+      "conditionality": "CR"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/SITE/SITE_UTILITY/@_NonPublicIndicator",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/SITE/SITE_UTILITY/",
+      "element": "_NonPublicIndicator",
+      "label": "Utilities Electricity Other",
+      "section": "SITE",
+      "conditionality": "CR"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/SITE/SITE_UTILITY/@_NonPublicDescription",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/SITE/SITE_UTILITY/",
+      "element": "_NonPublicDescription",
+      "label": "Utilities  Electricity Other (describe)",
+      "section": "SITE",
+      "conditionality": "CR"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/_OFF_SITE_IMPROVEMENT/@_Description",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/_OFF_SITE_IMPROVEMENT/",
+      "element": "_Description",
+      "label": "Off-Site Improvements - Type Street",
+      "section": "SITE",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/_OFF_SITE_IMPROVEMENT/@_ExistsIndicator",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/_OFF_SITE_IMPROVEMENT/",
+      "element": "_ExistsIndicator",
+      "label": "Street Public",
+      "section": "SITE",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/SITE/FLOOD_ZONE/FLOOD_ZONE_EXTENSION/FLOOD_ZONE_EXTENSION_SECTION/FLOOD_ZONE_EXTENSION_SECTION_DATA/FLOOD_ZONE_INFORMATION",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/SITE/FLOOD_ZONE/FLOOD_ZONE_EXTENSION/FLOOD_ZONE_EXTENSION_SECTION/FLOOD_ZONE_EXTENSION_SECTION_DATA/",
+      "element": "FLOOD_ZONE_INFORMATION",
+      "label": "FEMA Special Flood Hazard Area Yes",
+      "section": "SITE",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/SITE/FLOOD_ZONE/FLOOD_ZONE_EXTENSION/FLOOD_ZONE_EXTENSION_SECTION/FLOOD_ZONE_EXTENSION_SECTION_DATA/FLOOD_ZONE_INFORMATION/@GSENFIPFloodZoneIdentifier",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/SITE/FLOOD_ZONE/FLOOD_ZONE_EXTENSION/FLOOD_ZONE_EXTENSION_SECTION/FLOOD_ZONE_EXTENSION_SECTION_DATA/FLOOD_ZONE_INFORMATION/",
+      "element": "GSENFIPFloodZoneIdentifier",
+      "label": "FEMA Flood Zone",
+      "section": "SITE",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/SITE/FLOOD_ZONE/FLOOD_ZONE_EXTENSION/FLOOD_ZONE_EXTENSION_SECTION/FLOOD_ZONE_EXTENSION_SECTION_DATA/FLOOD_ZONE_INFORMATION/@GSEFEMAFloodMapIdentifier",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/SITE/FLOOD_ZONE/FLOOD_ZONE_EXTENSION/FLOOD_ZONE_EXTENSION_SECTION/FLOOD_ZONE_EXTENSION_SECTION_DATA/FLOOD_ZONE_INFORMATION/",
+      "element": "GSEFEMAFloodMapIdentifier",
+      "label": "FEMA Map #",
+      "section": "SITE",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/SITE/FLOOD_ZONE/@NFIPMapPanelDate",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/SITE/FLOOD_ZONE/",
+      "element": "NFIPMapPanelDate",
+      "label": "FEMA Map Date",
+      "section": "SITE",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/PROPERTY_ANALYSIS",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/",
+      "element": "PROPERTY_ANALYSIS",
+      "label": "Are the utilities and off-site improvements typical for the market area? Yes",
+      "section": "SITE",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/PROPERTY_ANALYSIS/@_Comment",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/PROPERTY_ANALYSIS/",
+      "element": "_Comment",
+      "label": "Are the utilities and off-site improvements typical for the market area?  If No, describe",
+      "section": "SITE",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/",
+      "element": "STRUCTURE",
+      "label": "Units One",
+      "section": "IMPROVEMENTS",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/STRUCTURE_EXTENSION/STRUCTURE_EXTENSION_SECTION/STRUCTURE_EXTENSION_SECTION_DATA/STRUCTURE_INFORMATION/@GSEStoriesCount",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/STRUCTURE_EXTENSION/STRUCTURE_EXTENSION_SECTION/STRUCTURE_EXTENSION_SECTION_DATA/STRUCTURE_INFORMATION/",
+      "element": "GSEStoriesCount",
+      "label": "# of Stories",
+      "section": "IMPROVEMENTS",
+      "conditionality": "R"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/@_DesignDescription",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/",
+      "element": "_DesignDescription",
+      "label": "Design (Style)",
+      "section": "IMPROVEMENTS",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/STRUCTURE_EXTENSION/STRUCTURE_EXTENSION_SECTION/STRUCTURE_EXTENSION_SECTION_DATA/STRUCTURE_INFORMATION/@GSEYearBuiltEstimationIndicator",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/STRUCTURE_EXTENSION/STRUCTURE_EXTENSION_SECTION/STRUCTURE_EXTENSION_SECTION_DATA/STRUCTURE_INFORMATION/",
+      "element": "GSEYearBuiltEstimationIndicator",
+      "label": "Year Built",
+      "section": "IMPROVEMENTS",
+      "conditionality": "R"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/@PropertyStructureBuiltYear",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/",
+      "element": "PropertyStructureBuiltYear",
+      "label": "Year Built",
+      "section": "IMPROVEMENTS",
+      "conditionality": "R"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/STRUCTURE_ANALYSIS/STRUCTURE_ANALYSIS_EXTENSION/STRUCTURE_ANALYSIS_EXTENSION_SECTION/STRUCTURE_ANALYSIS_EXTENSION_SECTION_DATA/EFFECTIVE_AGE/@GSEEffectiveAgeDescription",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/STRUCTURE_ANALYSIS/STRUCTURE_ANALYSIS_EXTENSION/STRUCTURE_ANALYSIS_EXTENSION_SECTION/STRUCTURE_ANALYSIS_EXTENSION_SECTION_DATA/EFFECTIVE_AGE/",
+      "element": "GSEEffectiveAgeDescription",
+      "label": "Effective Age (Yrs)",
+      "section": "IMPROVEMENTS",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/FOUNDATION/@_ExistsIndicator",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/FOUNDATION/",
+      "element": "_ExistsIndicator",
+      "label": "Foundation Concrete Slab",
+      "section": "IMPROVEMENTS",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/BASEMENT/@SquareFeetCount",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/BASEMENT/",
+      "element": "SquareFeetCount",
+      "label": "Foundation Basement Area",
+      "section": "IMPROVEMENTS",
+      "conditionality": "R"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/BASEMENT/@_FinishedPercent",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/BASEMENT/",
+      "element": "_FinishedPercent",
+      "label": "Foundation Basement Finish",
+      "section": "IMPROVEMENTS",
+      "conditionality": "R"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/BASEMENT/BASEMENT_FEATURE/@_ExistsIndicator",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/BASEMENT/BASEMENT_FEATURE/",
+      "element": "_ExistsIndicator",
+      "label": "Foundation Outside Entry/Exit",
+      "section": "IMPROVEMENTS",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/FOUNDATION_FEATURE/@_ExistsIndicator",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/FOUNDATION_FEATURE/",
+      "element": "_ExistsIndicator",
+      "label": "Foundation Sump Pump",
+      "section": "IMPROVEMENTS",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/FOUNDATION/_CONDITION/@_ExistsIndicator",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/FOUNDATION/_CONDITION/",
+      "element": "_ExistsIndicator",
+      "label": "Foundation Evidence of Infestation",
+      "section": "IMPROVEMENTS",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/EXTERIOR_FEATURE/@_Description",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/EXTERIOR_FEATURE/",
+      "element": "_Description",
+      "label": "Exterior Description Foundation Walls",
+      "section": "IMPROVEMENTS",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/INTERIOR_FEATURE/@_ConditionDescription",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/INTERIOR_FEATURE/",
+      "element": "_ConditionDescription",
+      "label": "Interior Floors",
+      "section": "IMPROVEMENTS",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/ATTIC/@_ExistsIndicator",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/ATTIC/",
+      "element": "_ExistsIndicator",
+      "label": "Attic None",
+      "section": "IMPROVEMENTS",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/ATTIC/ATTIC_FEATURE/@_ExistsIndicator",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/ATTIC/ATTIC_FEATURE/",
+      "element": "_ExistsIndicator",
+      "label": "Attic Drop Stair",
+      "section": "IMPROVEMENTS",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/HEATING",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/",
+      "element": "HEATING",
+      "label": "Heating FWA",
+      "section": "IMPROVEMENTS",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/HEATING/@_TypeOtherDescription",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/HEATING/",
+      "element": "_TypeOtherDescription",
+      "label": "Heating Other Description",
+      "section": "IMPROVEMENTS",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/HEATING/@_FuelDescription",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/HEATING/",
+      "element": "_FuelDescription",
+      "label": "Heating Fuel",
+      "section": "IMPROVEMENTS",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/COOLING/@_CentralizedIndicator",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/COOLING/",
+      "element": "_CentralizedIndicator",
+      "label": "Cooling Central Air Conditioning",
+      "section": "IMPROVEMENTS",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/COOLING/@_IndividualIndicator",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/COOLING/",
+      "element": "_IndividualIndicator",
+      "label": "Cooling Individual",
+      "section": "IMPROVEMENTS",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/COOLING/@_OtherIndicator",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/COOLING/",
+      "element": "_OtherIndicator",
+      "label": "Cooling Other",
+      "section": "IMPROVEMENTS",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/COOLING/@_UnitDescription",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/COOLING/",
+      "element": "_UnitDescription",
+      "label": "Cooling Other Description",
+      "section": "IMPROVEMENTS",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/AMENITY/@_ExistsIndicator",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/AMENITY/",
+      "element": "_ExistsIndicator",
+      "label": "Amenities Fireplace",
+      "section": "IMPROVEMENTS",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/AMENITY/@_Count",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/AMENITY/",
+      "element": "_Count",
+      "label": "Amenities Fireplace(s) #",
+      "section": "IMPROVEMENTS",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/AMENITY/@_DetailedDescription",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/AMENITY/",
+      "element": "_DetailedDescription",
+      "label": "Amenities Patio/Deck Description",
+      "section": "IMPROVEMENTS",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/AMENITY/@_TypeOtherDescription",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/AMENITY/",
+      "element": "_TypeOtherDescription",
+      "label": "Amenities Other Description",
+      "section": "IMPROVEMENTS",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/CAR_STORAGE/@_ExistsIndicator",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/CAR_STORAGE/",
+      "element": "_ExistsIndicator",
+      "label": "Car Storage None",
+      "section": "IMPROVEMENTS",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/CAR_STORAGE/CAR_STORAGE_LOCATION/@_ExistsIndicator",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/CAR_STORAGE/CAR_STORAGE_LOCATION/",
+      "element": "_ExistsIndicator",
+      "label": "Driveway",
+      "section": "IMPROVEMENTS",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/CAR_STORAGE/CAR_STORAGE_LOCATION/@ParkingSpacesCount",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/CAR_STORAGE/CAR_STORAGE_LOCATION/",
+      "element": "ParkingSpacesCount",
+      "label": "Driveway # of Cars",
+      "section": "IMPROVEMENTS",
+      "conditionality": "R"
+    },
+    {
+      "key": "subject:VALUATION_RESPONSE/PROPERTY/STRUCTURE/CAR_STORAGE",
+      "scope": "subject",
+      "xpath_dir": "",
+      "element": "VALUATION_RESPONSE/PROPERTY/STRUCTURE/CAR_STORAGE",
+      "label": "Car Storage Att.",
+      "section": "IMPROVEMENTS",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/CAR_STORAGE",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/",
+      "element": "CAR_STORAGE",
+      "label": "Car Storage Det.",
+      "section": "IMPROVEMENTS",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/KITCHEN_EQUIPMENT/@_ExistsIndicator",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/KITCHEN_EQUIPMENT/",
+      "element": "_ExistsIndicator",
+      "label": "Appliances Refrigerator",
+      "section": "IMPROVEMENTS",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/KITCHEN_EQUIPMENT/@_TypeOtherDescription",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/KITCHEN_EQUIPMENT/",
+      "element": "_TypeOtherDescription",
+      "label": "Appliances Other (describe)",
+      "section": "IMPROVEMENTS",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/@TotalRoomCount",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/",
+      "element": "TotalRoomCount",
+      "label": "Finished Area Above Grade Contains Rooms",
+      "section": "IMPROVEMENTS",
+      "conditionality": "R"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/@TotalBedroomCount",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/",
+      "element": "TotalBedroomCount",
+      "label": "Finished Area Above Grade Contains Bedrooms",
+      "section": "IMPROVEMENTS",
+      "conditionality": "R"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/@TotalBathroomCount",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/",
+      "element": "TotalBathroomCount",
+      "label": "Finished Area Above Grade Contains Bath(s)",
+      "section": "IMPROVEMENTS",
+      "conditionality": "R"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/@GrossLivingAreaSquareFeetCount",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/",
+      "element": "GrossLivingAreaSquareFeetCount",
+      "label": "Square Feet of Gross Living Area Above Grade",
+      "section": "IMPROVEMENTS",
+      "conditionality": "R"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEOverallConditionType",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/",
+      "element": "GSEOverallConditionType",
+      "label": "Describe the condition of the property (including needed repairs, deterioration, renovations, remodeling, etc.)",
+      "section": "IMPROVEMENTS",
+      "conditionality": "R"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/OVERALL_CONDITION_RATING_EXTENSION/OVERALL_CONDITION_RATING_EXTENSION_SECTION/OVERALL_CONDITION_RATING_EXTENSION_SECTION_DATA/OVERALL_CONDITION_RATING/@GSEUpdateLastFifteenYearIndicator",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/OVERALL_CONDITION_RATING_EXTENSION/OVERALL_CONDITION_RATING_EXTENSION_SECTION/OVERALL_CONDITION_RATING_EXTENSION_SECTION_DATA/OVERALL_CONDITION_RATING/",
+      "element": "GSEUpdateLastFifteenYearIndicator",
+      "label": "Describe the condition of the property (including needed repairs, deterioration, renovations, remodeling, etc.)",
+      "section": "IMPROVEMENTS",
+      "conditionality": "R"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/CONDITION_DETAIL_EXTENSION/CONDITION_DETAIL_EXTENSION_SECTION/CONDITION_DETAIL_EXTENSION_SECTION_DATA/CONDITION_DETAIL/@GSEImprovementAreaType",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/CONDITION_DETAIL_EXTENSION/CONDITION_DETAIL_EXTENSION_SECTION/CONDITION_DETAIL_EXTENSION_SECTION_DATA/CONDITION_DETAIL/",
+      "element": "GSEImprovementAreaType",
+      "label": "Describe the condition of the property (including needed repairs, deterioration, renovations, remodeling, etc.)",
+      "section": "IMPROVEMENTS",
+      "conditionality": "CR"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/CONDITION_DETAIL_EXTENSION/CONDITION_DETAIL_EXTENSION_SECTION/CONDITION_DETAIL_EXTENSION_SECTION_DATA/CONDITION_DETAIL/@GSEImprovementDescriptionType",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/CONDITION_DETAIL_EXTENSION/CONDITION_DETAIL_EXTENSION_SECTION/CONDITION_DETAIL_EXTENSION_SECTION_DATA/CONDITION_DETAIL/",
+      "element": "GSEImprovementDescriptionType",
+      "label": "Describe the condition of the property (including needed repairs, deterioration, renovations, remodeling, etc.)",
+      "section": "IMPROVEMENTS",
+      "conditionality": "CR"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/STRUCTURE/CONDITION_DETAIL_EXTENSION/CONDITION_DETAIL_EXTENSION_SECTION/CONDITION_DETAIL_EXTENSION_SECTION_DATA/CONDITION_DETAIL/@GSEEstimateYearOfImprovementType",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/STRUCTURE/CONDITION_DETAIL_EXTENSION/CONDITION_DETAIL_EXTENSION_SECTION/CONDITION_DETAIL_EXTENSION_SECTION_DATA/CONDITION_DETAIL/",
+      "element": "GSEEstimateYearOfImprovementType",
+      "label": "Describe the condition of the property (including needed repairs, deterioration, renovations, remodeling, etc.)",
+      "section": "IMPROVEMENTS",
+      "conditionality": "CR"
+    },
+    {
+      "key": "listing:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/RESEARCH/@ComparableListingsResearchedCount",
+      "scope": "listing",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/RESEARCH/",
+      "element": "ComparableListingsResearchedCount",
+      "label": "Number of Comparable Listings",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "listing:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/RESEARCH/@ComparableListingsPriceRangeLowAmount",
+      "scope": "listing",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/RESEARCH/",
+      "element": "ComparableListingsPriceRangeLowAmount",
+      "label": "Comparable Listings Price Range Low",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "listing:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/RESEARCH/@ComparableListingsPriceRangeHighAmount",
+      "scope": "listing",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/RESEARCH/",
+      "element": "ComparableListingsPriceRangeHighAmount",
+      "label": "Comparable Listings Price Range High",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/RESEARCH/@ComparableSalesResearchedCount",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/RESEARCH/",
+      "element": "ComparableSalesResearchedCount",
+      "label": "Number of Comparable Sales",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/RESEARCH/@ComparableSalesPriceRangeLowAmount",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/RESEARCH/",
+      "element": "ComparableSalesPriceRangeLowAmount",
+      "label": "Comparable Sales Price Range Low",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/RESEARCH/@ComparableSalesPriceRangeHighAmount",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/RESEARCH/",
+      "element": "ComparableSalesPriceRangeHighAmount",
+      "label": "Comparable Sales Price Range High",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/@PropertySalesAmount",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/",
+      "element": "PropertySalesAmount",
+      "label": "Sale Price",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "CR"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/@SalesPricePerGrossLivingAreaAmount",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/",
+      "element": "SalesPricePerGrossLivingAreaAmount",
+      "label": "Sale Price/Gross Liv. Area",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_LOCATION_OVERALL_RATING_EXTENSION/COMPARISON_LOCATION_OVERALL_RATING_EXTENSION_SECTION/COMPARISON_LOCATION_OVERALL_RATING_EXTENSION_SECTION_DATA/COMPARISON_LOCATION_OVERALL_RATING/@GSEOverallLocationRatingType",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_LOCATION_OVERALL_RATING_EXTENSION/COMPARISON_LOCATION_OVERALL_RATING_EXTENSION_SECTION/COMPARISON_LOCATION_OVERALL_RATING_EXTENSION_SECTION_DATA/COMPARISON_LOCATION_OVERALL_RATING/",
+      "element": "GSEOverallLocationRatingType",
+      "label": "Location",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "R"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_LOCATION_DETAIL_EXTENSION/COMPARISON_LOCATION_DETAIL_EXTENSION_SECTION/COMPARISON_LOCATION_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_LOCATION_DETAIL/@GSELocationType",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_LOCATION_DETAIL_EXTENSION/COMPARISON_LOCATION_DETAIL_EXTENSION_SECTION/COMPARISON_LOCATION_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_LOCATION_DETAIL/",
+      "element": "GSELocationType",
+      "label": "Location",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "R"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_LOCATION_DETAIL_EXTENSION/COMPARISON_LOCATION_DETAIL_EXTENSION_SECTION/COMPARISON_LOCATION_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_LOCATION_DETAIL/@GSELocationTypeOtherDescription",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_LOCATION_DETAIL_EXTENSION/COMPARISON_LOCATION_DETAIL_EXTENSION_SECTION/COMPARISON_LOCATION_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_LOCATION_DETAIL/",
+      "element": "GSELocationTypeOtherDescription",
+      "label": "Location",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "CR"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/SALE_PRICE_ADJUSTMENT/@_Description",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/SALE_PRICE_ADJUSTMENT/",
+      "element": "_Description",
+      "label": "Leasehold/Fee Simple",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEQualityOfConstructionRatingType",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/",
+      "element": "GSEQualityOfConstructionRatingType",
+      "label": "Quality of Construction",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "R"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEAgeEstimationIndicator",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/",
+      "element": "GSEAgeEstimationIndicator",
+      "label": "Actual Age",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "R"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/ROOM_ADJUSTMENT/@TotalRoomCount",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/ROOM_ADJUSTMENT/",
+      "element": "TotalRoomCount",
+      "label": "Above Grade Room Count Total",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "R"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/ROOM_ADJUSTMENT/@TotalBedroomCount",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/ROOM_ADJUSTMENT/",
+      "element": "TotalBedroomCount",
+      "label": "Above Grade Room Count Bdrms.",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "R"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/ROOM_ADJUSTMENT/@TotalBathroomCount",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/ROOM_ADJUSTMENT/",
+      "element": "TotalBathroomCount",
+      "label": "Above Grade Room Count Baths",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "R"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEBelowGradeTotalSquareFeetNumber",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/",
+      "element": "GSEBelowGradeTotalSquareFeetNumber",
+      "label": "Basement & Finished (line 1)   (Basement Area)",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "R"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEBelowGradeFinishSquareFeetNumber",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/",
+      "element": "GSEBelowGradeFinishSquareFeetNumber",
+      "label": "Basement & Finished (line 1)  (Basement Finish Square Footage)",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "CR"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEBasementExitType",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/",
+      "element": "GSEBasementExitType",
+      "label": "Basement & Finished (line 1)  (Basement Exit Type)",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "CR"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEBelowGradeRecreationRoomCount",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/",
+      "element": "GSEBelowGradeRecreationRoomCount",
+      "label": "Rooms Below Grade (line 2)  (Below Grade Rec Room Count)",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "CR"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEBelowGradeBedroomRoomCount",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/",
+      "element": "GSEBelowGradeBedroomRoomCount",
+      "label": "Rooms Below Grade (line 2)  (Below Grade Bedroom Count)",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "CR"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEBelowGradeBathroomRoomCount",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/",
+      "element": "GSEBelowGradeBathroomRoomCount",
+      "label": "Rooms Below Grade (line 2)  (Below Grade Bathroom Count)",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "CR"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEBelowGradeOtherRoomCount",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/",
+      "element": "GSEBelowGradeOtherRoomCount",
+      "label": "Rooms Below Grade (line 2)  (Below Grade Other Room Count)",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "CR"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/SALE_PRICE_ADJUSTMENT/@_TypeOtherDescription",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/SALE_PRICE_ADJUSTMENT/",
+      "element": "_TypeOtherDescription",
+      "label": "Extra Item Feature Name",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/LOCATION/@PropertyStreetAddress",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/LOCATION/",
+      "element": "PropertyStreetAddress",
+      "label": "Address (Line 1)",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "R"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/LOCATION/@PropertyCity",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/LOCATION/",
+      "element": "PropertyCity",
+      "label": "Address  (Line 2)",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "R"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/LOCATION/@PropertyState",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/LOCATION/",
+      "element": "PropertyState",
+      "label": "Address  (Line 2)",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "R"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/LOCATION/@PropertyPostalCode",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/LOCATION/",
+      "element": "PropertyPostalCode",
+      "label": "Address  (Line 2)",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "R"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/LOCATION/@ProximityToSubjectDescription",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/LOCATION/",
+      "element": "ProximityToSubjectDescription",
+      "label": "Proximity to Subject",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "R"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/@PropertySalesAmount",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/",
+      "element": "PropertySalesAmount",
+      "label": "Sale Price",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "R"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/@SalesPricePerGrossLivingAreaAmount",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/",
+      "element": "SalesPricePerGrossLivingAreaAmount",
+      "label": "Sale Price/Gross Liv. Area",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEDataSourceDescription",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/",
+      "element": "GSEDataSourceDescription",
+      "label": "Data Source(s)",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "R"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEDaysOnMarketDescription",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/",
+      "element": "GSEDaysOnMarketDescription",
+      "label": "Data Source(s)",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "R"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/@DataSourceVerificationDescription",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/",
+      "element": "DataSourceVerificationDescription",
+      "label": "Verification Source(s)",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSESaleType",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/",
+      "element": "GSESaleType",
+      "label": "Sale or Financing (Line 1)",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "R"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/SALE_PRICE_ADJUSTMENT/@_Amount",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/SALE_PRICE_ADJUSTMENT/",
+      "element": "_Amount",
+      "label": "Sale or Financing Adjustment (Line 1)",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "CR"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEFinancingType",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/",
+      "element": "GSEFinancingType",
+      "label": "Concessions (Line 2)",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "CR"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEFinancingTypeOtherDescription",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/",
+      "element": "GSEFinancingTypeOtherDescription",
+      "label": "Concessions (Line 2)",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "CR"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEConcessionAmount",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/",
+      "element": "GSEConcessionAmount",
+      "label": "Concessions (Line 2)",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "CR"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEListingStatusType",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/",
+      "element": "GSEListingStatusType",
+      "label": "Date of Sale/Time",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "R"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DATE_EXTENSION/COMPARISON_DATE_EXTENSION_SECTION/COMPARISON_DATE_EXTENSION_SECTION_DATA/OFFERING_DISPOSITION/@GSEShortDateDescription",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DATE_EXTENSION/COMPARISON_DATE_EXTENSION_SECTION/COMPARISON_DATE_EXTENSION_SECTION_DATA/OFFERING_DISPOSITION/",
+      "element": "GSEShortDateDescription",
+      "label": "Date of Sale/Time",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "CR"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEContractDateUnknownIndicator",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/",
+      "element": "GSEContractDateUnknownIndicator",
+      "label": "Date of Sale/Time",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "CR"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_LOCATION_OVERALL_RATING_EXTENSION/COMPARISON_LOCATION_OVERALL_RATING_EXTENSION_SECTION/COMPARISON_LOCATION_OVERALL_RATING_EXTENSION_SECTION_DATA/COMPARISON_LOCATION_OVERALL_RATING/@GSEOverallLocationRatingType",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_LOCATION_OVERALL_RATING_EXTENSION/COMPARISON_LOCATION_OVERALL_RATING_EXTENSION_SECTION/COMPARISON_LOCATION_OVERALL_RATING_EXTENSION_SECTION_DATA/COMPARISON_LOCATION_OVERALL_RATING/",
+      "element": "GSEOverallLocationRatingType",
+      "label": "Location  (Overall Rating)",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "R"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_LOCATION_DETAIL_EXTENSION/COMPARISON_LOCATION_DETAIL_EXTENSION_SECTION/COMPARISON_LOCATION_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_LOCATION_DETAIL/@GSELocationType",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_LOCATION_DETAIL_EXTENSION/COMPARISON_LOCATION_DETAIL_EXTENSION_SECTION/COMPARISON_LOCATION_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_LOCATION_DETAIL/",
+      "element": "GSELocationType",
+      "label": "Location  (Location Type)",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "R"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_LOCATION_DETAIL_EXTENSION/COMPARISON_LOCATION_DETAIL_EXTENSION_SECTION/COMPARISON_LOCATION_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_LOCATION_DETAIL/./@GSELocationTypeOtherDescription",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_LOCATION_DETAIL_EXTENSION/COMPARISON_LOCATION_DETAIL_EXTENSION_SECTION/COMPARISON_LOCATION_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_LOCATION_DETAIL/./",
+      "element": "GSELocationTypeOtherDescription",
+      "label": "Location  (Location Type Other Description)",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "CR"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/SALE_PRICE_ADJUSTMENT/@_Description",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/SALE_PRICE_ADJUSTMENT/",
+      "element": "_Description",
+      "label": "Leasehold/Fee Simple",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_VIEW_OVERALL_RATING_EXTENSION/COMPARISON_VIEW_OVERALL_RATING_EXTENSION_SECTION/COMPARISON_VIEW_OVERALL_RATING_EXTENSION_SECTION_DATA/COMPARISON_VIEW_OVERALL_RATING/@GSEViewOverallRatingType",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_VIEW_OVERALL_RATING_EXTENSION/COMPARISON_VIEW_OVERALL_RATING_EXTENSION_SECTION/COMPARISON_VIEW_OVERALL_RATING_EXTENSION_SECTION_DATA/COMPARISON_VIEW_OVERALL_RATING/",
+      "element": "GSEViewOverallRatingType",
+      "label": "View  (Overall Rating)",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "R"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_VIEW_DETAIL_EXTENSION/COMPARISON_VIEW_DETAIL_EXTENSION_SECTION/COMPARISON_VIEW_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_VIEW_DETAIL/@GSEViewType",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_VIEW_DETAIL_EXTENSION/COMPARISON_VIEW_DETAIL_EXTENSION_SECTION/COMPARISON_VIEW_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_VIEW_DETAIL/",
+      "element": "GSEViewType",
+      "label": "View  (ViewType)",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "R"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_VIEW_DETAIL_EXTENSION/COMPARISON_VIEW_DETAIL_EXTENSION_SECTION/COMPARISON_VIEW_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_VIEW_DETAIL/@GSEViewTypeOtherDescription",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_VIEW_DETAIL_EXTENSION/COMPARISON_VIEW_DETAIL_EXTENSION_SECTION/COMPARISON_VIEW_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_VIEW_DETAIL/",
+      "element": "GSEViewTypeOtherDescription",
+      "label": "View   (View Type Other Description)",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "CR"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEQualityOfConstructionRatingType",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/",
+      "element": "GSEQualityOfConstructionRatingType",
+      "label": "Quality of Construction",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "R"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEAgeEstimationIndicator",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/",
+      "element": "GSEAgeEstimationIndicator",
+      "label": "Actual Age",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "R"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEOverallConditionType",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/",
+      "element": "GSEOverallConditionType",
+      "label": "Condition",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "R"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/ROOM_ADJUSTMENT/@TotalRoomCount",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/ROOM_ADJUSTMENT/",
+      "element": "TotalRoomCount",
+      "label": "Above Grade Room Count Total Rooms",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "R"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/ROOM_ADJUSTMENT/@TotalBedroomCount",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/ROOM_ADJUSTMENT/",
+      "element": "TotalBedroomCount",
+      "label": "Above Grade Room Count Bdrms.",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "R"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/ROOM_ADJUSTMENT/@TotalBathroomCount",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/ROOM_ADJUSTMENT/",
+      "element": "TotalBathroomCount",
+      "label": "Above Grade Room Count Baths",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "R"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEBelowGradeTotalSquareFeetNumber",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/",
+      "element": "GSEBelowGradeTotalSquareFeetNumber",
+      "label": "Basement & Finished   (Line 1)",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "R"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEBelowGradeFinishSquareFeetNumber",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/",
+      "element": "GSEBelowGradeFinishSquareFeetNumber",
+      "label": "Basement & Finished  (Line 1)",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "CR"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEBasementExitType",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/",
+      "element": "GSEBasementExitType",
+      "label": "Basement & Finished   (Line 1)",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "CR"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEBelowGradeRecreationRoomCount",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/",
+      "element": "GSEBelowGradeRecreationRoomCount",
+      "label": "Rooms Below Grade  (Line 2)",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "CR"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEBelowGradeBedroomRoomCount",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/",
+      "element": "GSEBelowGradeBedroomRoomCount",
+      "label": "Rooms Below Grade  (Line 2)",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "CR"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEBelowGradeBathroomRoomCount",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/",
+      "element": "GSEBelowGradeBathroomRoomCount",
+      "label": "Rooms Below Grade  (Line 2)",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "CR"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEBelowGradeOtherRoomCount",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/",
+      "element": "GSEBelowGradeOtherRoomCount",
+      "label": "Rooms Below Grade  (Line 2)",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "CR"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/OTHER_FEATURE_ADJUSTMENT/@PropertyFeatureDescription",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/OTHER_FEATURE_ADJUSTMENT/",
+      "element": "PropertyFeatureDescription",
+      "label": "Extra Item",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/OTHER_FEATURE_ADJUSTMENT/@PropertyFeatureAdjustmentAmount",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/OTHER_FEATURE_ADJUSTMENT/",
+      "element": "PropertyFeatureAdjustmentAmount",
+      "label": "Extra Item Adjustment",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "CR"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/",
+      "element": "COMPARABLE_SALE",
+      "label": "Adjusted Sales Price Positive",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/@SalePriceTotalAdjustmentAmount",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/",
+      "element": "SalePriceTotalAdjustmentAmount",
+      "label": "Net Adjustment",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "R"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/@SalePriceTotalAdjustmentNetPercent",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/",
+      "element": "SalePriceTotalAdjustmentNetPercent",
+      "label": "Net Adjustment Percentage",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/@SalesPriceTotalAdjustmentGrossPercent",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/",
+      "element": "SalesPriceTotalAdjustmentGrossPercent",
+      "label": "Gross Adjustment Percentage",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/@AdjustedSalesPriceAmount",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/",
+      "element": "AdjustedSalesPriceAmount",
+      "label": "Adjusted Sale Price of Comparables",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/RESEARCH",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/",
+      "element": "RESEARCH",
+      "label": "I did research the sale or transfer history of the subject property and comparable sales.",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/RESEARCH/@SalesHistoryNotResearchedComment",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/RESEARCH/",
+      "element": "SalesHistoryNotResearchedComment",
+      "label": "I did not research the sale or transfer history of the subject property and comparable sales.  If not, explain.",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/RESEARCH/SUBJECT",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/RESEARCH/",
+      "element": "SUBJECT",
+      "label": "My research did reveal any prior sales or transfers of the subject property for the three years prior to the effective date of this appraisal.",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "CR"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/RESEARCH/SUBJECT/@DataSourceDescription",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/RESEARCH/SUBJECT/",
+      "element": "DataSourceDescription",
+      "label": "Subject Prior Sales History Data Source(s)",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/RESEARCH/COMPARABLE",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/RESEARCH/",
+      "element": "COMPARABLE",
+      "label": "My research did reveal any prior sales or transfers of the comparable sales for the year prior to the date of sale of the comparable sale.",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "CR"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/RESEARCH/COMPARABLE/@DataSourceDescription",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/RESEARCH/COMPARABLE/",
+      "element": "DataSourceDescription",
+      "label": "Comparable Prior Sales History Data Source(s)",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/PRIOR_SALES/PRIOR_SALES_EXTENSION/PRIOR_SALES_EXTENSION_SECTION/ PRIOR_SALES_EXTENSION_SECTION_DATA/PRIOR_SALE/@GSEPriorSaleDate",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/PRIOR_SALES/PRIOR_SALES_EXTENSION/PRIOR_SALES_EXTENSION_SECTION/ PRIOR_SALES_EXTENSION_SECTION_DATA/PRIOR_SALE/",
+      "element": "GSEPriorSaleDate",
+      "label": "Date of Prior Sale/Transfer SUBJECT",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "CR"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/PRIOR_SALES/@PropertySalesAmount",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/PRIOR_SALES/",
+      "element": "PropertySalesAmount",
+      "label": "Price of Prior Sale/Transfer SUBJECT",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "CR"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/PRIOR_SALES/@DataSourceDescription",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/PRIOR_SALES/",
+      "element": "DataSourceDescription",
+      "label": "Data Source (s) SUBJECT",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "R"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/PRIOR_SALES/@DataSourceEffectiveDate",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/PRIOR_SALES/",
+      "element": "DataSourceEffectiveDate",
+      "label": "Effective Date of Data Source (s) SUBJECT",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "R"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/PRIOR_SALES/PRIOR_SALES_EXTENSION/PRIOR_SALES_EXTENSION_SECTION/PRIOR_SALES_EXTENSION_SECTION_DATA/PRIOR_SALE/@GSEPriorSaleDate",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/PRIOR_SALES/PRIOR_SALES_EXTENSION/PRIOR_SALES_EXTENSION_SECTION/PRIOR_SALES_EXTENSION_SECTION_DATA/PRIOR_SALE/",
+      "element": "GSEPriorSaleDate",
+      "label": "Date of Prior Sale/Transfer COMPARABLE",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "CR"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/PRIOR_SALES/@PropertySalesAmount",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/PRIOR_SALES/",
+      "element": "PropertySalesAmount",
+      "label": "Price of Prior Sale/Transfer COMPARABLE",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "CR"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/PRIOR_SALES/@DataSourceDescription",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/PRIOR_SALES/",
+      "element": "DataSourceDescription",
+      "label": "Data Source (s) COMPARABLE",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "R"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/PRIOR_SALES/@DataSourceEffectiveDate",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/PRIOR_SALES/",
+      "element": "DataSourceEffectiveDate",
+      "label": "Effective Date of Data Source (s) COMPARABLE",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "R"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/PRIOR_SALES/PRIOR_SALES_EXTENSION/PRIOR_SALES_EXTENSION_SECTION/ PRIOR_SALES_EXTENSION_SECTION_DATA/PRIOR_SALE/@GSEPriorSaleComment",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/PRIOR_SALES/PRIOR_SALES_EXTENSION/PRIOR_SALES_EXTENSION_SECTION/ PRIOR_SALES_EXTENSION_SECTION_DATA/PRIOR_SALE/",
+      "element": "GSEPriorSaleComment",
+      "label": "Analysis of prior sale or transfer history of the subject property and comparable sales.",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/@_Comment",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/",
+      "element": "_Comment",
+      "label": "Summary of Sales Comparison Approach",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/@ValueIndicatedBySalesComparisonApproachAmount",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/",
+      "element": "ValueIndicatedBySalesComparisonApproachAmount",
+      "label": "Indicated Value by: Sales Comparison Approach $",
+      "section": "SALES COMPARISON APPROACH",
+      "conditionality": "R"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/@ValueIndicatedByCostApproachAmount",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/",
+      "element": "ValueIndicatedByCostApproachAmount",
+      "label": "Indicated Value by: Sales Cost Approach (if developed) $",
+      "section": "RECONCILIATION",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/INCOME_ANALYSIS/@ValueIndicatedByIncomeApproachAmount",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/INCOME_ANALYSIS/",
+      "element": "ValueIndicatedByIncomeApproachAmount",
+      "label": "Indicated Value by: Sales Income Approach (if developed) $",
+      "section": "RECONCILIATION",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION/_RECONCILIATION/@_SummaryComment",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION/_RECONCILIATION/",
+      "element": "_SummaryComment",
+      "label": "Comment Area",
+      "section": "RECONCILIATION",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION/_RECONCILIATION/_CONDITION_OF_APPRAISAL",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION/_RECONCILIATION/",
+      "element": "_CONDITION_OF_APPRAISAL",
+      "label": "The appraisal is made \u201cas is\u201d",
+      "section": "RECONCILIATION",
+      "conditionality": "CR"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION/_RECONCILIATION/@_ConditionsComment",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION/_RECONCILIATION/",
+      "element": "_ConditionsComment",
+      "label": "Comment Area",
+      "section": "RECONCILIATION",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION/@PropertyAppraisedValueAmount",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION/",
+      "element": "PropertyAppraisedValueAmount",
+      "label": "Market Value",
+      "section": "RECONCILIATION",
+      "conditionality": "R"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION/@AppraisalEffectiveDate",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION/",
+      "element": "AppraisalEffectiveDate",
+      "label": "As of (Effective Date)",
+      "section": "RECONCILIATION",
+      "conditionality": "R"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/@_AdditionalDescription",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/",
+      "element": "_AdditionalDescription",
+      "label": "Additional Comment",
+      "section": "ADDITIONAL COMMENTS",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/@SiteEstimatedValueComment",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/",
+      "element": "SiteEstimatedValueComment",
+      "label": "Support for the Opinion of Site Value",
+      "section": "COST APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/",
+      "element": "COST_ANALYSIS",
+      "label": "Reproduction Cost",
+      "section": "COST APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/@DataSourceDescription",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/",
+      "element": "DataSourceDescription",
+      "label": "Source of Cost Data",
+      "section": "COST APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/@CostServiceQualityRatingDescription",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/",
+      "element": "CostServiceQualityRatingDescription",
+      "label": "Quality Rating from Cost Service",
+      "section": "COST APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/COST_ANALYSIS_EXTENSION/COST_ANALYSIS_EXTENSION_SECTION/COST_ANALYSIS_EXTENSION_SECTION_DATA/COST_APPROACH_DATA_SOURCE/@GSECostDataSourceEffectiveDateDescription",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/COST_ANALYSIS_EXTENSION/COST_ANALYSIS_EXTENSION_SECTION/COST_ANALYSIS_EXTENSION_SECTION_DATA/COST_APPROACH_DATA_SOURCE/",
+      "element": "GSECostDataSourceEffectiveDateDescription",
+      "label": "Effective Date of Cost Data",
+      "section": "COST APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/@_Comment",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/",
+      "element": "_Comment",
+      "label": "Comments on Cost Approach",
+      "section": "COST APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/@EstimatedRemainingEconomicLifeYearsCount",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/",
+      "element": "EstimatedRemainingEconomicLifeYearsCount",
+      "label": "Estimated Remaining Economic Life",
+      "section": "COST APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/@SiteEstimatedValueAmount",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/",
+      "element": "SiteEstimatedValueAmount",
+      "label": "Opinion of Site Value",
+      "section": "COST APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/NEW_IMPROVEMENT/@SquareFeetCount",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/NEW_IMPROVEMENT/",
+      "element": "SquareFeetCount",
+      "label": "Cost-New Improvements Dwelling Sq. Ft.",
+      "section": "COST APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/NEW_IMPROVEMENT/@PricePerSquareFootAmount",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/NEW_IMPROVEMENT/",
+      "element": "PricePerSquareFootAmount",
+      "label": "Cost-New Improvements Dwelling Price/Sq. Ft.",
+      "section": "COST APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/NEW_IMPROVEMENT/@_CostAmount",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/NEW_IMPROVEMENT/",
+      "element": "_CostAmount",
+      "label": "Cost-New Improvements Dwelling Cost",
+      "section": "COST APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/NEW_IMPROVEMENT/@_TypeOtherDescription",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/NEW_IMPROVEMENT/",
+      "element": "_TypeOtherDescription",
+      "label": "Cost-New Improvements Other Description",
+      "section": "COST APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/NEW_IMPROVEMENT/@_CostDescription",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/NEW_IMPROVEMENT/",
+      "element": "_CostDescription",
+      "label": "Cost-New Improvements Extras",
+      "section": "COST APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/@NewImprovementTotalCostAmount",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/",
+      "element": "NewImprovementTotalCostAmount",
+      "label": "Total Estimated Cost-New",
+      "section": "COST APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/DEPRECIATION/@_PhysicalAmount",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/DEPRECIATION/",
+      "element": "_PhysicalAmount",
+      "label": "Physical Depreciation",
+      "section": "COST APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/DEPRECIATION/@_FunctionalAmount",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/DEPRECIATION/",
+      "element": "_FunctionalAmount",
+      "label": "Functional Depreciation",
+      "section": "COST APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/DEPRECIATION/@_ExteriorAmount",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/DEPRECIATION/",
+      "element": "_ExteriorAmount",
+      "label": "External Depreciation",
+      "section": "COST APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/DEPRECIATION/@_TotalAmount",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/DEPRECIATION/",
+      "element": "_TotalAmount",
+      "label": "Total Depreciation",
+      "section": "COST APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/@NewImprovementDepreciatedCostAmount",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/",
+      "element": "NewImprovementDepreciatedCostAmount",
+      "label": "Depreciated Cost of Improvements",
+      "section": "COST APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/@SiteOtherImprovementsAsIsAmount",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/COST_ANALYSIS/",
+      "element": "SiteOtherImprovementsAsIsAmount",
+      "label": "\"As-Is\"` Value of Site Improvements",
+      "section": "COST APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/INCOME_ANALYSIS/@EstimatedMarketMonthlyRentAmount",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/INCOME_ANALYSIS/",
+      "element": "EstimatedMarketMonthlyRentAmount",
+      "label": "Estimated Monthly Market Rent $",
+      "section": "INCOME APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/INCOME_ANALYSIS/@GrossRentMultiplierFactor",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/INCOME_ANALYSIS/",
+      "element": "GrossRentMultiplierFactor",
+      "label": "Gross Rent Multiplier",
+      "section": "INCOME APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/VALUATION_METHODS/INCOME_ANALYSIS/@_Comment",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/INCOME_ANALYSIS/",
+      "element": "_Comment",
+      "label": "Summary of Income Approach (including support for market rent and GRM)",
+      "section": "INCOME APPROACH",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/PROJECT",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/",
+      "element": "PROJECT",
+      "label": "Is the developer/builder in control of the Homeowners' Association (HOA)? Yes",
+      "section": "PROJECT INFORMATION",
+      "conditionality": "CR"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/PROJECT/@_Name",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/PROJECT/",
+      "element": "_Name",
+      "label": "PUD Legal name of project",
+      "section": "PROJECT INFORMATION",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/PROJECT/DEVELOPMENT_STAGE/@_TotalPhasesCount",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/PROJECT/DEVELOPMENT_STAGE/",
+      "element": "_TotalPhasesCount",
+      "label": "PUD Total number of phases",
+      "section": "PROJECT INFORMATION",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/PROJECT/DEVELOPMENT_STAGE/@CompletedUnitsCount",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/PROJECT/DEVELOPMENT_STAGE/",
+      "element": "CompletedUnitsCount",
+      "label": "PUD Total number of units",
+      "section": "PROJECT INFORMATION",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/PROJECT/DEVELOPMENT_STAGE/@UnitsSoldCount",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/PROJECT/DEVELOPMENT_STAGE/",
+      "element": "UnitsSoldCount",
+      "label": "PUD Total number of units sold",
+      "section": "PROJECT INFORMATION",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/PROJECT/DEVELOPMENT_STAGE/@UnitsRentedCount",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/PROJECT/DEVELOPMENT_STAGE/",
+      "element": "UnitsRentedCount",
+      "label": "PUD Total number of units rented",
+      "section": "PROJECT INFORMATION",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/PROJECT/DEVELOPMENT_STAGE/@UnitsForSaleCount",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/PROJECT/DEVELOPMENT_STAGE/",
+      "element": "UnitsForSaleCount",
+      "label": "PUD Total number of units for sale",
+      "section": "PROJECT INFORMATION",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/PROJECT/DEVELOPMENT_STAGE/@DataSourceDescription",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/PROJECT/DEVELOPMENT_STAGE/",
+      "element": "DataSourceDescription",
+      "label": "PUD Number of Units Data Source(s)",
+      "section": "PROJECT INFORMATION",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/PROJECT/@_ConversionDate",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/PROJECT/",
+      "element": "_ConversionDate",
+      "label": "PUD If yes, date of conversion",
+      "section": "PROJECT INFORMATION",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/PROJECT/@_ContainsMultipleDwellingUnitsDataSourceDescription",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/PROJECT/",
+      "element": "_ContainsMultipleDwellingUnitsDataSourceDescription",
+      "label": "PUD Multi-Dwelling Unit Data source(s)",
+      "section": "PROJECT INFORMATION",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/PROJECT/@_CommonElementsStatusDescription",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/PROJECT/",
+      "element": "_CommonElementsStatusDescription",
+      "label": "PUD If no, describe the status of completion",
+      "section": "PROJECT INFORMATION",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/PROJECT/@_CommonElementsLeaseTermsDescription",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/PROJECT/",
+      "element": "_CommonElementsLeaseTermsDescription",
+      "label": "PUD If yes, describe the rental terms and options.",
+      "section": "PROJECT INFORMATION",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/PROPERTY/PROJECT/@_CommonElementsDescription",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/PROPERTY/PROJECT/",
+      "element": "_CommonElementsDescription",
+      "label": "PUD Describe common elements and recreational facilities",
+      "section": "PROJECT INFORMATION",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/PARTIES/APPRAISER/@_Name",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/PARTIES/APPRAISER/",
+      "element": "_Name",
+      "label": "Appraiser Name",
+      "section": "APPRAISER CERTIFICATION",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/PARTIES/APPRAISER/@_CompanyName",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/PARTIES/APPRAISER/",
+      "element": "_CompanyName",
+      "label": "Appraiser Company Name",
+      "section": "APPRAISER CERTIFICATION",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/PARTIES/APPRAISER/@_StreetAddress",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/PARTIES/APPRAISER/",
+      "element": "_StreetAddress",
+      "label": "Appraiser Company Address",
+      "section": "APPRAISER CERTIFICATION",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/PARTIES/APPRAISER/@_City",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/PARTIES/APPRAISER/",
+      "element": "_City",
+      "label": "Appraiser Company Address (Line 2)",
+      "section": "APPRAISER CERTIFICATION",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/PARTIES/APPRAISER/@_State",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/PARTIES/APPRAISER/",
+      "element": "_State",
+      "label": "Appraiser Company Address (Line 2)",
+      "section": "APPRAISER CERTIFICATION",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/PARTIES/APPRAISER/@_PostalCode",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/PARTIES/APPRAISER/",
+      "element": "_PostalCode",
+      "label": "Appraiser Company Address (Line 2)",
+      "section": "APPRAISER CERTIFICATION",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/PARTIES/APPRAISER/CONTACT_DETAIL/CONTACT_POINT/@_Value",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/PARTIES/APPRAISER/CONTACT_DETAIL/CONTACT_POINT/",
+      "element": "_Value",
+      "label": "Appraiser Telephone Number",
+      "section": "APPRAISER CERTIFICATION",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/REPORT/@AppraiserReportSignedDate",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/REPORT/",
+      "element": "AppraiserReportSignedDate",
+      "label": "Appraiser Date of Signature and Report",
+      "section": "APPRAISER CERTIFICATION",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/PARTIES/APPRAISER/APPRAISER_LICENSE/@_Identifier",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/PARTIES/APPRAISER/APPRAISER_LICENSE/",
+      "element": "_Identifier",
+      "label": "Appraiser State Certification #",
+      "section": "APPRAISER CERTIFICATION",
+      "conditionality": "CR"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/PARTIES/APPRAISER/APPRAISER_LICENSE/@_TypeOtherDescription",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/PARTIES/APPRAISER/APPRAISER_LICENSE/",
+      "element": "_TypeOtherDescription",
+      "label": "Appraiser or Other (describe)",
+      "section": "APPRAISER CERTIFICATION",
+      "conditionality": "CR"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/PARTIES/APPRAISER/APPRAISER_LICENSE/@_State",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/PARTIES/APPRAISER/APPRAISER_LICENSE/",
+      "element": "_State",
+      "label": "Appraiser State",
+      "section": "APPRAISER CERTIFICATION",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/PARTIES/APPRAISER/APPRAISER_LICENSE/@_ExpirationDate",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/PARTIES/APPRAISER/APPRAISER_LICENSE/",
+      "element": "_ExpirationDate",
+      "label": "Appraiser Expiration Date of Certification or License",
+      "section": "APPRAISER CERTIFICATION",
+      "conditionality": "CR"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/PARTIES/MANAGEMENT_COMPANY_EXTENSION/MANAGEMENT_COMPANY_EXTENSION_SECTION/MANAGEMENT_COMPANY_EXTENSION_SECTION_DATA/MANAGEMENT_COMPANY/@GSEManagementCompanyName",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/PARTIES/MANAGEMENT_COMPANY_EXTENSION/MANAGEMENT_COMPANY_EXTENSION_SECTION/MANAGEMENT_COMPANY_EXTENSION_SECTION_DATA/MANAGEMENT_COMPANY/",
+      "element": "GSEManagementCompanyName",
+      "label": "LENDER/CLIENT  Name",
+      "section": "APPRAISER CERTIFICATION",
+      "conditionality": "R"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/PARTIES/LENDER/CONTACT_DETAIL/CONTACT_POINT/@_Value",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/PARTIES/LENDER/CONTACT_DETAIL/CONTACT_POINT/",
+      "element": "_Value",
+      "label": "LENDER/CLIENT Email Address",
+      "section": "APPRAISER CERTIFICATION",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/PARTIES/SUPERVISOR/@_Name",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/PARTIES/SUPERVISOR/",
+      "element": "_Name",
+      "label": "Supervisory Appraiser Name",
+      "section": "APPRAISER CERTIFICATION",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/PARTIES/SUPERVISOR/@_CompanyName",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/PARTIES/SUPERVISOR/",
+      "element": "_CompanyName",
+      "label": "Supervisory Appraiser Company Name",
+      "section": "APPRAISER CERTIFICATION",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/PARTIES/SUPERVISOR/@_StreetAddress",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/PARTIES/SUPERVISOR/",
+      "element": "_StreetAddress",
+      "label": "Supervisory Appraiser Company Address",
+      "section": "APPRAISER CERTIFICATION",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/PARTIES/SUPERVISOR/@_City",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/PARTIES/SUPERVISOR/",
+      "element": "_City",
+      "label": "Supervisory Appraiser Company Address (2nd line)",
+      "section": "APPRAISER CERTIFICATION",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/PARTIES/SUPERVISOR/@_State",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/PARTIES/SUPERVISOR/",
+      "element": "_State",
+      "label": "Supervisory Appraiser Company Address (2nd line)",
+      "section": "APPRAISER CERTIFICATION",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/PARTIES/SUPERVISOR/@_PostalCode",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/PARTIES/SUPERVISOR/",
+      "element": "_PostalCode",
+      "label": "Supervisory Appraiser Company Address (2nd line)",
+      "section": "APPRAISER CERTIFICATION",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/PARTIES/SUPERVISOR/CONTACT_DETAIL/CONTACT_POINT/@_Value",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/PARTIES/SUPERVISOR/CONTACT_DETAIL/CONTACT_POINT/",
+      "element": "_Value",
+      "label": "Supervisory Appraiser Telephone Number",
+      "section": "APPRAISER CERTIFICATION",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/REPORT/@SupervisorReportSignedDate",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/REPORT/",
+      "element": "SupervisorReportSignedDate",
+      "label": "Supervisory Appraiser Date of Signature",
+      "section": "APPRAISER CERTIFICATION",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/PARTIES/SUPERVISOR/APPRAISER_LICENSE/@_Identifier",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/PARTIES/SUPERVISOR/APPRAISER_LICENSE/",
+      "element": "_Identifier",
+      "label": "Supervisory Appraiser State Certification #",
+      "section": "APPRAISER CERTIFICATION",
+      "conditionality": "CR"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/PARTIES/SUPERVISOR/APPRAISER_LICENSE/@_State",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/PARTIES/SUPERVISOR/APPRAISER_LICENSE/",
+      "element": "_State",
+      "label": "Supervisory Appraiser State",
+      "section": "APPRAISER CERTIFICATION",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/PARTIES/SUPERVISOR/APPRAISER_LICENSE/@_ExpirationDate",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/PARTIES/SUPERVISOR/APPRAISER_LICENSE/",
+      "element": "_ExpirationDate",
+      "label": "Supervisory Appraiser Expiration Date of Certification or License",
+      "section": "APPRAISER CERTIFICATION",
+      "conditionality": "CR"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/PARTIES/SUPERVISOR/INSPECTION",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/PARTIES/SUPERVISOR/",
+      "element": "INSPECTION",
+      "label": "Did not inspect subject property",
+      "section": "APPRAISER CERTIFICATION",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/PARTIES/SUPERVISOR/INSPECTION/@InspectionDate",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/PARTIES/SUPERVISOR/INSPECTION/",
+      "element": "InspectionDate",
+      "label": "Date of Inspection from street",
+      "section": "APPRAISER CERTIFICATION",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/REPORT/FORM/@AppraisalReportContentIdentifier",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/REPORT/FORM/",
+      "element": "AppraisalReportContentIdentifier",
+      "label": "BLANK",
+      "section": "FOOTER",
+      "conditionality": "R"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/LOCATION/@LatitudeNumber",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/LOCATION/",
+      "element": "LatitudeNumber",
+      "label": "N/A",
+      "section": "N/A",
+      "conditionality": "T"
+    },
+    {
+      "key": "subject:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/LOCATION/@LongitudeNumber",
+      "scope": "subject",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/LOCATION/",
+      "element": "LongitudeNumber",
+      "label": "N/A",
+      "section": "N/A",
+      "conditionality": "T"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/LOCATION/@LatitudeNumber",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/LOCATION/",
+      "element": "LatitudeNumber",
+      "label": "N/A",
+      "section": "N/A",
+      "conditionality": "T"
+    },
+    {
+      "key": "comp1:/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/LOCATION/@LongitudeNumber",
+      "scope": "comp1",
+      "xpath_dir": "/VALUATION_RESPONSE/VALUATION_METHODS/SALES_COMPARISON/COMPARABLE_SALE/LOCATION/",
+      "element": "LongitudeNumber",
+      "label": "N/A",
+      "section": "N/A",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/REPORT/FORM/@AppraisalReportContentName",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/REPORT/FORM/",
+      "element": "AppraisalReportContentName",
+      "label": "Appraisal Assignment Type Subject Property Data Collection Date Subject Property Data Collection Method Subject Property Data Collection Workforce",
+      "section": "ADDITIONAL COMMENTS",
+      "conditionality": "T"
+    },
+    {
+      "key": "doc:/VALUATION_RESPONSE/REPORT/FORM/@AppraisalReportContentIsPrimaryFormIndicator",
+      "scope": "doc",
+      "xpath_dir": "/VALUATION_RESPONSE/REPORT/FORM/",
+      "element": "AppraisalReportContentIsPrimaryFormIndicator",
+      "label": "N/A",
+      "section": "N/A",
+      "conditionality": "T"
+    }
+  ]
+}

@@ -90,7 +90,7 @@ function getNodeValue(node: any, path: string): string | null {
   return current ? (current.textContent || null) : null;
 }
 
-async function runPythonSupplementalRules(report: NormalizedReport): Promise<Finding[]> {
+async function runPythonSupplementalRules(report: NormalizedReport, schemaVersion: string): Promise<Finding[]> {
   return new Promise((resolve) => {
     try {
       // Allow ops to disable the Python engine entirely (e.g. until the photo/geocode
@@ -99,7 +99,11 @@ async function runPythonSupplementalRules(report: NormalizedReport): Promise<Fin
         return resolve([]);
       }
 
-      const scriptPath = path.join(process.cwd(), "supplemental_rules", "engine.py");
+      // Use UAD 2.6 engine for UAD 2.6, otherwise default 3.6
+      const isUAD26 = schemaVersion === "2.6" || schemaVersion.startsWith("UAD_2.6");
+      const scriptPath = isUAD26
+        ? path.join(process.cwd(), "uad26_supplemental_rules", "engine.py")
+        : path.join(process.cwd(), "supplemental_rules", "engine.py");
 
       if (!fs.existsSync(scriptPath)) {
         console.warn(`Python supplemental rules engine not found at: ${scriptPath}`);
@@ -189,14 +193,18 @@ function hasEnabledPhotoRules(): boolean {
   }
 }
 
-async function runPythonCollateralRisk(report: NormalizedReport): Promise<Finding[]> {
+async function runPythonCollateralRisk(report: NormalizedReport, schemaVersion: string): Promise<Finding[]> {
   return new Promise((resolve) => {
     try {
       if (process.env.QC_DISABLE_COLLATERAL_RISK === "1" || process.env.QC_DISABLE_COLLATERAL_RISK === "true") {
         return resolve([]);
       }
 
-      const packageDir = path.join(process.cwd(), "collateral_risk");
+      // Use UAD 2.6 engine for UAD 2.6, otherwise default 3.6
+      const isUAD26 = schemaVersion === "2.6" || schemaVersion.startsWith("UAD_2.6");
+      const packageDir = isUAD26
+        ? path.join(process.cwd(), "uad26_collateral_risk")
+        : path.join(process.cwd(), "collateral_risk");
 
       if (!fs.existsSync(packageDir)) {
         console.warn(`Python collateral risk engine not found at: ${packageDir}`);
@@ -206,7 +214,8 @@ async function runPythonCollateralRisk(report: NormalizedReport): Promise<Findin
       // run_entrypoint.py uses relative imports (part of the collateral_risk package),
       // so it must run as a module (-m) from repo root, not as a direct script path.
       const pythonBin = process.env.QC_PYTHON_BIN || "python3";
-      const pythonProcess = spawn(pythonBin, ["-m", "collateral_risk.run_entrypoint"], { cwd: process.cwd() });
+      const moduleName = isUAD26 ? "uad26_collateral_risk.run_entrypoint" : "collateral_risk.run_entrypoint";
+      const pythonProcess = spawn(pythonBin, ["-m", moduleName], { cwd: process.cwd() });
       let stdoutData = "";
       let stderrData = "";
 
@@ -274,7 +283,8 @@ async function runPythonCollateralRisk(report: NormalizedReport): Promise<Findin
 
 export async function evaluateReport(
   report: NormalizedReport,
-  activeRules: Rule[]
+  activeRules: Rule[],
+  schemaVersion: string = "3.6"
 ): Promise<RunResult> {
   const findings: Finding[] = [];
   const rule_errors: RuleError[] = [];
@@ -661,14 +671,14 @@ export async function evaluateReport(
   }
 
   try {
-    const supplementalFindings = await runPythonSupplementalRules(report);
+    const supplementalFindings = await runPythonSupplementalRules(report, schemaVersion);
     findings.push(...supplementalFindings);
   } catch (err) {
     console.error("Error adding supplemental findings:", err);
   }
 
   try {
-    const collateralRiskFindings = await runPythonCollateralRisk(report);
+    const collateralRiskFindings = await runPythonCollateralRisk(report, schemaVersion);
     findings.push(...collateralRiskFindings);
   } catch (err) {
     console.error("Error adding collateral risk findings:", err);

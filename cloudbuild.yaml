@@ -1,23 +1,26 @@
+# UAD 2.6 QC Beta Deployment
 steps:
-  # 1. Build the container image using automatic Container Registry (gcr.io)
+  # Build the container image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/remix-uad36-qc-beta:$COMMIT_SHA', '.']
+    args: ['build', '-t', 'gcr.io/legacy26-qdt/uad26-qc-beta:$COMMIT_SHA', '.']
 
-  # 2. Push the container image 
+  # Push the container image 
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/remix-uad36-qc-beta:$COMMIT_SHA']
+    args: ['push', 'gcr.io/legacy26-qdt/uad26-qc-beta:$COMMIT_SHA']
 
-  # 3. Deploy to Cloud Run
+  # Deploy to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args:
       - 'run'
       - 'deploy'
-      - 'remix-uad36-qc-beta'
+      - 'uad26-qc-beta'
       - '--image'
-      - 'gcr.io/$PROJECT_ID/remix-uad36-qc-beta:$COMMIT_SHA'
+      - 'gcr.io/legacy26-qdt/uad26-qc-beta:$COMMIT_SHA'
       - '--region'
       - 'us-east1'
+      - '--project'
+      - 'legacy26-qdt'
 
 options:
   logging: CLOUD_LOGGING_ONLY

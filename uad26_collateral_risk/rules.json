@@ -1,0 +1,265 @@
+{
+  "name": "uad26-collateral-risk-rules",
+  "version": "1.0.0",
+  "schema": "UAD-2.6",
+  "rules": [
+    {
+      "rule_id": "CR-001",
+      "category": "Comparable Selection & Proximity",
+      "description": "Comparable located materially farther from subject than typical for the market (>1 mile default)",
+      "severity": "Advisory",
+      "enabled": true,
+      "logic": {
+        "type": "comparable_numeric_range",
+        "field": "LOCATION/@ProximityToSubjectDescription",
+        "comp_index": 1,
+        "max": 1.0
+      },
+      "citation": "MI/Arch checklist: comparable distance vs. subject location"
+    },
+    {
+      "rule_id": "CR-002",
+      "category": "Comparable Selection & Proximity",
+      "description": "Comp sale is stale relative to effective date",
+      "severity": "Advisory",
+      "enabled": false,
+      "logic": {
+        "type": "needs_encoding",
+        "source_logic": "Flag if comp settlement/contract date is more than 12 months before AppraisalEffectiveDate",
+        "uad_fields_referenced": "PRIOR_SALES/@GSEPriorSaleDate vs VALUATION/@AppraisalEffectiveDate"
+      },
+      "citation": "MI checklist: 'Did any of the comparables sell more than 12 months prior to the effective date?'"
+    },
+    {
+      "rule_id": "CR-003",
+      "category": "Comparable Selection & Proximity",
+      "description": "All comparables selected are materially superior or inferior to subject (one-directional bias)",
+      "severity": "Advisory",
+      "enabled": false,
+      "logic": {
+        "type": "needs_encoding",
+        "source_logic": "Flag if ComparableToSubjectDirectionType is the same direction (all 'Superior' or all 'Inferior') across every comp on a given characteristic line",
+        "uad_fields_referenced": "COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEOverallConditionType (all comps)"
+      },
+      "citation": "MGIC training: 'Property value may be inflated when all comparables are significantly superior or inferior to the subject.'"
+    },
+    {
+      "rule_id": "CR-004",
+      "category": "Comparable Selection & Proximity",
+      "description": "Fewer than 3 closed sales comparables reported without an explanation",
+      "severity": "Fatal",
+      "enabled": true,
+      "logic": {
+        "type": "numeric_range",
+        "field": "COMPARABLE_SALE/@PropertySalesAmount",
+        "min": 3,
+        "max": null
+      },
+      "citation": "Fannie Mae B4-1.3-08/09: minimum comparable sufficiency to support value"
+    },
+    {
+      "rule_id": "CR-005",
+      "category": "Comparable Selection & Proximity",
+      "description": "Comp weighting inconsistent with adjustment magnitude",
+      "severity": "Advisory",
+      "enabled": false,
+      "logic": {
+        "type": "needs_encoding",
+        "source_logic": "Flag if ComparableWeightType marks a comp as most heavily weighted while it also carries the largest SalePriceNetTotalAdjustmentAmount among the set",
+        "uad_fields_referenced": "COMPARISON_DETAIL/@GSEOverallConditionType; SALE_PRICE_ADJUSTMENT/@_Amount"
+      },
+      "citation": "CU FNM1011: 'CU indicates heightened overvaluation risk may result from the appraiser's weighting of adjusted sale prices.'"
+    },
+    {
+      "rule_id": "CR-006",
+      "category": "Comparable Selection & Proximity",
+      "description": "Comp property type mismatch with subject use type",
+      "severity": "Advisory",
+      "enabled": false,
+      "logic": {
+        "type": "needs_encoding",
+        "source_logic": "Flag if a Sales Comparable's improvement/property type materially differs from Subject's (e.g. subject SFR, comp is a PUD/condo) without adjustment",
+        "uad_fields_referenced": "PROPERTY/@PropertyStructureType (subject vs. comp)"
+      },
+      "citation": "Fannie Mae B4-1.3-08: comparable sales should have similar physical and legal characteristics"
+    },
+    {
+      "rule_id": "CR-007",
+      "category": "Comparable Selection & Proximity",
+      "description": "Rental comparable count insufficient for GRM support",
+      "severity": "Advisory",
+      "enabled": false,
+      "logic": {
+        "type": "needs_encoding",
+        "source_logic": "Flag if Income Approach is used (GrossRentMultiplierFactor populated) but fewer than 3 rental/GRM comparables reported",
+        "uad_fields_referenced": "INCOME_ANALYSIS/@GrossRentMultiplierFactor; PROPERTY[@PropertyUseType='GrossRentMultiplierComparable'] instance count"
+      },
+      "citation": "Standard income-approach sufficiency practice, mirrors sales-comparison minimum-comp guidance"
+    },
+    {
+      "rule_id": "CR-008",
+      "category": "Subject Data Quality",
+      "description": "Subject property ZIP code format invalid (must be 5-digit or 5+4)",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "field_in_set",
+        "field": "PROPERTY/@_PostalCode",
+        "allowed": [],
+        "mode": "flag_if_in"
+      },
+      "citation": "UAD Specification Section 2.1"
+    },
+    {
+      "rule_id": "CR-009",
+      "category": "Subject Data Quality",
+      "description": "Subject Gross Living Area missing or zero",
+      "severity": "Fatal",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "STRUCTURE/@GrossLivingAreaSquareFeetCount"
+      },
+      "citation": "UAD Appendix B: GLA is required (R)"
+    },
+    {
+      "rule_id": "CR-010",
+      "category": "Subject Data Quality",
+      "description": "Appraiser license/certification number missing",
+      "severity": "Fatal",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "APPRAISER/APPRAISER_LICENSE/@_Identifier"
+      },
+      "citation": "UAD Appendix B: Appraiser License Identifier is required (R)"
+    },
+    {
+      "rule_id": "CR-011",
+      "category": "Valuation Integrity",
+      "description": "Appraised value missing or zero",
+      "severity": "Fatal",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "VALUATION/@PropertyAppraisedValueAmount"
+      },
+      "citation": "UAD Appendix B: PropertyAppraisedValueAmount is required (R)"
+    },
+    {
+      "rule_id": "CR-012",
+      "category": "Valuation Integrity",
+      "description": "Effective date of appraisal missing",
+      "severity": "Fatal",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "VALUATION/@AppraisalEffectiveDate"
+      },
+      "citation": "UAD Appendix B: AppraisalEffectiveDate is required (R)"
+    },
+    {
+      "rule_id": "CR-013",
+      "category": "Valuation Integrity",
+      "description": "Sales comparison approach indicated value missing when sales comparison used",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "SALES_COMPARISON/@ValueIndicatedBySalesComparisonApproachAmount"
+      },
+      "citation": "UAD Appendix B: ValueIndicatedBySalesComparisonApproachAmount required when approach used"
+    },
+    {
+      "rule_id": "CR-014",
+      "category": "Valuation Integrity",
+      "description": "Reconciliation summary comment missing",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "field_present",
+        "field": "RECONCILIATION/@_SummaryComment"
+      },
+      "citation": "USPAP Standards Rule 2-2(a): reconciliation required"
+    },
+    {
+      "rule_id": "CR-015",
+      "category": "Adjustment Quality",
+      "description": "Comp 1 net adjustment exceeds 10% of sale price (CU overvaluation signal)",
+      "severity": "Advisory",
+      "enabled": true,
+      "logic": {
+        "type": "subject_comparable_value_comparison",
+        "subject_field": "VALUATION/@PropertyAppraisedValueAmount",
+        "comp_field": "@PropertySalesAmount",
+        "comp_index": 1,
+        "operator": "ratio_gt",
+        "threshold": 0.1
+      },
+      "citation": "CU FNM1011: net adjustment > 10% indicates potential overvaluation"
+    },
+    {
+      "rule_id": "CR-016",
+      "category": "Adjustment Quality",
+      "description": "Comp 1 gross adjustment exceeds 25% of sale price",
+      "severity": "Advisory",
+      "enabled": true,
+      "logic": {
+        "type": "comparable_numeric_range",
+        "field": "SALE_PRICE_ADJUSTMENT/@_Amount",
+        "comp_index": 1,
+        "min": 0,
+        "max": 0.25
+      },
+      "citation": "Standard practice: gross adjustment > 25% suggests comparability concerns"
+    },
+    {
+      "rule_id": "CR-017",
+      "category": "Adjustment Quality",
+      "description": "Comp 1 GLA adjustment missing when subject and comp GLA differ materially",
+      "severity": "Warning",
+      "enabled": true,
+      "logic": {
+        "type": "needs_encoding",
+        "source_logic": "Flag if subject GLA and comp GLA differ by > 100 sq ft but no SALE_PRICE_ADJUSTMENT with _Type='GrossLivingArea' exists",
+        "uad_fields_referenced": "STRUCTURE/@GrossLivingAreaSquareFeetCount; COMPARISON_DETAIL_EXTENSION/COMPARISON_DETAIL_EXTENSION_SECTION/COMPARISON_DETAIL_EXTENSION_SECTION_DATA/COMPARISON_DETAIL/@GSEGrossLivingAreaSquareFeetCount; SALE_PRICE_ADJUSTMENT[@_Type='GrossLivingArea']/@_Amount"
+      },
+      "citation": "Fannie Mae B4-1.3-08: adjustments required for material differences"
+    },
+    {
+      "rule_id": "CR-018",
+      "category": "Photo Quality",
+      "description": "Delivery photo too dark to evaluate",
+      "severity": "Warning",
+      "enabled": false,
+      "logic": {
+        "type": "photo_quality_flag",
+        "check": "dark"
+      },
+      "citation": "Fannie Mae B4-1.2-01: photos must be clear and evaluable"
+    },
+    {
+      "rule_id": "CR-019",
+      "category": "Photo Quality",
+      "description": "Delivery photo too blurry to evaluate",
+      "severity": "Warning",
+      "enabled": false,
+      "logic": {
+        "type": "photo_quality_flag",
+        "check": "blurry"
+      },
+      "citation": "Fannie Mae B4-1.2-01: photos must be clear and evaluable"
+    },
+    {
+      "rule_id": "CR-020",
+      "category": "Photo Quality",
+      "description": "Face detected in delivery photo -- potential PII exposure",
+      "severity": "Warning",
+      "enabled": false,
+      "logic": {
+        "type": "photo_face_detected"
+      },
+      "citation": "GLBA/PII protection: appraiser should redact faces before delivery"
+    }
+  ]
+}

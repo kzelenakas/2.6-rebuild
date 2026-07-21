@@ -1,6 +1,6 @@
-# UAD 3.6 QC app - single container: Express serves API + built React frontend.
-# Build:  docker build -t uad36-qc .
-# Run:    docker run -p 3000:3000 uad36-qc
+# UAD 2.6 QC app - single container: Express serves API + built React frontend.
+# Build:  docker build -t uad26-qc .
+# Run:    docker run -p 3000:3000 uad26-qc
 
 # --- Stage 1: build the frontend ---------------------------------------------
 FROM node:22-slim AS frontend-builder
@@ -41,12 +41,11 @@ COPY --from=frontend-builder /app/frontend/dist /app/frontend/dist
 # Copy rules, schemas, and schemas combined XSDs
 COPY rules /app/rules
 COPY schemas /app/schemas
-COPY GSE_UAD_3.6.0_v1.3_schema/Combined /app/GSE_UAD_3.6.0_v1.3_schema/Combined
+COPY REAL_ESTATE_PROPERTY_INFORMATION_VALUATION_RESPONSE_v2_6_Errata_1 /app/REAL_ESTATE_PROPERTY_INFORMATION_VALUATION_RESPONSE_v2_6_Errata_1
 
-# Python subprocess rule engines (were never copied into the runtime image before --
-# engine.ts's own existence-check silently skipped them, findings always empty)
-COPY supplemental_rules /app/supplemental_rules
-COPY collateral_risk /app/collateral_risk
+# Python subprocess rule engines
+COPY uad26_supplemental_rules /app/uad26_supplemental_rules
+COPY uad26_collateral_risk /app/uad26_collateral_risk
 
 ENV QC_DATA_DIR=/data/files/db \
     NODE_ENV=production \

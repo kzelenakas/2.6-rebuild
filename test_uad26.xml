@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VALUATION_RESPONSE>
+  <REPORT AppraisalFormType="FNM1004" AppraiserFileIdentifier="TEST-123">
+    <EMBEDDED_FILE>
+      <DOCUMENT>base64data</DOCUMENT>
+    </EMBEDDED_FILE>
+  </REPORT>
+  <PARTIES>
+    <LENDER _UnparsedName="Test Lender" AppraisalFormsUnparsedAddress="123 Main St, City, ST 12345"/>
+    <BORROWER>
+      <BORROWER_EXTENSION>
+        <BORROWER_EXTENSION_SECTION ExtensionSectionOrganizationName="UNIFORM APPRAISAL DATASET">
+          <BORROWER_EXTENSION_SECTION_DATA>
+            <BORROWER_NAME GSEBorrowerName="John Doe"/>
+          </BORROWER_EXTENSION_SECTION_DATA>
+        </BORROWER_EXTENSION_SECTION>
+      </BORROWER_EXTENSION>
+    </BORROWER>
+    <APPRAISER _Name="Jane Appraiser" _CompanyName="Appraisal Co" _City="City" _State="ST" _ZipCode="12345">
+      <APPRAISER_LICENSE _Type="Certificate" _Identifier="CERT-123" _State="CA" _ExpirationDate="2025-12-31"/>
+      <CONTACT_DETAIL>
+        <CONTACT_POINT _Type="Phone" _Value="555-1234"/>
+        <CONTACT_POINT _Type="Email" _Value="jane@appraisal.com"/>
+      </CONTACT_DETAIL>
+    </APPRAISER>
+  </PARTIES>
+  <PROPERTY _StreetAddress="123 Subject St" _City="Subject City" _State="CA" _PostalCode="90001" _County="Los Angeles" _CurrentOccupancyType="OwnerOccupied" _RightsType="FeeSimple">
+    <LEGAL_DESCRIPTION _Type="Other" _TypeOtherDescription="LongLegal" _TextDescription="Lot 1, Block 1, Tract 123"/>
+    <SITE _AreaDescription="16000 sq ft" _ZoningClassificationIdentifier="R1" _ZoningClassificationDescription="Single Family" _ZoningComplianceType="Legal"/>
+    <NEIGHBORHOOD _Name="Test Neighborhood" _Description="Residential" _MarketConditionsDescription="Stable">
+      <HOUSING _Type="SingleFamily" _LowPriceAmount="500" _HighPriceAmount="800" _PredominantPriceAmount="650" _NewestYearsCount="5" _OldestYearsCount="50" _PredominantAgeYearsCount="25"/>
+      <PRESENT_LAND_USE _Type="SingleFamily" _Percent="75"/>
+      <PRESENT_LAND_USE _Type="Commercial" _Percent="10"/>
+      <PRESENT_LAND_USE _Type="Other" _Percent="15"/>
+    </NEIGHBORHOOD>
+    <STRUCTURE LivingUnitCount="1" AttachmentType="Detached" BuildingStatusType="Existing" PropertyStructureBuiltYear="2000" _DesignDescription="Contemporary">
+      <FOUNDATION _Type="Slab" _ExistsIndicator="Y"/>
+      <BASEMENT SquareFeetCount="0" _FinishedPercent="0"/>
+      <EXTERIOR_FEATURE _Type="Foundation" _Description="Concrete Slab"/>
+      <EXTERIOR_FEATURE _Type="Walls" _Description="Stucco"/>
+      <EXTERIOR_FEATURE _Type="RoofSurface" _Description="Composition Shingle"/>
+      <INTERIOR_FEATURE _Type="Floors" _ConditionDescription="Good"/>
+      <INTERIOR_FEATURE _Type="Walls" _ConditionDescription="Good"/>
+      <HEATING _Type="ForcedWarmAir" _FuelDescription="Gas"/>
+      <COOLING _CentralizedIndicator="Y"/>
+      <AMENITY _Type="Fireplace" _ExistsIndicator="Y" _Count="1"/>
+      <AMENITY _Type="Patio" _ExistsIndicator="Y" _DetailedDescription="Covered patio"/>
+    </STRUCTURE>
+    <SALES_CONTRACT _Amount="500000" _Date="2024-01-15" SellerIsOwnerIndicator="Y" DataSourceDescription="MLS" SalesConcessionIndicator="N"/>
+    <LISTING_HISTORY ListedWithinPreviousYearIndicator="N" ListedWithinPreviousYearDescription="Not listed in prior 12 months"/>
+  </PROPERTY>
+  <VALUATION PropertyAppraisedValueAmount="525000" AppraisalEffectiveDate="2024-06-15">
+    <RECONCILIATION _SummaryComment="Market value supported by comparable sales" _ConditionsComment="As-is">
+      <CONDITION_OF_APPRAISAL _Type="AsIs"/>
+    </RECONCILIATION>
+  </VALUATION>
+  <VALUATION_METHODS>
+    <SALES_COMPARISON ValueIndicatedBySalesComparisonApproachAmount="525000">
+      <COMPARABLE_SALE PropertySequenceIdentifier="0" PropertySalesAmount="525000" SalesPricePerGrossLivingAreaAmount="250">
+        <LOCATION PropertyStreetAddress="123 Subject St" PropertyCity="Subject City" PropertyState="CA" PropertyPostalCode="90001" ProximityToSubjectDescription="0.5 miles"/>
+        <COMPARISON_DETAIL_EXTENSION>
+          <COMPARISON_DETAIL_EXTENSION_SECTION ExtensionSectionOrganizationName="UNIFORM APPRAISAL DATASET">
+            <COMPARISON_DETAIL_EXTENSION_SECTION_DATA>
+              <COMPARISON_DETAIL GSEOverallConditionType="C3" GSEQualityOfConstructionRatingType="Q3" GSEAgeEstimationIndicator="false" GSEGrossLivingAreaSquareFeetCount="2100" GSEBelowGradeTotalSquareFeetNumber="0" GSEBelowGradeFinishSquareFeetNumber="0"/>
+            </COMPARISON_DETAIL_EXTENSION_SECTION_DATA>
+          </COMPARISON_DETAIL_EXTENSION_SECTION>
+        </COMPARISON_DETAIL_EXTENSION>
+        <ROOM_ADJUSTMENT TotalRoomCount="8" TotalBedroomCount="4" TotalBathroomCount="2"/>
+        <SALE_PRICE_ADJUSTMENT _Type="GrossLivingArea" _Description="2100" _Amount="0"/>
+        <SALE_PRICE_ADJUSTMENT _Type="SiteArea" _Description="16000" _Amount="0"/>
+      </COMPARABLE_SALE>
+      <COMPARABLE_SALE PropertySequenceIdentifier="1" PropertySalesAmount="510000" SalesPricePerGrossLivingAreaAmount="243">
+        <LOCATION PropertyStreetAddress="456 Comp St" PropertyCity="Comp City" PropertyState="CA" PropertyPostalCode="90002" ProximityToSubjectDescription="0.3 miles"/>
+        <COMPARISON_DETAIL_EXTENSION>
+          <COMPARISON_DETAIL_EXTENSION_SECTION ExtensionSectionOrganizationName="UNIFORM APPRAISAL DATASET">
+            <COMPARISON_DETAIL_EXTENSION_SECTION_DATA>
+              <COMPARISON_DETAIL GSEOverallConditionType="C3" GSEQualityOfConstructionRatingType="Q3" GSEAgeEstimationIndicator="false" GSEGrossLivingAreaSquareFeetCount="2100" GSEBelowGradeTotalSquareFeetNumber="0" GSEBelowGradeFinishSquareFeetNumber="0"/>
+            </COMPARISON_DETAIL_EXTENSION_SECTION_DATA>
+          </COMPARISON_DETAIL_EXTENSION_SECTION>
+        </COMPARISON_DETAIL_EXTENSION>
+        <ROOM_ADJUSTMENT TotalRoomCount="8" TotalBedroomCount="4" TotalBathroomCount="2"/>
+        <SALE_PRICE_ADJUSTMENT _Type="GrossLivingArea" _Description="2100" _Amount="-5000"/>
+        <SALE_PRICE_ADJUSTMENT _Type="SiteArea" _Description="16000" _Amount="3000"/>
+      </COMPARABLE_SALE>
+    </SALES_COMPARISON>
+  </VALUATION_METHODS>
+</VALUATION_RESPONSE>
