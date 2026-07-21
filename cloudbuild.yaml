@@ -2,11 +2,11 @@
 steps:
   # 1. Build the container image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/legacy26-qdt/uad26-qc-beta:$SHORT_SHA', '.']
+    args: ['build', '-t', 'gcr.io/legacy26-qdt/uad26-qc-beta:$BUILD_ID', '.']
 
   # 2. Push the container image 
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/legacy26-qdt/uad26-qc-beta:$SHORT_SHA']
+    args: ['push', 'gcr.io/legacy26-qdt/uad26-qc-beta:$BUILD_ID']
 
   # 3. Deploy to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -16,7 +16,7 @@ steps:
       - 'deploy'
       - 'uad26-qc-beta'
       - '--image'
-      - 'gcr.io/legacy26-qdt/uad26-qc-beta:$SHORT_SHA'
+      - 'gcr.io/legacy26-qdt/uad26-qc-beta:$BUILD_ID'
       - '--region'
       - 'us-east1'
       - '--project'
