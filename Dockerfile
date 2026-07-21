@@ -41,7 +41,7 @@ COPY --from=frontend-builder /app/frontend/dist /app/frontend/dist
 # Copy rules, schemas, and schemas combined XSDs
 COPY rules /app/rules
 COPY schemas /app/schemas
-COPY REAL_ESTATE_PROPERTY_INFORMATION_VALUATION_RESPONSE_v2_6_Errata_1 /app/REAL_ESTATE_PROPERTY_INFORMATION_VALUATION_RESPONSE_v2_6_Errata_1
+COPY GSE_UAD_3.6.0_v1.3_schema/Combined /app/GSE_UAD_3.6.0_v1.3_schema/Combined
 
 # Python subprocess rule engines
 COPY uad26_supplemental_rules /app/uad26_supplemental_rules

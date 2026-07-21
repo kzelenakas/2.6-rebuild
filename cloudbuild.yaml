@@ -1,14 +1,14 @@
 # UAD 2.6 QC Beta Deployment
 steps:
-  # Build the container image
+  # 1. Build the container image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/legacy26-qdt/uad26-qc-beta:$COMMIT_SHA', '.']
+    args: ['build', '-t', 'gcr.io/legacy26-qdt/uad26-qc-beta:$SHORT_SHA', '.']
 
-  # Push the container image 
+  # 2. Push the container image 
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/legacy26-qdt/uad26-qc-beta:$COMMIT_SHA']
+    args: ['push', 'gcr.io/legacy26-qdt/uad26-qc-beta:$SHORT_SHA']
 
-  # Deploy to Cloud Run
+  # 3. Deploy to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args:
@@ -16,7 +16,7 @@ steps:
       - 'deploy'
       - 'uad26-qc-beta'
       - '--image'
-      - 'gcr.io/legacy26-qdt/uad26-qc-beta:$COMMIT_SHA'
+      - 'gcr.io/legacy26-qdt/uad26-qc-beta:$SHORT_SHA'
       - '--region'
       - 'us-east1'
       - '--project'
